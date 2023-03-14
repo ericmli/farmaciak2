@@ -1,0 +1,180 @@
+body, html {
+    height: 100%;
+}
+
+.rnkHeader{
+    background: #343a40;
+    top: 0;
+    width: 100%;
+    height: 76px;
+    
+}
+
+.container {
+    padding: 0;
+}
+
+.imgLogo {
+    height: 50px;
+    object-fit: cover;
+}
+
+.container-fluid {
+    padding: 0;
+    min-height: 45px;
+    margin-bottom: 0;
+    left: 0;
+}
+
+.sale {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.convenienceList {
+    width: 100%;
+    padding: 10px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    overflow-x: auto;
+    background-color: aliceblue;
+    border-radius: 20px;
+    margin-top: 5px;
+}
+
+.convenienceList li {
+    text-align: center;
+}
+
+.convenienceList::-webkit-scrollbar {
+    width: auto;
+    height: 10px;
+}
+
+.convenienceList::-webkit-scrollbar-track {
+    background: aliceblue;
+}
+
+.convenienceList::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    border: 3px solid #f66464;
+}
+
+.backSize{
+    width: 99%;
+    margin: 0.5%;
+    background-color: #e9e9e9;
+    border-radius: 50px 500px 0px 50px;
+    
+}
+
+.convenienceList li img{
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.midIcons{
+    height: 5em;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.metds{
+    text-align: center;
+    font-size: 1rem;
+    transition: 0.5s;
+    z-index: 1;
+    cursor: pointer;
+}
+
+i.bi{
+    font-size: 2rem;
+    transition: 0.5s;
+    z-index: 0;
+    color: rgb(127, 187, 255);
+}
+
+i.bi:hover,.metds:hover{
+    color: rgb(127, 187, 255);
+    transition: 0.5s;
+}
+
+i.bi:hover{
+    color: black;
+}
+
+.sales{
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 15px;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-top: 5px;
+    padding-inline-start: 0;
+    overflow: hidden;
+}
+
+
+#products{
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+    border-radius: 20px;
+    margin-top: 5px;
+    padding-inline-start: 0;
+}
+
+.product{
+    background: #fff;
+    position: relative;
+    width: 280px;
+    height: 40%;
+    border-radius: 10px;
+    margin-top: 5px;
+    
+    cursor: pointer;
+    
+}
+
+.product:hover{
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.product img{
+    width: 100%;
+    padding: 20px;
+    height: 15rem;
+    object-fit: cover;
+}
+
+.product .infoCard{
+    height: 5vh;
+}
+
+.textCard{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    padding: 0px 20px;
+    color: #343a407e;
+}

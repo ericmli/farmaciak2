@@ -1,0 +1,68 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "K2 of Kiss",
+      "price": 2,
+      "stock": 2,
+      "descrecption": "Codeina",
+      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+    },
+    {
+      "id": 2,
+      "name": "K2 of Kiss",
+      "price": 2,
+      "stock": 2,
+      "descrecption": "Teste",
+      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+    },
+    {
+      "id": 3,
+      "name": "K2 of Kiss",
+      "price": 2,
+      "stock": 2,
+      "descrecption": "Remedio",
+      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+    },
+    {
+      "id": 4,
+      "name": "K2 of Kiss",
+      "price": 2,
+      "stock": 2,
+      "descrecption": "Morphina",
+      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+    },
+    {
+      "id": 5,
+      "name": "K2 of Kiss",
+      "price": 2,
+      "stock": 2,
+      "descrecption": "Teste",
+      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+    },
+    {
+      "id": 6,
+      "name": "K2 of Kiss",
+      "price": 2,
+      "stock": 2,
+      "descrecption": "BandDeid",
+      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+    },
+    {
+      "id": 7,
+      "name": "K2 of Kiss",
+      "price": 2,
+      "stock": 2,
+      "descrecption": "Dipirona",
+      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+    },
+    {
+      "id": 8,
+      "name": "K2 of Kiss",
+      "price": 2,
+      "stock": 2,
+      "descrecption": "Paracetamol",
+      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+    }
+  ]
+}
