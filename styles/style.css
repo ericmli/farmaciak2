@@ -2,6 +2,15 @@ body, html {
     height: 100%;
 }
 
+.error{
+    border-color: red;
+}
+
+.textError{
+    text-align: center;
+    height: 5px;
+}
+
 .rnkHeader{
     background: #343a40;
     top: 0;

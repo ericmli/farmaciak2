@@ -6,7 +6,7 @@
       "price": 2,
       "stock": 2,
       "descrecption": "Codeina",
-      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+      "img": "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
     },
     {
       "id": 2,
@@ -14,7 +14,7 @@
       "price": 2,
       "stock": 2,
       "descrecption": "Teste",
-      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+      "img": "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
     },
     {
       "id": 3,
@@ -22,7 +22,7 @@
       "price": 2,
       "stock": 2,
       "descrecption": "Remedio",
-      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+      "img": "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
     },
     {
       "id": 4,
@@ -30,7 +30,7 @@
       "price": 2,
       "stock": 2,
       "descrecption": "Morphina",
-      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+      "img": "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
     },
     {
       "id": 5,
@@ -38,7 +38,7 @@
       "price": 2,
       "stock": 2,
       "descrecption": "Teste",
-      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+      "img": "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
     },
     {
       "id": 6,
@@ -46,7 +46,7 @@
       "price": 2,
       "stock": 2,
       "descrecption": "BandDeid",
-      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+      "img": "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
     },
     {
       "id": 7,
@@ -54,7 +54,7 @@
       "price": 2,
       "stock": 2,
       "descrecption": "Dipirona",
-      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+      "img": "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
     },
     {
       "id": 8,
@@ -62,7 +62,74 @@
       "price": 2,
       "stock": 2,
       "descrecption": "Paracetamol",
-      "img" : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+      "img": "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "",
+      "email": "",
+      "password": "",
+      "age": "",
+      "CPF": "",
+      "gender": "",
+      "number": "",
+      "street": "",
+      "district": "",
+      "houseNumber": ""
+    },
+    {
+      "name": "a",
+      "email": "a",
+      "password": "a",
+      "age": "2023-03-14",
+      "CPF": "1234567890",
+      "gender": "Feminino",
+      "number": "122222222",
+      "street": "Rua Niels Christian Soerensen",
+      "district": "Jardim Paulo Afonso",
+      "houseNumber": "1221",
+      "id": 2
+    },
+    {
+      "name": "a",
+      "email": "a",
+      "password": "a",
+      "age": "2023-03-14",
+      "CPF": "123",
+      "gender": "Feminino",
+      "number": "1",
+      "street": "",
+      "district": "",
+      "houseNumber": "1",
+      "id": 3
+    },
+    {
+      "name": "a",
+      "email": "a",
+      "password": "a",
+      "age": "1111-11-11",
+      "CPF": "1",
+      "gender": "Feminino",
+      "number": "1",
+      "street": "",
+      "district": "",
+      "houseNumber": "1",
+      "id": 4
+    },
+    {
+      "name": "q",
+      "email": "q",
+      "password": "q",
+      "age": "2023-03-15",
+      "CPF": "1",
+      "gender": "Feminino",
+      "number": "1",
+      "street": "",
+      "district": "",
+      "houseNumber": "1",
+      "id": 5
     }
   ]
 }
