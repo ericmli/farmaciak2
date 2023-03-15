@@ -12,6 +12,8 @@ function cadastrar() {
   let numberHouse = document.getElementById("inputNumero").value.trim();
   let street = document.getElementById("inputRua").value.trim()
   let district = document.getElementById("inputBairro").value.trim()
+  let cep = document.getElementById("inputCEP").value.trim();
+
 
   if (
     name.length == 0 ||
@@ -70,7 +72,26 @@ function cadastrar() {
         document.getElementById("gender").classList.remove(`error`);
     }
 
+    if(number.length == 0 || number.length != 11 ){
+      document.getElementById("inputCelular").classList.add(`error`);
+    }else{
+      document.getElementById("inputCelular").classList.remove(`error`);
 
+    }
+
+    if(numberHouse.length == 0 || numberHouse.length > 10){
+      document.getElementById("inputNumero").classList.add(`error`);
+    }else{
+      document.getElementById("inputNumero").classList.add(`error`);
+    }
+
+    if(cep.length != 9 ){
+      document.getElementById("inputCEP").classList.add(`error`);
+    }else{
+      document.getElementById("inputCEP").classList.remove(`error`);
+    }
+
+ 
 
   } else {
     let newUser = {
@@ -107,16 +128,18 @@ function cadastrar() {
 }
 
 function cep() {
-  let a = document.getElementById("inputCEP").value.trim();
+  let cep = document.getElementById("inputCEP").value.trim();
 
   $.ajax({
-    url: `https://viacep.com.br/ws/${a}/json/`,
+    url: `https://viacep.com.br/ws/${cep}/json/`,
     type: "GET",
     headers: {
       accept: "application/json",
     },
     success: function (data) {
       console.log(data);
+
+      document.getElementById("inputCEP").classList.remove(`error`);
 
       document.getElementById("inputCEP").value = data.cep;
       document.getElementById("inputBairro").value = data.bairro;
