@@ -71,5 +71,46 @@ module.exports = {
             json.error = 'Campos não enviados';
         }
         res.json(json);
+    },
+
+    alterar: async (req, res) => {
+        let json = { error: '', result: {} };
+
+        let  id = req.params.id;
+        let nome_completo = req.body.nome_completo;
+        let cpf = req.body.cpf;
+        let email = req.body.email;
+        let senha = req.body.senha;
+        let grupo = req.body.grupo;
+        let status = req.body.status;
+        let logado = req.body.logado;
+
+
+        if (nome_completo && cpf && email && senha && grupo && status && logado) {
+            await FuncionarioService.alterar(id,nome_completo,cpf,email,senha,grupo,status,logado);
+            json.result = {
+                id,
+                nome_completo,
+                cpf,
+                email,
+                senha,
+                grupo,
+                status,
+                logado
+            };
+
+        } else {
+            json.error = 'Campos não enviados';
+        }
+        res.json(json);
+    },
+
+    excluir: async(req, res) =>{
+        let json = { error: '', result: {} };
+
+        let funcionario = await FuncionarioService.excluir(req.params.id);
+
+        res.json(json)
     }
+
 }
