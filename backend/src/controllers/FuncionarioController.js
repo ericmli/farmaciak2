@@ -30,7 +30,7 @@ module.exports = {
         })
         .catch(error => {
             console.log(error);
-            res.status(401).json({ message: 'Usuario ou senha invalido!' });
+            res.status(401).json({ error: error.message });
         });
     },
 
@@ -39,10 +39,6 @@ module.exports = {
 
         let id = req.params.id;
         let funcionario = await FuncionarioService.buscarUm(id);
-
-        if (email && senha) {
-            
-        }
 
         if (funcionario) {
             json.result = funcionario;

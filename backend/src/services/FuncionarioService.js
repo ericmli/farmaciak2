@@ -7,12 +7,15 @@ module.exports = {
             db.query('SELECT * FROM funcionarios WHERE email = ?', [email], (error, results) =>{
                 if (error) {
                     rejeitado(error); 
-                    return;
                 }else if(results.length === 0){
                     rejeitado(new Error('Usuario não encontrado!'))
                 }else if (results[0].senha !== senha) {
                     rejeitado(new Error('Senha invalida!'));
-                } else {
+                }else if(results[0].status !== 'ativo'){
+                    rejeitado(new Error('Usuario inativo!'))
+                }else if (results[0].logado) {
+                    rejeitado(new Error('Usuario já está logado!'));
+                }else {
                     aceito(results);
                 }
             });
