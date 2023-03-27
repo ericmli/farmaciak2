@@ -1,6 +1,24 @@
 const db = require('../db');
 
+
 module.exports = {
+    login: (email, senha) =>{
+        return new Promise((aceito, rejeitado) => {
+            db.query('SELECT * FROM funcionarios WHERE email = ?', [email], (error, results) =>{
+                if (error) {
+                    rejeitado(error); 
+                    return;
+                }else if(results.length === 0){
+                    rejeitado(new Error('Usuario não encontrado!'))
+                }else if (results[0].senha !== senha) {
+                    rejeitado(new Error('Senha invalida!'));
+                } else {
+                    aceito(results);
+                }
+            });
+        });
+    },
+
     buscarTodos: () => {
         return new Promise((aceito, rejeitado) => {
             db.query('SELECT * FROM funcionarios', (error, results) => {
@@ -9,6 +27,7 @@ module.exports = {
             });
         });
     },
+
 
     buscarUm: (id) => {
         return new Promise((aceito, rejeitado) => {

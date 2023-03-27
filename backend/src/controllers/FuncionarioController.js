@@ -20,11 +20,29 @@ module.exports = {
         res.json(json);
     },
 
+    login: async(req,res)=> {
+        const email = req.body.email;
+        const senha = req.body.senha;
+
+        FuncionarioService.login(email, senha)
+        .then(result =>{
+            res.status(200).json({message: "Logado com sucesso!"})
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(401).json({ message: 'Usuario ou senha invalido!' });
+        });
+    },
+
     buscarUm: async (req, res) => {
         let json = { error: '', result: {} };
 
         let id = req.params.id;
         let funcionario = await FuncionarioService.buscarUm(id);
+
+        if (email && senha) {
+            
+        }
 
         if (funcionario) {
             json.result = funcionario;
