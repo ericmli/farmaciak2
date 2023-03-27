@@ -24,6 +24,7 @@ module.exports = {
     },
 
     inserir: (nome_completo,cpf,email,senha,grupo,status,logado) => {
+        console.log(nome_completo,cpf,email,senha,grupo,status,logado)
         return new Promise((aceito, rejeitado) => {
             db.query('INSERT INTO funcionarios (nome_completo, cpf, email, senha, grupo, status, logado) VALUES (?, ?, ?, ?, ?, ?, ?)',
                 [nome_completo,cpf,email,senha,grupo,status,logado], 
@@ -31,7 +32,6 @@ module.exports = {
                     if (error) { rejeitado(error); return;}
                     aceito(results.insertId);
                 }
-                
             );
         });
     },

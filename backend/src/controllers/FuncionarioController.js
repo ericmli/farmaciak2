@@ -44,10 +44,7 @@ module.exports = {
         let status = req.body.status;
         let logado = req.body.logado;
 
-        console.log(req.body)
-
-
-        if (nome_completo && cpf && email && senha && grupo && status && logado) {
+        if (nome_completo && cpf && email && senha && grupo && status) {
             let FuncionarioId = await FuncionarioService.inserir(
                 nome_completo,
                 cpf,
@@ -66,7 +63,6 @@ module.exports = {
                 status,
                 logado
             };
-
         } else {
             json.error = 'Campos não enviados';
         }
@@ -86,7 +82,7 @@ module.exports = {
         let logado = req.body.logado;
 
 
-        if (nome_completo && cpf && email && senha && grupo && status && logado) {
+        if (nome_completo && cpf && email && senha && grupo && status) {
             await FuncionarioService.alterar(id,nome_completo,cpf,email,senha,grupo,status,logado);
             json.result = {
                 id,

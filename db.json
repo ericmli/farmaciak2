@@ -78,71 +78,16 @@
       "street": "",
       "district": "",
       "houseNumber": ""
-    },
+    }
+  ],
+  "group": [
     {
-      "name": "a",
-      "email": "a",
-      "password": "a",
-      "age": "2023-03-14",
-      "CPF": "1234567890",
-      "gender": "Feminino",
-      "number": "122222222",
-      "street": "Rua Niels Christian Soerensen",
-      "district": "Jardim Paulo Afonso",
-      "houseNumber": "1221",
-      "id": 2
-    },
-    {
-      "name": "a",
-      "email": "a",
-      "password": "a",
-      "age": "2023-03-14",
-      "CPF": "123",
-      "gender": "Feminino",
-      "number": "1",
-      "street": "",
-      "district": "",
-      "houseNumber": "1",
-      "id": 3
-    },
-    {
-      "name": "a",
-      "email": "a",
-      "password": "a",
-      "age": "1111-11-11",
-      "CPF": "1",
-      "gender": "Feminino",
-      "number": "1",
-      "street": "",
-      "district": "",
-      "houseNumber": "1",
-      "id": 4
-    },
-    {
-      "name": "q",
-      "email": "q",
-      "password": "q",
-      "age": "2023-03-15",
-      "CPF": "1",
-      "gender": "Feminino",
-      "number": "1",
-      "street": "",
-      "district": "",
-      "houseNumber": "1",
-      "id": 5
-    },
-    {
-      "name": "a",
-      "email": "a",
-      "password": "a",
-      "age": "2023-03-15",
-      "CPF": "1",
-      "gender": "Feminino",
-      "number": "1",
-      "street": "",
-      "district": "",
-      "houseNumber": "1",
-      "id": 6
+      "name": "Wall cabeça de peroba",
+      "email": "wallcachorra@gmail.com",
+      "password": "aa",
+      "cpf": "123",
+      "group": "true",
+      "id": 1
     }
   ]
 }
