@@ -1,5 +1,5 @@
 const db = require('../db');
-
+const bcrypt = require('bcrypt');
 
 module.exports = {
     login: (email, senha) =>{
@@ -9,14 +9,20 @@ module.exports = {
                     rejeitado(error); 
                 }else if(results.length === 0){
                     rejeitado(new Error('Usuario não encontrado!'))
-                }else if (results[0].senha !== senha) {
-                    rejeitado(new Error('Senha invalida!'));
-                }else if(results[0].status !== 'ativo'){
-                    rejeitado(new Error('Usuario inativo!'))
-                }else if (results[0].logado) {
-                    rejeitado(new Error('Usuario já está logado!'));
                 }else {
-                    aceito(results);
+                    bcrypt.compare(senha, results[0].senha, (err, match) =>{
+                        if (err) {
+                            rejeitado(err);
+                        }else if (!match) {
+                            rejeitado(new Error('Senha invalida #'));
+                        }else if (results[0].status !== 'ativo') {
+                            rejeitado(new Error('Usuario inativo #'));
+                        }else if (results[0].logado) {
+                            rejeitado(new Error('Usuario já logado #'));
+                        }else{
+                            aceito(results)
+                        }
+                    })
                 }
             });
         });
@@ -48,14 +54,22 @@ module.exports = {
     inserir: (nome_completo,cpf,email,senha,grupo,status,logado) => {
         console.log(nome_completo,cpf,email,senha,grupo,status,logado)
         return new Promise((aceito, rejeitado) => {
-            db.query('INSERT INTO funcionarios (nome_completo, cpf, email, senha, grupo, status, logado) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                [nome_completo,cpf,email,senha,grupo,status,logado], 
+            bcrypt.hash(senha, 10,(error, hash) =>{
+                if(error) {
+                    rejeitado(error);
+                }else{
+                    db.query('INSERT INTO funcionarios (nome_completo, cpf, email, senha, grupo, status, logado) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                [nome_completo,cpf,email,hash,grupo,status,logado], 
                 (error, results) => {
-                    if (error) { rejeitado(error); return;}
-                    aceito(results.insertId);
-                }
-            );
+                    if (error) { 
+                        rejeitado(error);
+                    }else{
+                        aceito(results.insertId);
+                    }  
+                });
+            }
         });
+    });
     },
 
     alterar: (id,nome_completo,cpf,email,senha,grupo,status,logado) => {
