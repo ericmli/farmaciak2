@@ -64,7 +64,6 @@ module.exports = {
     },
 
 
-
     inserir: async (nome_completo,cpf,email,senha,grupo,status,logado) => {
         return new Promise(async (aceito, rejeitado) => {
             try {
