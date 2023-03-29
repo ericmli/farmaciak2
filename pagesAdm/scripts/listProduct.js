@@ -15,12 +15,12 @@ function listarProdutos(){
             let htmlLis = ''
             for (let i = 0; i < data.result.length; i++) {
                 htmlLis += `  
-                <div class="card" style="width: 18rem; ">
+                <div class="card" style="width: 18rem">
                 <img src="${data.result[i].img}" class="card-img-top">
                 <div class="card-body">
                   <h5 class="card-title">${data.result[i].nome}</h5>
                   <p class="card-text">${data.result[i].descricao}</p>
-                  <a href="#" class="btn btn-primary">Editar</a>
+                  <a href="#" class="btn btn-warning" onclick="editarProduto(${data.result[i].id})">Editar</a>
                   <a class="btn btn-danger" onclick="deleteProduto(${data.result[i].id})">Deletar</a>
                 </div>
               </div>
@@ -54,8 +54,9 @@ function deleteProduto(id) {
 
 }
 
-function callLocal(id){
-    localStorage.setItem("idProducts", id)
-    window.location.href = `file:///C:/Codes/Senac/K2/pages/cards.html`
+function editarProduto(id) {
+
+    localStorage.setItem("idProduto", id)
+    window.location.href = `file:///C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/updateProduct.html#`
 
 }

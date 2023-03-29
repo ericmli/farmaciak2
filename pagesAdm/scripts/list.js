@@ -67,31 +67,3 @@ function editarFuncionario(id) {
 
 }
 
-function editarStatus(state){
-    let newUser = {
-        nome_completo: name,
-        cpf: cpf,
-        email: email,
-        senha: password,
-        grupo: group,
-        status : state,
-        logado : false,
-      };
-  
-      $.ajax({
-        url: "http://localhost:2000/api/funcionario",
-        type: "POST",
-        headers: {
-          accept: "application/json",
-        },
-        dataType: "json",
-        contentType: "application/json",
-        data: JSON.stringify(newUser),
-        success: function (data) {
-          window.location.href = "file:///C:/Codes/Senac/k2farma/pagesAdm/pages/list.html";
-        },
-        error: function (data) {
-          console.log(data);
-        },
-      });
-}
