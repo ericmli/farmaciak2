@@ -13,7 +13,8 @@ module.exports = {
                 preco: produtos[i].preco,
                 quantidade: produtos[i].quantidade,
                 laboratorio: produtos[i].laboratorio,
-                categoria: produtos[i].categoria
+                categoria: produtos[i].categoria,
+                img: produtos[i].img
             })
         }
         res.json(json);
@@ -41,15 +42,17 @@ module.exports = {
         let quantidade = req.body.quantidade;
         let laboratorio = req.body.laboratorio;
         let categoria = req.body.categoria;
+        let img = req.body.img;
 
-        if (nome && descricao && preco && quantidade && laboratorio && categoria) {
+        if (nome && descricao && preco && quantidade && laboratorio && categoria && img) {
             let ProdutoId = await ProdutoService.inserir(
                 nome,
                 descricao,
                 preco,
                 quantidade,
                 laboratorio,
-                categoria);
+                categoria,
+                img);
             json.result = {
                 id: ProdutoId,
                 nome,
@@ -57,7 +60,8 @@ module.exports = {
                 preco,
                 quantidade,
                 laboratorio,
-                categoria
+                categoria,
+                img
             };
         } else {
             json.error = 'Campos não enviados';
@@ -75,10 +79,10 @@ module.exports = {
         let quantidade = req.body.quantidade;
         let laboratorio = req.body.laboratorio;
         let categoria = req.body.categoria;
+        let img = req.body.img;
 
-
-        if (nome && descricao && preco && quantidade && laboratorio && categoria) {
-            await ProdutoService.alterar(id,nome,descricao,preco,quantidade,laboratorio,categoria);
+        if (nome && descricao && preco && quantidade && laboratorio && categoria && img) {
+            await ProdutoService.alterar(id,nome,descricao,preco,quantidade,laboratorio,categoria,img);
             json.result = {
                 id,
                 nome,
@@ -86,7 +90,8 @@ module.exports = {
                 preco,
                 quantidade,
                 laboratorio,
-                categoria
+                categoria,
+                img
             };
 
         } else {

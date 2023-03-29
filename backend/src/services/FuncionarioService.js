@@ -27,7 +27,7 @@ module.exports = {
                             rejeitado(err);
                         } else if (!match) {
                             rejeitado(new Error('Senha invalida #'));
-                        } else if (results[0].status !== 'ativo') {
+                        } else if (results[0].status !== 'Ativo' || 'ativo') {
                             rejeitado(new Error('Usuario inativo #'));
                         } else if (results[0].logado) {
                             rejeitado(new Error('Usuario já logado #'));

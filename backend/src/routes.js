@@ -19,5 +19,4 @@ router.post('/produto', ProdutoController.inserir);
 router.put('/produto/:id', ProdutoController.alterar);
 router.delete('/produto/:id', ProdutoController.excluir)
 
-
 module.exports = router;

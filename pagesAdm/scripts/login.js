@@ -15,7 +15,8 @@ function login(){
         contentType: "application/json",
         data: JSON.stringify(send),
         success: function (data) {
-          window.location.href = "file:///C:/Codes/Senac/k2farma/pagesAdm/pages/list.html";
+          window.location.href = "C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/list.html";
+          console.log('foi',data)
         },
         error: function (data) {
           console.log(data);

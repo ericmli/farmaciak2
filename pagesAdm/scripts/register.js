@@ -15,7 +15,6 @@ function cadastrar() {
   let passwordConfirm = document.getElementById("inputConfirmPassword").value.trim();
   let cpf = document.getElementById("inputCPF").value.trim();
   let group = document.getElementById("group").value.trim();
-  let status = document.getElementById("status").value.trim();
 
 
   if (
@@ -25,7 +24,6 @@ function cadastrar() {
     passwordConfirm.length == 0 ||
     cpf.length == 0 ||
     group.length == 0 ||
-    status.length == 0 ||
     password !== passwordConfirm
   ) {
 
@@ -67,13 +65,6 @@ function cadastrar() {
     } else {
       document.getElementById("group").classList.remove(`error`);
     }
-
-    if (status.length == 0) {
-      document.getElementById("status").classList.add(`error`);
-    } else {
-      document.getElementById("status").classList.remove(`error`);
-    }
-
   
   } else {
     let newUser = {
@@ -82,7 +73,7 @@ function cadastrar() {
       email: email,
       senha: password,
       grupo: group,
-      status : status,
+      status : "Ativo",
       logado : false,
     };
 
@@ -96,7 +87,7 @@ function cadastrar() {
       contentType: "application/json",
       data: JSON.stringify(newUser),
       success: function (data) {
-        window.location.href = "file:///C:/Codes/Senac/k2farma/pagesAdm/pages/list.html";
+        window.location.href = "C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/list.html";
       },
       error: function (data) {
         console.log(data);
