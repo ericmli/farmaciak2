@@ -26,7 +26,7 @@ module.exports = {
 
         FuncionarioService.login(email, senha)
         .then(result =>{
-            res.status(200).json({message: "Logado com sucesso!"})
+            if (result[0])return res.status(200).json({data :result[0] })
         })
         .catch(error => {
             console.log(error);

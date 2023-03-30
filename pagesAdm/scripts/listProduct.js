@@ -26,7 +26,19 @@ function listarProdutos(){
               </div>
     `
             }
+            
             document.getElementById('products').innerHTML = htmlLis
+            
+            const gp = localStorage.getItem("Administrador")
+            
+            if(gp == 1){
+                adm = `<button type="button" class="btn btn-success mb-5" onclick="location.href='list.html';">Lista Funcionario </button>`
+                document.getElementById('idExiste').innerHTML = adm
+            }else{
+                adm = ``
+                document.getElementById('idExiste').innerHTML = adm
+            }
+
         },
         error: function (error) {
             console.log(error)

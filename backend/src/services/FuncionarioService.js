@@ -27,12 +27,12 @@ module.exports = {
                             rejeitado(err);
                         } else if (!match) {
                             rejeitado(new Error('Senha invalida #'));
-                        } else if (results[0].status !== 'Ativo' || 'ativo') {
+                        } else if (results[0].status !== 'Ativo' ) {
                             rejeitado(new Error('Usuario inativo #'));
                         } else if (results[0].logado) {
                             rejeitado(new Error('Usuario já logado #'));
                         } else {
-                            aceito(results)
+                            aceito(results);
                         }
                     })
                 }

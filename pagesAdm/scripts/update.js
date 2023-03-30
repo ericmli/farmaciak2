@@ -136,9 +136,7 @@ function pegarInfos(){
         contentType: "application/json",
         data: JSON.stringify(newUser),
         success: function (data) {
-            console.log(data);
-            console.log(newUser);
-            window.location.href = "file:///C:/Codes/Senac/k2farma/pagesAdm/pages/list.html";
+          window.location.href = "C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/list.html";
         },
         error: function (data) {
           console.log(data);
