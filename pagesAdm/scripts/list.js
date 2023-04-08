@@ -26,7 +26,6 @@ function pegarFuncionario() {
                     <td>${data.result[i].grupo}</td>
                     <td> <button type="button" class="btn btn-primary"  return false>${irineu}</button> </td>
                     <td> <button type="button" class="btn btn-warning" onclick="editarFuncionario(${data.result[i].id})"; return false>Editar</button> </td>
-                    <td> <button type="button" class="btn btn-danger" onclick="deleteFuncionario(${data.result[i].id})"; return false>Deletar</button> </td>
                 </tr>
                 `
                 document.getElementById('infosFuncionario').innerHTML = htmlTab
@@ -36,28 +35,6 @@ function pegarFuncionario() {
             console.log(data)
         }
     })
-}
-
-function deleteFuncionario(id) {
-
-    $.ajax({
-        url: `http://localhost:2000/api/funcionario/${id}`,
-        type: "DELETE",
-        headers: {
-            "accept": "application/json"
-        },
-        success: function (data) {
-            console.log(data)
-            pegarFuncionario()
-
-
-        },
-        error: function (data) {
-            console.log(data)
-
-        }
-    })
-
 }
 
 function editarFuncionario(id) {
