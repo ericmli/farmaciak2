@@ -68,7 +68,7 @@ function editarInfos() {
           contentType: "application/json",
           data: JSON.stringify(newUser),
           success: function (data) {
-            window.location.href = "C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/listProduct.html";
+            window.location.href = "../listProduct/listProduct.html";
           },
           error: function (data) {
             console.log(data);

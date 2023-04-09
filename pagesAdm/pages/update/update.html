@@ -9,102 +9,96 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="../../styles/login.css">
+  <link rel="stylesheet" href="update.css">
   <title>K2 Farma</title>
 </head>
 
 <body>
 
+  <div class="rnkHeader">
+    <div class="container">
+      <div class="container-fluid ">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <a class="navbar-brand"><img src="../../../src/logos/logoWhiteSlim.png" class="imgLogo"></a>
 
-  <div class="backSize mt-2">
+        </nav>
+      </div>
+    </div>
+    <div class="backSize mt-5">
 
-    <div class="container text-center">
-      <h4>ATUALIZAR FUNCIONÁRIO</h4>
+      <div class="container text-center">
+        <h4>ATUALIZAR FUNCIONÁRIO</h4>
 
-      <form class="mt-5 text-left">
+        <form class="mt-5 text-left">
 
-        <div class="form-group row">
-          <label for="staticEmail" class="col-sm-2 col-form-label">Nome</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputNome" placeholder="Nome Completo">
+          <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Nome</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputNome" placeholder="Nome Completo">
+            </div>
           </div>
-        </div>
 
 
-        <div class="form-group row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Senha</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputPassword">
+          <div class="form-group row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Senha</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" id="inputPassword">
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Confirmar Senha</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputConfirmPassword">
+          <div class="form-group row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Confirmar Senha</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" id="inputConfirmPassword">
+            </div>
           </div>
-        </div>
 
-        <div class="form-group row">
-          <label for="staticEmail" class="col-sm-2 col-form-label">CPF</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" placeholder="000.000.000-00" id="inputCPF">
+          <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">CPF</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="000.000.000-00" id="inputCPF">
+            </div>
           </div>
-        </div>
 
-        <div class="form-group row">
-          <label for="staticEmail" class="col-sm-2 col-form-label">Grupo</label>
-          <div class="col-sm-10">
-            <select class="custom-select" id="group" required>
-              <option selected disabled></option>
-              <option>Estoquista</option>
-              <option>Administrador</option>
-            </select>
+          <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Grupo</label>
+            <div class="col-sm-10">
+              <select class="custom-select" id="group" required>
+                <option selected disabled></option>
+                <option>Estoquista</option>
+                <option>Administrador</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <div class="form-group row">
-          <label for="staticEmail" class="col-sm-2 col-form-label">Ativo</label>
-          <div class="col-sm-10">
-            <select class="custom-select" id="status" required>
-              <option selected disabled></option>
-              <option>Ativo</option>
-              <option>Inativo</option>
-            </select>
+          <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Ativo</label>
+            <div class="col-sm-10">
+              <select class="custom-select" id="status" required>
+                <option selected disabled></option>
+                <option>Ativo</option>
+                <option>Inativo</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-      </form>
-      <button type="button" class="btn btn-info m-2" onclick="location.href='list.html';">Lista</button>
-
-      <button type="button" class="btn btn-success" onclick="editarInfos()">Atualizar</button>
+        </form>
 
 
+        <button type="button" class="btn btn-success" onclick="editarInfos()">Atualizar</button>
+
+        <button type="button" class="btn btn-danger m-2" onclick="location.href='../list/list.html';">Cancelar</button>
+
+      </div>
 
     </div>
 
-  </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-    crossorigin="anonymous"></script>
-  <script src="../scripts/update.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+      integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+      crossorigin="anonymous"></script>
+    <script src="update.js"></script>
 </body>
 
 </html>

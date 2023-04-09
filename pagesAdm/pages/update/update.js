@@ -14,6 +14,8 @@ input.addEventListener('input', function() {
     }
   });
 
+let email
+
 function pegarInfos(){
     let id = localStorage.getItem("idFuncionario")
 
@@ -29,7 +31,7 @@ function pegarInfos(){
           document.getElementById("inputCPF").value = data.result.cpf;
           document.getElementById("group").value = data.result.grupo;
           document.getElementById("status").value = data.result.status;
-      
+          email = data.result.email;
 
       },
       error: function (data) {
@@ -40,7 +42,6 @@ function pegarInfos(){
 
   function editarInfos() {
     let name = document.getElementById("inputNome").value.trim();
-    let email = document.getElementById("inputEmail").value.trim();
     let password = document.getElementById("inputPassword").value.trim();
     let passwordConfirm = document
       .getElementById("inputConfirmPassword")
@@ -51,24 +52,12 @@ function pegarInfos(){
   
     if (
       name.length == 0 ||
-      email.length == 0 ||
       password == 0 ||
       passwordConfirm.length == 0 ||
       cpf.length == 0 ||
       group.length == 0 ||
       status.length == 0 
-    ) {
-  
-      const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-      console.log(email)
-      if (emailRegex.test(email)) {
-        document.getElementById("inputEmail").classList.remove(`error`);
-        console.log(emailRegex.test(email))
-      } else {
-        document.getElementById("inputEmail").classList.add(`error`);
-        console.log(emailRegex.test(email))
-      }
-    
+    ) {  
       const cpfRegex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
       if (cpfRegex.test(cpf)) {
         document.getElementById("inputCPF").classList.remove(`error`);
@@ -133,7 +122,7 @@ function pegarInfos(){
         contentType: "application/json",
         data: JSON.stringify(newUser),
         success: function (data) {
-          window.location.href = "C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/list.html";
+          window.location.href = "../list/list.html";
         },
         error: function (data) {
           console.log(data);
