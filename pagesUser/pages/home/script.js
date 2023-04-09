@@ -18,6 +18,7 @@ function callFunction(){
                     <li class="product" onclick="callLocal(${data.result[i].id})">
                         <img src="${data.result[i].img}">
                         <div class="infoCard">
+                            <p class="textNameCard" >${data.result[i].nome}</p>
                             <p class="textCard" >${data.result[i].descricao}</p>
                         </div>
                         </li>
@@ -34,6 +35,6 @@ function callFunction(){
 
 function callLocal(id){
     localStorage.setItem("idProducts", id)
-    window.location.href = `file:///C:/Codes/Senac/K2/pages/cards.html`
+    window.location.href = `../cards/cards.html`
 
 }

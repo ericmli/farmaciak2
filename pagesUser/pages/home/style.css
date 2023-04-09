@@ -177,13 +177,19 @@ i.bi:hover{
 }
 
 .product .infoCard{
-    height: 5vh;
+    height: 8vh;
+}
+
+.infoCard{
+    display: flex;
+    flex-direction: column;
+    padding: 0px 20px;
 }
 
 .textCard{
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    padding: 0px 20px;
     color: #343a407e;
+}
+
+.textNameCard{
+    color: #343a40;
 }
