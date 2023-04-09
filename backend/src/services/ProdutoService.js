@@ -23,6 +23,15 @@ module.exports = {
         });
     },
 
+    buscarPorNome: (nome) => {
+        return new Promise((aceito, rejeitado) => {
+            db.query(`SELECT * FROM produtos WHERE nome LIKE '%${nome}%'`, (error, results) => {
+                if (error) { rejeitado(error); return; }
+                aceito(results);
+            });
+        });
+    },
+
     inserir: (nome,descricao,preco,quantidade,laboratorio,categoria) => {
         return new Promise((aceito, rejeitado) => {
             db.query('INSERT INTO produtos (nome, descricao, preco, quantidade, laboratorio, categoria) VALUES (?, ?, ?, ?, ?, ?)',

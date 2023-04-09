@@ -34,6 +34,33 @@ module.exports = {
         res.json(json);
     },
 
+    buscarPorNome:  async (req, res) => {
+        let json = { error: '', result: [] };
+        let nome = req.body.nome;
+        let produtos = await ProdutoService.buscarPorNome(nome);
+
+        if (nome) {
+            for (let i in produtos) {
+                json.result.push({
+                    id: produtos[i].id,
+                    nome: produtos[i].nome,
+                    descricao: produtos[i].descricao,
+                    preco: produtos[i].preco,
+                    quantidade: produtos[i].quantidade,
+                    laboratorio: produtos[i].laboratorio,
+                    categoria: produtos[i].categoria,
+                    img: produtos[i].img,
+                    status: produtos[i].status
+                })
+            }
+            res.json(json);
+        }else{
+            console.log("caiu no else")
+        }
+        
+    },
+
+
     inserir: async (req, res) => {
         let json = { error: '', result: {} };
 

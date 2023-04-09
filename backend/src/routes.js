@@ -18,5 +18,6 @@ router.get('/produto/:id', ProdutoController.buscarUm);
 router.post('/produto', ProdutoController.inserir);
 router.put('/produto/:id', ProdutoController.alterar);
 router.delete('/produto/:id', ProdutoController.excluir)
+router.post('/buscaprodutos', ProdutoController.buscarPorNome)
 
 module.exports = router;
