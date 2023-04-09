@@ -31,8 +31,8 @@ function pegarProdutos() {
 
                 if (gp == 1) {
                     adm = `<div>
-                    <button type="button" class="btn btn-success " onclick="location.href='list.html';">Lista Funcionario </button>
-                    <button type="button" class="btn btn-info " onclick="location.href='createProduct.html';">Criar Produto</button>
+                    <button type="button" class="btn btn-success " onclick="location.href='../list/list.html';">Lista Funcionario </button>
+                    <button type="button" class="btn btn-info " onclick="location.href='../createProduct/createProduct.html';">Criar Produto</button>
                     </div>
                     `;
                     document.getElementById("idExiste").innerHTML = adm;
@@ -115,8 +115,8 @@ function editarProduto(id) {
     const gp = localStorage.getItem("Administrador");
 
     if (gp == 1) {
-        window.location.href = `C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/updateProduct.html`
+        window.location.href = `../updateProduct/updateProduct.html`
     } else {
-        window.location.href = `C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/updateProductStock.html`
+        window.location.href = `../updateStock/updateProductStock.html`
     }
 }

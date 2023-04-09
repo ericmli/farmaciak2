@@ -9,6 +9,7 @@ input.addEventListener('input', function() {
 });
 
 function cadastrar() {
+  console.log('efsd')
   let name = document.getElementById("inputNome").value.trim();
   let email = document.getElementById("inputEmail").value.trim();
   let password = document.getElementById("inputPassword").value.trim();
@@ -87,7 +88,7 @@ function cadastrar() {
       contentType: "application/json",
       data: JSON.stringify(newUser),
       success: function (data) {
-        window.location.href = "C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/list.html";
+        window.location.href = "file:///C:/Codes/Senac/k2farma/pagesAdm/pages/list/list.html";
       },
       error: function (data) {
         alert("E-mail ou CPF já existente!")

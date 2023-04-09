@@ -93,7 +93,7 @@ function statusFuncionario(id) {
 function editarFuncionario(id) {
 
     localStorage.setItem("idFuncionario", id)
-    window.location.href = `C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/update.html`
+    window.location.href = `../update/update.html`
 
 }
 

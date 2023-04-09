@@ -18,10 +18,10 @@ function login() {
     success: function (data) {
       let id = localStorage.getItem("id")
       if(data?.data.grupo == 'Administrador') {
-        window.location.href = 'file:///C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/home.html'
+        window.location.href = '../home/home.html'
         localStorage.setItem("Administrador", 1)
       }else{
-        window.location.href = "C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/home.html"
+        window.location.href = '../home/home.html'
         localStorage.setItem("Administrador", 2)
       }
       

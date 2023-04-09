@@ -107,7 +107,7 @@ function editarInfos(){
           data: JSON.stringify(newUser),
           success: function (data) {
             console.log( 'foi ' ,newUser)
-            window.location.href = "C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/listProduct.html";
+            window.location.href = "../listProduct/listProduct.html";
           },
           error: function (data) {
             console.log(data);
