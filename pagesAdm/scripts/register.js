@@ -90,7 +90,7 @@ function cadastrar() {
         window.location.href = "C:/Users/gui1kz/Documents/projects/farmaciak2/pagesAdm/pages/list.html";
       },
       error: function (data) {
-        console.log(data);
+        alert("E-mail ou CPF já existente!")
       },
     });
   }

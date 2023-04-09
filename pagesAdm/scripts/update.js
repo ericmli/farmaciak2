@@ -26,9 +26,6 @@ function pegarInfos(){
       success: function (data) {
         
           document.getElementById("inputNome").value = data.result.nome_completo;
-          document.getElementById("inputEmail").value = data.result.email;
-          document.getElementById("inputPassword").value = data.result.senha;
-          document.getElementById("inputConfirmPassword").value = data.result.senha;
           document.getElementById("inputCPF").value = data.result.cpf;
           document.getElementById("group").value = data.result.grupo;
           document.getElementById("status").value = data.result.status;

@@ -36,3 +36,6 @@ body, html {
     border-radius: 50px 500px 0px 50px;
     height: 100vh;
 }
+.error{
+    border-color: red;
+}

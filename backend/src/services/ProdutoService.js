@@ -36,11 +36,11 @@ module.exports = {
         });
     },
 
-    alterar: (id,nome,descricao,preco,quantidade,laboratorio,categoria) => {
+    alterar: (id,nome,descricao,preco,quantidade,laboratorio,categoria, status) => {
         return new Promise((aceito, rejeitado) => {
             db.query('UPDATE produtos SET nome = ?, ' +
-                'descricao = ?, preco = ?, quantidade = ?, laboratorio = ?, categoria = ? WHERE id = ?',
-                [nome, descricao, preco, quantidade, laboratorio, categoria, id],
+                'descricao = ?, preco = ?, quantidade = ?, laboratorio = ?, categoria = ?, status = ? WHERE id = ?',
+                [nome, descricao, preco, quantidade, laboratorio, categoria, status, id],
                 (error, results) => {
                     console.log(error);
                     if (error) { rejeitado(error); return; }

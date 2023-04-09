@@ -14,7 +14,8 @@ module.exports = {
                 quantidade: produtos[i].quantidade,
                 laboratorio: produtos[i].laboratorio,
                 categoria: produtos[i].categoria,
-                img: produtos[i].img
+                img: produtos[i].img,
+                status: produtos[i].status
             })
         }
         res.json(json);
@@ -79,10 +80,10 @@ module.exports = {
         let quantidade = req.body.quantidade;
         let laboratorio = req.body.laboratorio;
         let categoria = req.body.categoria;
-        let img = req.body.img;
+        let status = req.body.status;
 
-        if (nome && descricao && preco && quantidade && laboratorio && categoria && img) {
-            await ProdutoService.alterar(id,nome,descricao,preco,quantidade,laboratorio,categoria,img);
+        if (nome && descricao && preco && quantidade && laboratorio && categoria && status) {
+            await ProdutoService.alterar(id,nome,descricao,preco,quantidade,laboratorio,categoria,status);
             json.result = {
                 id,
                 nome,
@@ -91,7 +92,7 @@ module.exports = {
                 quantidade,
                 laboratorio,
                 categoria,
-                img
+                status
             };
 
         } else {

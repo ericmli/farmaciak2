@@ -2,13 +2,14 @@
 
 body, html {
     height: 100%;
+    background-color: #252525a9;
 }
 
 .container{
     position: relative;
     top: 25%;
     margin: auto;
-    background-color: #25252521;
+    background-color: #ffffffcc;
     height: 400px;
     display: flex;
     flex-direction: column;
@@ -21,4 +22,28 @@ body, html {
     border-radius: 50px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.containerImg{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+img{
+    height: 50px;
+    margin-bottom: 20px;
+}
+
+#pss{
+    color: black;
+    position: relative;
+    top: 0;
+    border: none;
+    padding-left: 70px;
+}
+
+input{
+    border-radius: 50px;
 }

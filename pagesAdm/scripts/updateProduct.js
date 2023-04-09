@@ -14,13 +14,14 @@ function pegarInfos(){
           "accept": "application/json"
       },
       success: function (data) {
-        console.log(data)
+        
           document.getElementById("inputNome").value = data.result.nome;
           document.getElementById("inputPreco").value = data.result.preco;
           document.getElementById("inputLaboratorio").value = data.result.laboratorio;
           document.getElementById("inputEstoque").value = data.result.quantidade;
           document.getElementById("inputDescricao").value = data.result.descricao;
           document.getElementById("inputCategoria").value = data.result.categoria;      
+          document.getElementById("inputStatus").value = data.result.status;      
 
       },
       error: function (data) {
@@ -36,6 +37,7 @@ function editarInfos(){
     let estoque = document.getElementById("inputEstoque").value.trim();
     let descricao = document.getElementById("inputDescricao").value.trim();
     let categoria = document.getElementById("inputCategoria").value.trim();
+    let status = document.getElementById("inputStatus").value.trim();
 
     if (
         nome.length == 0 ||
@@ -90,6 +92,7 @@ function editarInfos(){
           quantidade : estoque ,
           laboratorio : laboratorio,
           categoria : categoria,
+          status : status,
           img : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
         };
         let id = localStorage.getItem("idProduto")
