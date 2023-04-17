@@ -28,26 +28,26 @@
             <div class="container text-center">
                 <h4>Criar Produto</h4>
 
-                <form class="mt-5 text-left">
+                <form enctype="multipart/form-data" action="http://localhost:2000/api/produto" method="post" class="mt-5 text-left">
 
                     <div class="form-group row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Nome</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputNome">
+                            <input type="text" class="form-control" id="inputNome" name="nome">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Preço (R$)</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="inputPreco">
+                            <input type="number" class="form-control" id="inputPreco" name="preco">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Laboratório</label>
                         <div class="col-sm-10">
-                            <select class="custom-select" id="inputLaboratorio" required>
+                            <select class="custom-select" id="inputLaboratorio" required name="laboratorio">
                                 <option selected disabled></option>
                                 <option>Cristalia</option>
                                 <option>Genérico</option>
@@ -59,21 +59,21 @@
                     <div class="form-group row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Estoque</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="inputEstoque">
+                            <input type="number" class="form-control" id="inputEstoque" name="quantidade">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Descrição</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" id="inputDescricao"></textarea>
+                            <textarea class="form-control" id="inputDescricao" name="descricao"></textarea>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Laboratório</label>
                         <div class="col-sm-10">
-                            <select class="custom-select" id="inputCategoria" required>
+                            <select class="custom-select" id="inputCategoria" required name="categoria">
                                 <option selected disabled></option>
                                 <option>Oral</option>
                                 <option>Injetavel</option>
@@ -88,17 +88,17 @@
                             <span class="input-group-text" id="inputGroupFileAddon01">Imagem</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputImagem"
+                            <input type="file" class="custom-file-input" id="inputImagem" name="file"
                                 aria-describedby="inputGroupFileAddon01">
                             <label class="custom-file-label" for="inputGroupFile01">Escolha a Imagem</label>
                         </div>
                     </div>
+                    <button type="button" class="btn btn-danger m-2"
+                        onclick="location.href='../listProduct/listProduct.html';">Cancelar</button>
+    
+                    <input type="submit">
                 </form>
 
-                <button type="button" class="btn btn-danger m-2"
-                    onclick="location.href='../listProduct/listProduct.html';">Cancelar</button>
-
-                <button type="button" class="btn btn-success" onclick="cadastrar()">Cadastrar</button>
 
 
 

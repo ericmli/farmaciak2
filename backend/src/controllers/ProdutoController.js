@@ -70,7 +70,8 @@ module.exports = {
         let quantidade = req.body.quantidade;
         let laboratorio = req.body.laboratorio;
         let categoria = req.body.categoria;
-        let img = req.body.img;
+        let img = req.file.path
+        console.log(img);
 
         if (nome && descricao && preco && quantidade && laboratorio && categoria && img) {
             let ProdutoId = await ProdutoService.inserir(
@@ -93,6 +94,7 @@ module.exports = {
             };
         } else {
             json.error = 'Campos não enviados';
+            
         }
         res.json(json);
     },
