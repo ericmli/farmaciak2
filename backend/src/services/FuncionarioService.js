@@ -27,7 +27,7 @@ module.exports = {
                             rejeitado(err);
                         } else if (!match) {
                             rejeitado(new Error('Senha invalida #'));
-                        } else if (results[0].status !== 'Ativo' ) {
+                        } else if (results[0].status !== 'Ativo') {
                             rejeitado(new Error('Usuario inativo #'));
                         } else if (results[0].logado) {
                             rejeitado(new Error('Usuario já logado #'));
@@ -64,7 +64,7 @@ module.exports = {
     },
 
 
-    inserir: async (nome_completo,cpf,email,senha,grupo,status,logado) => {
+    inserir: async (nome_completo, cpf, email, senha, grupo, status, logado) => {
         return new Promise(async (aceito, rejeitado) => {
             try {
                 const emailJaCadastrado = await verificaExistencia('email', email);
@@ -96,21 +96,54 @@ module.exports = {
         });
     },
 
-    alterar: (id, nome_completo, cpf, email, senha, grupo, status, logado) => {
-        return new Promise((aceito, rejeitado) => {
-            db.query('UPDATE funcionarios SET nome_completo = ?, ' +
-                'cpf = ?, email = ?, senha = ?, grupo = ?, status = ?, logado = ? WHERE id = ?',
-                [nome_completo, cpf, email, senha, grupo, status, logado, id],
-                (error, results) => {
-                    console.log(error);
-                    if (error) { rejeitado(error); return; }
-                    aceito(results);
-
+    alterar: async (id, nome_completo, cpf, email, senha, grupo, status, logado) => {
+        return new Promise(async (aceito, rejeitado) => {
+            try {
+                const emailJaCadastrado = await verificaExistencia('email', email, id);
+                if (emailJaCadastrado) {
+                    return aceito({ mensagem: 'E-mail já cadastrado' });
                 }
-
-            );
+                const cpfJaCadastrado = await verificaExistencia('cpf', cpf, id);
+                if (cpfJaCadastrado) {
+                    return aceito({ mensagem: 'CPF já cadastrado' });
+                }
+                if (senha !== '') {
+                    bcrypt.hash(senha, 10, (error, hash) => {
+                        if (error) {
+                            rejeitado(error);
+                        } else {
+                            db.query('UPDATE funcionarios SET nome_completo = ?, ' +
+                                'cpf = ?, email = ?, senha = ?, grupo = ?, status = ?, logado = ? WHERE id = ?',
+                                [nome_completo, cpf, email, hash, grupo, status, logado, id],
+                                (error, results) => {
+                                    if (error) {
+                                        rejeitado(error);
+                                    } else {
+                                        aceito(results);
+                                    }
+                                }
+                            );
+                        }
+                    });
+                } else {
+                    db.query('UPDATE funcionarios SET nome_completo = ?, ' +
+                        'cpf = ?, email = ?, grupo = ?, status = ?, logado = ? WHERE id = ?',
+                        [nome_completo, cpf, email, grupo, status, logado, id],
+                        (error, results) => {
+                            if (error) {
+                                rejeitado(error);
+                            } else {
+                                aceito(results);
+                            }
+                        }
+                    );
+                }
+            } catch (error) {
+                rejeitado(error);
+            }
         });
     },
+
 
     excluir: (id) => {
         return new Promise((aceito, rejeitado) => {
