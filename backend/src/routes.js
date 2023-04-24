@@ -1,6 +1,7 @@
 const express = require('express');
 const FuncionarioController = require('./controllers/FuncionarioController');
 const ProdutoController = require('./controllers/ProdutoController');
+const ClienteController = require('./controllers/ClienteController');
 const CompraController = require('./controllers/CompraController');
 const router = express.Router();
 const upload = require('./config');
@@ -23,8 +24,17 @@ router.put('/produto/:id', ProdutoController.alterar);
 router.delete('/produto/:id', ProdutoController.excluir);
 router.post('/buscaprodutos', ProdutoController.buscarPorNome);
 
+//Rotas para clientes
+router.get('/clientes', ClienteController.buscarTodos);
+router.get('/cliente/:id', ClienteController.buscarUm);
+router.post('/cliente', ClienteController.inserir);
+router.put('/cliente/:id', ClienteController.alterar);
+router.post('/cliente/login', ClienteController.login);
+
 // rota para buscar os produtos de uma compra
 router.get('/compras/:id/produtos', CompraController.getProdutosCompra);
+router.post('/compra', CompraController.createCompra);
+
 
 
 module.exports = router;

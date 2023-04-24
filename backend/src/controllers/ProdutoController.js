@@ -93,8 +93,7 @@ module.exports = {
                 img
             };
         } else {
-            json.error = 'Campos não enviados';
-            
+            json.error = 'Campos não enviados';   
         }
         res.json(json);
     },

@@ -16,22 +16,17 @@ module.exports = {
     login: (email, senha) => {
 
         return new Promise((aceito, rejeitado) => {
-            db.query('SELECT * FROM funcionarios WHERE email = ?', [email], (error, results) => {
+            db.query('SELECT * FROM clientes WHERE email = ?', [email], (error, results) => {
                 if (error) {
                     rejeitado(error);
                 } else if (results.length === 0) {
                     rejeitado(new Error('Usuario não encontrado!'))
                 } else {
                     bcrypt.compare(senha, results[0].senha, (err, match) => {
-                        console.log(senha)
                         if (err) {
                             rejeitado(err);
                         } else if (!match) {
                             rejeitado(new Error('Senha invalida #'));
-                        } else if (results[0].status !== 'Ativo') {
-                            rejeitado(new Error('Usuario inativo #'));
-                        } else if (results[0].logado) {
-                            rejeitado(new Error('Usuario já logado #'));
                         } else {
                             aceito(results);
                         }
@@ -43,17 +38,16 @@ module.exports = {
 
     buscarTodos: () => {
         return new Promise((aceito, rejeitado) => {
-            db.query('SELECT * FROM funcionarios', (error, results) => {
+            db.query('SELECT * FROM clientes', (error, results) => {
                 if (error) { rejeitado(error); return; }
                 aceito(results);
             });
         });
     },
 
-
     buscarUm: (id) => {
         return new Promise((aceito, rejeitado) => {
-            db.query('SELECT * FROM funcionarios WHERE id = ?', [id], (error, results) => {
+            db.query('SELECT * FROM clientes WHERE id = ?', [id], (error, results) => {
                 if (error) { rejeitado(error); return; }
                 if (results.length > 0) {
                     aceito(results[0]);
@@ -64,8 +58,7 @@ module.exports = {
         });
     },
 
-
-    inserir: async (nome_completo, cpf, email, senha, grupo, status, logado) => {
+    inserir: async (nome_completo, cpf, nascimento, email, senha, telefone) => {
         return new Promise(async (aceito, rejeitado) => {
             try {
                 const emailJaCadastrado = await verificaExistencia('email', email);
@@ -80,8 +73,8 @@ module.exports = {
                     if (error) {
                         rejeitado(error);
                     } else {
-                        db.query('INSERT INTO funcionarios (nome_completo, cpf, email, senha, grupo, status, logado) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                            [nome_completo, cpf, email, hash, grupo, status, logado],
+                        db.query('INSERT INTO clientes (nome_completo, cpf, nascimento, email, senha, telefone) VALUES (?, ?, ?, ?, ?, ?)',
+                            [nome_completo, cpf, nascimento, email, hash, telefone],
                             (error, results) => {
                                 if (error) {
                                     rejeitado(error);
@@ -97,7 +90,7 @@ module.exports = {
         });
     },
 
-    alterar: async (id, nome_completo, cpf, email, senha, grupo, status, logado) => {
+    alterar: async (id, nome_completo, cpf,  nascimento, email, senha, telefone) => {
         return new Promise(async (aceito, rejeitado) => {
             try {
                 const emailJaCadastrado = await verificaExistencia('email', email, id);
@@ -113,9 +106,9 @@ module.exports = {
                         if (error) {
                             rejeitado(error);
                         } else {
-                            db.query('UPDATE funcionarios SET nome_completo = ?, ' +
-                                'cpf = ?, email = ?, senha = ?, grupo = ?, status = ?, logado = ? WHERE id = ?',
-                                [nome_completo, cpf, email, hash, grupo, status, logado, id],
+                            db.query('UPDATE clientes SET nome_completo = ?, ' +
+                                'cpf = ?, nascimento = ?, email = ?, senha = ?, telefone = ? WHERE id = ?',
+                                [nome_completo, cpf, nascimento, email, hash, telefone, id],
                                 (error, results) => {
                                     if (error) {
                                         rejeitado(error);
@@ -127,9 +120,9 @@ module.exports = {
                         }
                     });
                 } else {
-                    db.query('UPDATE funcionarios SET nome_completo = ?, ' +
-                        'cpf = ?, email = ?, grupo = ?, status = ?, logado = ? WHERE id = ?',
-                        [nome_completo, cpf, email, grupo, status, logado, id],
+                    db.query('UPDATE clientes SET nome_completo = ?, ' +
+                        'cpf = ?, nascimento = ?, email = ?, telefone = ? WHERE id = ?',
+                        [nome_completo, cpf, nascimento, email, telefone, id],
                         (error, results) => {
                             if (error) {
                                 rejeitado(error);
@@ -142,16 +135,6 @@ module.exports = {
             } catch (error) {
                 rejeitado(error);
             }
-        });
-    },
-
-
-    excluir: (id) => {
-        return new Promise((aceito, rejeitado) => {
-            db.query('DELETE FROM funcionarios WHERE id =?', [id], (error, results) => {
-                if (error) { rejeitado(error); return; }
-                aceito(results);
-            });
         });
     }
 
