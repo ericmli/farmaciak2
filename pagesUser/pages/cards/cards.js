@@ -30,20 +30,14 @@ function load() {
           </div>
         </div>
 
-        <div class="containerText">
-          <p class="textNome">${data.result.nome}</p>
-          <p class="textPreco">R$ ${data.result.preco}</p>
-          <p class="textDescricao"> - ${data.result.descricao}</p>
-        </div>
+          <div class="containerText">
+            <p class="textNome">${data.result.nome}</p>
+            <p class="textPreco">R$ ${data.result.preco}</p>
+            <p class="textDescricao"> - ${data.result.descricao}</p>
+          </div>
         `
 
       document.getElementById("containerBack").innerHTML = htmlLis
-
-      let htmlAdd = ''
-
-      htmlAdd = ``
-
-      document.getElementById("containerBuy").innerHTML = htmlAdd
 
     },
     error: function (error) {

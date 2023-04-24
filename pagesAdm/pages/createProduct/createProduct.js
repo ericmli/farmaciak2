@@ -1,4 +1,5 @@
 function cadastrar() {
+
   let nome = document.getElementById("inputNome").value.trim();
   let preco = document.getElementById("inputPreco").value.trim();
   let laboratorio = document.getElementById("inputLaboratorio").value.trim();
@@ -13,7 +14,6 @@ function cadastrar() {
     descricao == 0 ||
     categoria == 0 
   ) {
-
     if (nome.length == 0 || nome.length > 99) {
       document.getElementById("inputNome").classList.add(`error`);
     } else {

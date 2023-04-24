@@ -19,7 +19,7 @@ function login() {
     }
     
   }else {$.ajax({
-    url: "http://localhost:2000/api/login",
+    url: "http://localhost:2000/api/cliente/login",
     type: "POST",
     headers: {
       accept: "application/json",
@@ -28,16 +28,8 @@ function login() {
     contentType: "application/json",
     data: JSON.stringify(send),
     success: function (data) {
-      let id = localStorage.getItem("id")
-      if(data?.data.grupo == 'Administrador') {
-        window.location.href = '../home/home.html'
-        localStorage.setItem("Administrador", 1)
-      }else{
-        window.location.href = '../home/home.html'
-        localStorage.setItem("Administrador", 2)
-      }
-      
-
+      localStorage.setItem("logado", true)
+      localStorage.setItem("perfil", JSON.stringify(data.data))
     },
     error: function (data) {
       alert("E-mail ou senha erradas.")

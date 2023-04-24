@@ -8,6 +8,46 @@ input.addEventListener('input', function() {
     }
 });
 
+function validarCPF(cpf) {
+  // Remove qualquer caracter que não seja número
+  cpf = cpf.replace(/[^\d]+/g, '');
+
+  // Verifica se o CPF tem 11 dígitos
+  if (cpf.length !== 11) {
+    return false;
+  }
+
+  // Calcula o primeiro dígito verificador
+  var soma = 0;
+  for (var i = 0; i < 9; i++) {
+    soma += parseInt(cpf.charAt(i)) * (10 - i);
+  }
+  var resto = soma % 11;
+  var digito1 = resto < 2 ? 0 : 11 - resto;
+
+  // Verifica o primeiro dígito verificador
+  if (parseInt(cpf.charAt(9)) !== digito1) {
+    return false;
+  }
+
+  // Calcula o segundo dígito verificador
+  soma = 0;
+  for (var i = 0; i < 10; i++) {
+    soma += parseInt(cpf.charAt(i)) * (11 - i);
+  }
+  resto = soma % 11;
+  var digito2 = resto < 2 ? 0 : 11 - resto;
+
+  // Verifica o segundo dígito verificador
+  if (parseInt(cpf.charAt(10)) !== digito2) {
+    return false;
+  }
+
+  return true;
+}
+
+
+
 function cadastrar() {
   console.log('efsd')
   let name = document.getElementById("inputNome").value.trim();
@@ -34,9 +74,8 @@ function cadastrar() {
     } else {
       document.getElementById("inputEmail").classList.add(`error`);
     }
-  
-    const cpfRegex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
-    if (cpfRegex.test(cpf)) {
+    
+    if (validarCPF(cpf)) {
       document.getElementById("inputCPF").classList.remove(`error`);
     } else {
       document.getElementById("inputCPF").classList.add(`error`);

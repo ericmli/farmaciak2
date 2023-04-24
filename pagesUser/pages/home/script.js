@@ -17,17 +17,17 @@ function callFunction(){
                 console.log(data.result[i].status)
                 if(data.result[i].status === 'Ativo'){
                     htmlLis += `  
-                    <li class="product" onclick="callLocal(${data.result[i].id})">
-                        <img src="${data.result[i].img}">
-                        <div class="infoCard">
-                            <p class="textNameCard" >${data.result[i].nome}</p>
-                            <p class="textNameCard" >R$ ${data.result[i].preco}</p>
-                            <p class="textCard" >${data.result[i].descricao}</p>
-                        </div>
-                        </li>
+                    <div class="card" style="width: 18rem" onclick="callLocal(${data.result[i].id})">
+                    <img src="${data.result[i].img}" class="card-img-top">
+                    <div class="card-body">
+                    <h5 class="card-title">${data.result[i].nome}</h5>
+                    <p class="textNameCard" >R$ ${data.result[i].preco}</p>
+                    <p class="card-text">${data.result[i].descricao}</p>
+                    </div>
+                    </div>
                     `
                 }
-                
+
             }
             document.getElementById('products').innerHTML = htmlLis
         },

@@ -11,7 +11,27 @@ function pegarProdutos() {
         },
         success: function (data) {
             let htmlTab = ''
+            let button = ''
             for (let i = 0; data.result.length > i; i++) {
+                
+                const gp = localStorage.getItem("Administrador");
+
+                if (gp == 1) {
+                    adm = `<div>
+                    <button type="button" class="btn btn-success " onclick="location.href='../list/list.html';">Lista Funcionario </button>
+                    <button type="button" class="btn btn-info " onclick="location.href='../createProduct/createProduct.html';">Criar Produto</button>
+                    </div>
+                    `;
+
+                    button = `
+                    <td> <button type="button" class="btn btn-primary" onclick="statusProduto(${data.result[i].id})"; return false>${data.result[i].status}</button> </td>
+                    `
+                    document.getElementById("idExiste").innerHTML = adm;
+
+                } else {
+                    adm = ``;
+                    document.getElementById("idExiste").innerHTML = adm;
+                }
                 htmlTab += `
                 <tr>
                     <th scope="row">${data.result[i].id}</th>
@@ -21,25 +41,12 @@ function pegarProdutos() {
                     <td>${data.result[i].quantidade}</td>
                     <td>${data.result[i].laboratorio}</td>
                     <td>${data.result[i].categoria}</td>
-                    <td> <button type="button" class="btn btn-primary" onclick="statusProduto(${data.result[i].id})"; return false>${data.result[i].status}</button> </td>
+                    ${button}
                     <td> <button type="button" class="btn btn-warning" onclick="editarProduto(${data.result[i].id})"; return false>Editar</button> </td>
                 </tr>
                 `
                 document.getElementById("products").innerHTML = htmlTab;
 
-                const gp = localStorage.getItem("Administrador");
-
-                if (gp == 1) {
-                    adm = `<div>
-                    <button type="button" class="btn btn-success " onclick="location.href='../list/list.html';">Lista Funcionario </button>
-                    <button type="button" class="btn btn-info " onclick="location.href='../createProduct/createProduct.html';">Criar Produto</button>
-                    </div>
-                    `;
-                    document.getElementById("idExiste").innerHTML = adm;
-                } else {
-                    adm = ``;
-                    document.getElementById("idExiste").innerHTML = adm;
-                }
             }
         },
         error: function (data) {
