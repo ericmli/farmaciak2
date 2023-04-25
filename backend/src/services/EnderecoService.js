@@ -28,5 +28,21 @@ module.exports = {
                     aceito(results.insertId);
             })
         })
-    }
+    },
+
+    alterar: (id, rua, numero, cidade, estado, cep, principal) => {
+        return new Promise((aceito, rejeitado) => {
+            db.query('UPDATE enderecos SET rua = ?, ' +
+                'numero = ?, cidade = ?, estado = ?, cep = ?, principal = ? WHERE id = ?',
+                [rua, numero, cidade, estado, cep, principal, id],
+                (error, results) => {
+                    console.log(error);
+                    if (error) { rejeitado(error); return; }
+                    aceito(results);
+
+                }
+
+            );
+        });
+    },
 }

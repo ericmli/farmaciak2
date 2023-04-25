@@ -75,5 +75,34 @@ module.exports = {
             json.error = 'Campos não enviados';
         }
         res.json(json);
+    },
+
+    alterar: async (req, res) => {
+        let json = { error: '', result: {} };
+    
+        let id = req.params.id;
+        let rua = req.body.rua;
+        let numero = req.body.numero;
+        let cidade = req.body.cidade;
+        let estado = req.body.estado;
+        let cep = req.body.cep;
+        let principal = req.body.principal;
+
+        if(rua ){
+            await EnderecoService.alterar(id, rua, numero, cidade, estado, cep, principal);
+            json.result = {
+                id,
+                rua,
+                numero,
+                cidade,
+                estado,
+                cep,
+                principal
+            };
+        }else{
+            json.error = 'Campos não enviados';
+        }
+        res.json(json);
     }
+
 }

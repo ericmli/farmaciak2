@@ -36,6 +36,7 @@ router.post('/cliente/login', ClienteController.login);
 router.get('/cliente/:cliente_id/enderecos', EnderecoController.buscarTodosPorId);
 router.get('/cliente/:cliente_id/enderecos/principal', EnderecoController.buscarPrincipal);
 router.post('/cliente/endereco', EnderecoController.inserir);
+router.put('/cliente/endereco/:id', EnderecoController.alterar);
 
 // rota para buscar os produtos de uma compra
 router.get('/compras/:id/produtos', CompraController.getProdutosCompra);
