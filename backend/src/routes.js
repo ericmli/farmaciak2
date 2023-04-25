@@ -3,6 +3,7 @@ const FuncionarioController = require('./controllers/FuncionarioController');
 const ProdutoController = require('./controllers/ProdutoController');
 const ClienteController = require('./controllers/ClienteController');
 const CompraController = require('./controllers/CompraController');
+const EnderecoController = require('./controllers/EnderecoController');
 const router = express.Router();
 const upload = require('./config');
 const db = require('./db'); // importe o objeto de conexão com o banco de dados
@@ -31,10 +32,14 @@ router.post('/cliente', ClienteController.inserir);
 router.put('/cliente/:id', ClienteController.alterar);
 router.post('/cliente/login', ClienteController.login);
 
+//Rotas para endereços
+router.get('/cliente/:cliente_id/enderecos', EnderecoController.buscarTodosPorId);
+router.get('/cliente/:cliente_id/enderecos/principal', EnderecoController.buscarPrincipal);
+router.post('/cliente/endereco', EnderecoController.inserir);
+
 // rota para buscar os produtos de uma compra
 router.get('/compras/:id/produtos', CompraController.getProdutosCompra);
 router.post('/compra', CompraController.createCompra);
-
 
 
 module.exports = router;
