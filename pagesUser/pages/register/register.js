@@ -64,12 +64,7 @@ function cadastrar() {
     .value.trim();
   let date = document.getElementById("inputData").value.trim();
   let cpf = document.getElementById("inputCPF").value.trim();
-  let gender = document.getElementById("gender").value.trim();
   let number = document.getElementById("inputCelular").value.trim();
-  let numberHouse = document.getElementById("inputNumero").value.trim();
-  let street = document.getElementById("inputRua").value.trim()
-  let district = document.getElementById("inputBairro").value.trim()
-  let cep = document.getElementById("inputCEP").value.trim();
 
 
   if (
@@ -79,9 +74,7 @@ function cadastrar() {
     passwordConfirm.length == 0 ||
     date.length == 0 ||
     cpf.length == 0 ||
-    gender.length == 0 ||
-    number.length == 0 ||
-    numberHouse.length == 0
+    number.length == 0
   ) {
     if (name.length == 0 || name.length > 99) {
       document.getElementById("inputNome").classList.add(`error`);
@@ -123,12 +116,6 @@ function cadastrar() {
       document.getElementById("inputCPF").classList.add(`error`);
     }
 
-    if(gender.length == 0){
-        document.getElementById("gender").classList.add(`error`);
-    }else{
-        document.getElementById("gender").classList.remove(`error`);
-    }
-
     if(number.length == 0 || number.length != 13 ){
       document.getElementById("inputCelular").classList.add(`error`);
     }else{
@@ -152,20 +139,16 @@ function cadastrar() {
 
   } else {
     let newUser = {
-      name:name ,
+      nome_completo:name ,
+      cpf: cpf,
+      nascimento: date,
       email: email,
-      password: password,
-      age: date,
-      CPF: cpf,
-      gender: gender,
-      number: number,
-      street: street,
-      district: district,
-      houseNumber: numberHouse,
+      senha: password,
+      telefone: number
     };
 
     $.ajax({
-      url: "http://localhost:3000/users",
+      url: "http://localhost:2000/api/cliente",
       type: "POST",
       headers: {
         accept: "application/json",
@@ -174,7 +157,7 @@ function cadastrar() {
       contentType: "application/json",
       data: JSON.stringify(newUser),
       success: function (data) {
-        console.log(data);
+        createCep(data.result.id);
         // window.location.href = "file:///C:/Codes/Senac/k2farma/pages/index.html";
       },
       error: function (data) {
@@ -182,6 +165,40 @@ function cadastrar() {
       },
     });
   }
+}
+
+function createCep(id){
+  let cep = document.getElementById("inputCEP").value.trim();
+  let numberHouse = document.getElementById("inputNumero").value.trim();
+  let cidade = document.getElementById("inputLocalidade").value.trim();
+  let estado = document.getElementById("inputEstado").value.trim();
+  let rua = document.getElementById("inputRua").value.trim();
+
+  let newUser = {
+    cliente_id: id,
+    rua: rua,
+    numero: numberHouse,
+    cep: cep,
+    cidade: cidade,
+    estado: estado
+  }
+  $.ajax({
+    url: "http://localhost:2000/api/cliente/endereco",
+    type: "POST",
+    headers: {
+      accept: "application/json",
+    },
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(newUser),
+    success: function (data) {
+      console.log(data);
+      // window.location.href = "file:///C:/Codes/Senac/k2farma/pages/index.html";
+    },
+    error: function (data) {
+      console.log(data);
+    },
+  });
 }
 
 function cep() {
@@ -199,8 +216,9 @@ function cep() {
       document.getElementById("inputCEP").classList.remove(`error`);
 
       document.getElementById("inputCEP").value = data.cep;
-      document.getElementById("inputBairro").value = data.bairro;
       document.getElementById("inputRua").value = data.logradouro;
+      document.getElementById("inputEstado").value = data.uf;
+      document.getElementById("inputLocalidade").value = data.localidade;
     },
     error: function (error) {
       console.log(error);
