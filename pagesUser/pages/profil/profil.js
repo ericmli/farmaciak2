@@ -5,20 +5,6 @@ const id = localStorage.getItem('idCliente')
 const input = document.getElementById('inputCPF');
 const celular = document.getElementById('inputCelular');
 
-input.addEventListener('input', function() {
-    const value = this.value;
-    const regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/; // expressão regular para validar CPF com pontos e hífens
-    if (!regex.test(value)) {
-      this.value = value.replace(/\D/g, '').replace(/^(\d{3})(\d{3})(\d{3})(\d{2}).*/, '$1.$2.$3-$4'); // formata o valor inserido para o formato de CPF com pontos e hífens
-    }
-});
-celular.addEventListener('input', function() {
-  const telefone = this.value.replace(/\D/g, '')
-  const regex = /^(\d{2})(\d{5})(\d{4})$/
-  const telefoneFormatado = telefone.replace(regex, '$1 $2-$3')
-  
-  this.value = telefoneFormatado
-});
 
 function validarCPF(cpf) {
   // Remove qualquer caracter que não seja número
@@ -70,12 +56,8 @@ function carregar(){
     success: function (data) {
       
       document.getElementById("inputNome").value = data.result.nome_completo;
-      document.getElementById("inputEmail").value = data.result.email;
       document.getElementById("inputPassword").value = data.result.senha;
-      document.getElementById("inputConfirmPassword").value = data.result.senha;
       document.getElementById("inputData").value = data.result.nascimento;
-      document.getElementById("inputCPF").value = data.result.cpf;
-      document.getElementById("inputCelular").value = data.result.telefone;
       $.ajax({
         url: `http://localhost:2000/api/cliente/${id}/enderecos`,
         type: "GET",
@@ -102,77 +84,30 @@ function carregar(){
 
 function cadastrar() {
   let name = document.getElementById("inputNome").value.trim();
-  let email = document.getElementById("inputEmail").value.trim();
   let password = document.getElementById("inputPassword").value.trim();
-  let passwordConfirm = document
-    .getElementById("inputConfirmPassword")
-    .value.trim();
   let date = document.getElementById("inputData").value.trim();
-  let cpf = document.getElementById("inputCPF").value.trim();
-  let number = document.getElementById("inputCelular").value.trim();
 
 
   if (
     name.length == 0 ||
-    email.length == 0 ||
     password == 0 ||
-    passwordConfirm.length == 0 ||
-    date.length == 0 ||
-    cpf.length == 0 ||
-    number.length == 0
+    date.length == 0
   ) {
     if (name.length == 0 || name.length > 99) {
       document.getElementById("inputNome").classList.add(`error`);
     } else {
       document.getElementById("inputNome").classList.remove(`error`);
     }
-
-    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    if (emailRegex.test(email)) {
-      document.getElementById("inputEmail").classList.add(`error`);
-    } else {
-      document.getElementById("inputEmail").classList.remove(`error`);
-    }
-
-    if (password.length == 0 || password != passwordConfirm ) {
+    if (password.length == 0) {
       document.getElementById("inputPassword").classList.add(`error`);
-      if (password != passwordConfirm) {
-        document.getElementById("inputPassword").classList.add(`error`);
-        document.getElementById("inputConfirmPassword").classList.add(`error`);
-      }
     } else {
       document.getElementById("inputPassword").classList.remove(`error`);
-    }
-
-    if (passwordConfirm.length == 0) {
-        document.getElementById("inputConfirmPassword").classList.add(`error`);
-    }else{
-        document.getElementById("inputConfirmPassword").classList.remove(`error`);
     }
 
     if(date.length == 0){
         document.getElementById("inputData").classList.add(`error`);
     }else{
         document.getElementById("inputData").classList.remove(`error`);
-    }
-
-    if (validarCPF(cpf)) {
-      document.getElementById("inputCPF").classList.remove(`error`);
-    } else {
-      document.getElementById("inputCPF").classList.add(`error`);
-    }
-
-    if(number.length == 0 || number.length != 13 ){
-      document.getElementById("inputCelular").classList.add(`error`);
-    }else{
-      document.getElementById("inputCelular").classList.remove(`error`);
-
-    }
-
-    if(numberHouse.length == 0 || numberHouse.length > 10){
-      document.getElementById("inputNumero").classList.add(`error`);
-    }else{
-      document.getElementById("inputNumero").classList.add(`error`);
     }
 
     if(cep.length != 9 ){
@@ -231,7 +166,7 @@ function createCep(){
   }
   $.ajax({
     url: `http://localhost:2000/api/cliente/endereco/${id}`,
-    type: "PUT",
+    type: "POST",
     headers: {
       accept: "application/json",
     },

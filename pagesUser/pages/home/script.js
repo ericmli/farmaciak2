@@ -55,6 +55,7 @@ function profil(){
     const email = localStorage.getItem('email')
     const id = localStorage.getItem('idCliente')
 
+    let loged = ''
     if(logado){
         console.log(logado)
         let add = ''
@@ -64,6 +65,22 @@ function profil(){
         </li>
         `
         document.getElementById('addProfil').innerHTML = add
+
+        loged += `
+        <ul class="dropdown-menu">
+        <li><a class="dropdown-item" onclick="sair()">Sair</a></li>
+        </ul>
+        `
+        document.getElementById('isLoged').innerHTML = loged
+    }else{
+
+        loged += `
+        <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="../login/login.html">Entrar</a></li>
+        <li><a class="dropdown-item" href="../register/register.html">Registrar</a></li>
+        </ul>
+        `
+        document.getElementById('isLoged').innerHTML = loged
     }
     
 }

@@ -65,6 +65,7 @@ function cadastrar() {
   let date = document.getElementById("inputData").value.trim();
   let cpf = document.getElementById("inputCPF").value.trim();
   let number = document.getElementById("inputCelular").value.trim();
+  let numberHouse = document.getElementById("inputNumero").value.trim();
 
 
   if (
@@ -74,7 +75,8 @@ function cadastrar() {
     passwordConfirm.length == 0 ||
     date.length == 0 ||
     cpf.length == 0 ||
-    number.length == 0
+    number.length == 0 ||
+    numberHouse.length == 0
   ) {
     function validaDuasFrases(frases) {
       let regex = /^[a-zA-Z]{3,}\s[a-zA-Z]{3,}$/;
@@ -92,9 +94,8 @@ function cadastrar() {
     }
 
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    if (emailRegex.test(email) || email.length == 0) {
+    if (emailRegex.test(email)) {
       document.getElementById("inputEmail").classList.remove(`error`);
-      
     } else {
       document.getElementById("inputEmail").classList.add(`error`);
     }
