@@ -20,37 +20,38 @@
         <div class="container">
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <a class="navbar-brand" href="#"><img src="../../../src/logos/logoWhiteSlim.png" class="imgLogo"></a>
+                    <a class="navbar-brand" href="#"><img src="../../../src/logos/logoWhiteSlim.png"
+                            class="imgLogo"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarScroll"
                         aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarScroll">
                         <ul class="navbar-nav mr-auto my-2 my-lg-0 navbar-nav-scroll" style="max-height: 100px;">
-                            <li class="nav-item active">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" href="../register/register.html">Registrar-se<span
                                         class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="../login/login.html">Entrar</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                                     aria-expanded="false">
-                                    Link
+                                    Opções
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="../login/login.html">Entrar</a></li>
+                                    <li><a class="dropdown-item" href="../register/register.html">Registrar</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    <li><a class="dropdown-item" onclick="sair()">Sair</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">Link</a>
-                            </li>
+                            <div id="addProfil">
+
+                            </div>
                         </ul>
                         <form class="d-flex">
                             <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">

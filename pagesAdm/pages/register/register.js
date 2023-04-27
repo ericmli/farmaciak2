@@ -127,7 +127,7 @@ function cadastrar() {
       contentType: "application/json",
       data: JSON.stringify(newUser),
       success: function (data) {
-        window.location.href = "file:///C:/Codes/Senac/k2farma/pagesAdm/pages/list/list.html";
+        window.location.href = '../list/list.html'
       },
       error: function (data) {
         alert("E-mail ou CPF já existente!")

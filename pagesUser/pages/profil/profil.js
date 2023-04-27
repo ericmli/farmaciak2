@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded", function () {
+  carregar()
+})
+const id = localStorage.getItem('idCliente')
 const input = document.getElementById('inputCPF');
 const celular = document.getElementById('inputCelular');
 
@@ -54,6 +58,47 @@ function validarCPF(cpf) {
   return true;
 }
 
+function carregar(){
+  
+
+  $.ajax({
+    url: `http://localhost:2000/api/cliente/${id}`,
+    type: "GET",
+    headers: {
+      accept: "application/json",
+    },
+    success: function (data) {
+      
+      document.getElementById("inputNome").value = data.result.nome_completo;
+      document.getElementById("inputEmail").value = data.result.email;
+      document.getElementById("inputPassword").value = data.result.senha;
+      document.getElementById("inputConfirmPassword").value = data.result.senha;
+      document.getElementById("inputData").value = data.result.nascimento;
+      document.getElementById("inputCPF").value = data.result.cpf;
+      document.getElementById("inputCelular").value = data.result.telefone;
+      $.ajax({
+        url: `http://localhost:2000/api/cliente/${id}/enderecos`,
+        type: "GET",
+        headers: {
+          accept: "application/json",
+        },
+        success: function (data) {
+          document.getElementById("inputCEP").value = data.result[0].cep;
+          document.getElementById("inputRua").value = data.result[0].rua;
+          document.getElementById("inputEstado").value = data.result[0].estado;
+          document.getElementById("inputLocalidade").value = data.result[0].cidade;
+          document.getElementById("inputNumero").value = data.result[0].numero;
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
+}
 
 function cadastrar() {
   let name = document.getElementById("inputNome").value.trim();
@@ -76,27 +121,17 @@ function cadastrar() {
     cpf.length == 0 ||
     number.length == 0
   ) {
-    function validaDuasFrases(frases) {
-      let regex = /^[a-zA-Z]{3,}\s[a-zA-Z]{3,}$/;
-      if (regex.test(frases) && frases.split(" ").length === 2) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    
-    if (validaDuasFrases(name)) {
-      document.getElementById("inputNome").classList.remove(`error`);
-    } else {
+    if (name.length == 0 || name.length > 99) {
       document.getElementById("inputNome").classList.add(`error`);
+    } else {
+      document.getElementById("inputNome").classList.remove(`error`);
     }
 
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    if (emailRegex.test(email) || email.length == 0) {
-      document.getElementById("inputEmail").classList.remove(`error`);
-      
-    } else {
+    if (emailRegex.test(email)) {
       document.getElementById("inputEmail").classList.add(`error`);
+    } else {
+      document.getElementById("inputEmail").classList.remove(`error`);
     }
 
     if (password.length == 0 || password != passwordConfirm ) {
@@ -159,8 +194,8 @@ function cadastrar() {
     };
 
     $.ajax({
-      url: "http://localhost:2000/api/cliente",
-      type: "POST",
+      url: `http://localhost:2000/api/cliente/${id}`,
+      type: "PUT",
       headers: {
         accept: "application/json",
       },
@@ -168,7 +203,7 @@ function cadastrar() {
       contentType: "application/json",
       data: JSON.stringify(newUser),
       success: function (data) {
-        createCep(data.result.id);
+        createCep();
         window.location.href = '../home/index.html'
       },
       error: function (data) {
@@ -178,7 +213,7 @@ function cadastrar() {
   }
 }
 
-function createCep(id){
+function createCep(){
   let cep = document.getElementById("inputCEP").value.trim();
   let numberHouse = document.getElementById("inputNumero").value.trim();
   let cidade = document.getElementById("inputLocalidade").value.trim();
@@ -195,8 +230,8 @@ function createCep(id){
     principal: true
   }
   $.ajax({
-    url: "http://localhost:2000/api/cliente/endereco",
-    type: "POST",
+    url: `http://localhost:2000/api/cliente/endereco/${id}`,
+    type: "PUT",
     headers: {
       accept: "application/json",
     },
