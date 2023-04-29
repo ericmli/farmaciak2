@@ -4,10 +4,10 @@ const ProdutoController = require('./controllers/ProdutoController');
 const ClienteController = require('./controllers/ClienteController');
 const CompraController = require('./controllers/CompraController');
 const EnderecoController = require('./controllers/EnderecoController');
+const AvaliacaoController = require('./controllers/AvaliacaoController');
 const router = express.Router();
 const upload = require('./config');
 const db = require('./db'); // importe o objeto de conexão com o banco de dados
-
 
 //Rotas para funcionarios
 router.get('/funcionarios', FuncionarioController.buscarTodos);
@@ -25,6 +25,12 @@ router.put('/produto/:id', ProdutoController.alterar);
 router.delete('/produto/:id', ProdutoController.excluir);
 router.post('/buscaprodutos', ProdutoController.buscarPorNome);
 
+//Rotas para avaliações
+router.get('/produto/:produto_id/avaliacoes', AvaliacaoController.buscarTodos);
+router.get('produto/:produto_id/avaliacao/:cliente_id', AvaliacaoController.buscarAvaliacaoPorCliente);
+router.post('produto/:produto_id/avaliacao', AvaliacaoController.inserir);
+router.put('/produto/:produto_id/avaliacao/:avaliacao_id', AvaliacaoController.alterar);
+
 //Rotas para clientes
 router.get('/clientes', ClienteController.buscarTodos);
 router.get('/cliente/:id', ClienteController.buscarUm);
@@ -38,7 +44,7 @@ router.get('/cliente/:cliente_id/enderecos/principal', EnderecoController.buscar
 router.post('/cliente/endereco', EnderecoController.inserir);
 router.put('/cliente/endereco/:id', EnderecoController.alterar);
 
-// rota para buscar os produtos de uma compra
+//Rotas para buscar os produtos de uma compra
 router.get('/compras/:id/produtos', CompraController.getProdutosCompra);
 router.post('/compra', CompraController.createCompra);
 
