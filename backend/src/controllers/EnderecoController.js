@@ -16,7 +16,8 @@ module.exports = {
                     cidade: enderecos[i].cidade,
                     estado: enderecos[i].estado,
                     cep: enderecos[i].cep,
-                    principal: enderecos[i].principal
+                    principal: enderecos[i].principal,
+                    faturamento: enderecos[i].faturamento
                 })
             }
             res.json(json);
@@ -39,6 +40,20 @@ module.exports = {
         res.json(json);
     },
 
+    buscarFaturamento: async (req, res) => {
+        let json = { error: '', result: {} };
+
+        let cliente_id = req.params.cliente_id;
+        let endereco = await EnderecoService.buscarFaturamento(cliente_id);
+
+        if (endereco) {
+            json.result = endereco;
+        }
+
+        res.json(json);
+
+    },
+
     inserir: async(req, res) => {
         let json = { error: '', result: {} };
 
@@ -49,6 +64,7 @@ module.exports = {
         let estado = req.body.estado;
         let cep = req.body.cep;
         let principal = req.body.principal;
+        let faturamento = req.body.faturamento;
 
         if (cliente_id && rua && numero && cidade && estado && cep) {
             let EnderecoId = await EnderecoService.inserir(
@@ -58,7 +74,8 @@ module.exports = {
                 cidade,
                 estado,
                 cep,
-                principal
+                principal,
+                faturamento
             );
             json.result = {
                 id: EnderecoId,
@@ -67,7 +84,8 @@ module.exports = {
                 cidade,
                 estado,
                 cep,
-                principal
+                principal,
+                faturamento
             };
         }else{
             json.error = 'Campos não enviados';
@@ -85,9 +103,10 @@ module.exports = {
         let estado = req.body.estado;
         let cep = req.body.cep;
         let principal = req.body.principal;
+        let faturamento = req.body.faturamento;
 
-        if(rua){
-            await EnderecoService.alterar(id, rua, numero, cidade, estado, cep, principal);
+        if(id && rua || numero || cidade || estado || cep || principal || faturamento){
+            await EnderecoService.alterar(id, rua, numero, cidade, estado, cep, principal, faturamento);
             json.result = {
                 id,
                 rua,
@@ -95,7 +114,8 @@ module.exports = {
                 cidade,
                 estado,
                 cep,
-                principal
+                principal,
+                faturamento
             };
         }else{
             json.error = 'Campos não enviados';

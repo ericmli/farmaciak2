@@ -41,6 +41,7 @@ router.post('/cliente/login', ClienteController.login);
 //Rotas para endereços
 router.get('/cliente/:cliente_id/enderecos', EnderecoController.buscarTodosPorId);
 router.get('/cliente/:cliente_id/enderecos/principal', EnderecoController.buscarPrincipal);
+router.get('/cliente/:cliente_id/enderecos/faturamento', EnderecoController.buscarFaturamento);
 router.post('/cliente/endereco', EnderecoController.inserir);
 router.put('/cliente/endereco/:id', EnderecoController.alterar);
 

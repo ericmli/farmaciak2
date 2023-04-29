@@ -17,17 +17,19 @@ module.exports = {
 
         let clienteId = req.body.clienteId;
         let status = req.body.status;
+        let total = req.body.total;
 
-        console.log(clienteId)
-        console.log(status)
-        if (clienteId && status) {
+        if (clienteId && status && subtotal) {
             let compraId = await CompraService.createCompra(
-                clienteId, status
+                clienteId, 
+                status,
+                total
             );
             json.result = {
                 id_compra: compraId,
                 clienteId,
-                status
+                status,
+                total
             };
         }else {
             json.error = 'Campos não enviados';
