@@ -27,9 +27,9 @@ router.post('/buscaprodutos', ProdutoController.buscarPorNome);
 
 //Rotas para avaliações
 router.get('/produto/:produto_id/avaliacoes', AvaliacaoController.buscarTodos);
-router.get('produto/:produto_id/avaliacao/:cliente_id', AvaliacaoController.buscarAvaliacaoPorCliente);
-router.post('produto/:produto_id/avaliacao', AvaliacaoController.inserir);
-router.put('/produto/:produto_id/avaliacao/:avaliacao_id', AvaliacaoController.alterar);
+router.get('/produto/:produto_id/avaliacao/:cliente_id', AvaliacaoController.buscarAvaliacaoPorCliente);
+router.post('/produto/:produto_id/avaliacao', AvaliacaoController.inserir);//
+router.put('/produto/avaliacao/:id', AvaliacaoController.alterar);
 
 //Rotas para clientes
 router.get('/clientes', ClienteController.buscarTodos);

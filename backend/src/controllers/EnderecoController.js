@@ -50,8 +50,6 @@ module.exports = {
         let cep = req.body.cep;
         let principal = req.body.principal;
 
-        console.log(req.body);
-
         if (cliente_id && rua && numero && cidade && estado && cep) {
             let EnderecoId = await EnderecoService.inserir(
                 cliente_id,
@@ -88,7 +86,7 @@ module.exports = {
         let cep = req.body.cep;
         let principal = req.body.principal;
 
-        if(rua ){
+        if(rua){
             await EnderecoService.alterar(id, rua, numero, cidade, estado, cep, principal);
             json.result = {
                 id,
