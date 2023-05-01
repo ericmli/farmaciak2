@@ -31,28 +31,50 @@ module.exports = {
 
     inserir: async (cliente_id, rua, numero, cidade, estado, cep, principal, faturamento) => {
         return new Promise(async(aceito, rejeitado) => {
-            let query = 'INSERT INTO enderecos (cliente_id, rua, numero, cidade, estado, cep, principal, faturamento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
-            db.query(query,
-            [cliente_id, rua, numero, cidade, estado, cep, principal, faturamento], (error, results) => {
-                if (error) { rejeitado(error); return;}
-                    aceito(results.insertId);
-            })
-        })
-    },
-
-    alterar: (id, rua, numero, cidade, estado, cep, principal, faturamento) => {
-        return new Promise((aceito, rejeitado) => {
-            db.query('UPDATE enderecos SET rua = ?, ' +
-                'numero = ?, cidade = ?, estado = ?, cep = ?, principal = ?, faturamento = ? WHERE id = ?',
-                [rua, numero, cidade, estado, cep, principal, faturamento, id],
-                (error, results) => {
-                    console.log(error);
-                    if (error) { rejeitado(error); return; }
-                    aceito(results);
-
+            let query;
+            let values;
+    
+            if (principal) {
+                // Se o novo endereço for principal, atualize todos os outros endereços do cliente para não serem mais principais
+                query = 'UPDATE enderecos SET principal = false WHERE cliente_id = ?';
+                values = [cliente_id];
+    
+                db.query(query, values, (error, results) => {
+                    if (error) {
+                        rejeitado(error);
+                        return;
+                    }
+                });
+            }
+    
+            // Insira o novo endereço
+            query = 'INSERT INTO enderecos (cliente_id, rua, numero, cidade, estado, cep, principal, faturamento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+            values = [cliente_id, rua, numero, cidade, estado, cep, principal, faturamento];
+    
+            db.query(query, values, (error, results) => {
+                if (error) {
+                    rejeitado(error);
+                    return;
                 }
-
-            );
+                aceito(results.insertId);
+            });
         });
     },
+
+    alterar: async (id, cliente_id, rua, numero, cidade, estado, cep, principal, faturamento) => {
+    return new Promise(async(aceito, rejeitado) => {
+        let query = 'UPDATE enderecos SET cliente_id=?, rua=?, numero=?, cidade=?, estado=?, cep=?, principal=?, faturamento=? WHERE id=?';
+        db.query(query, [cliente_id, rua, numero, cidade, estado, cep, principal, faturamento, id], async (error, results) => {
+            if (error) { rejeitado(error); return; }
+
+            // Verificar se o campo principal foi alterado
+            let enderecoAtualizado = await EnderecoService.buscarPorId(id);
+            if (enderecoAtualizado.principal !== principal) {
+                // Atualizar os outros endereços do mesmo cliente como não principais
+                await EnderecoService.definirOutrosEnderecosNaoPrincipais(cliente_id, id);
+            }
+            aceito(id);
+        });
+    });
+},
 }
