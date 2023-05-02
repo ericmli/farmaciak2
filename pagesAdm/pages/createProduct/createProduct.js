@@ -50,33 +50,8 @@ function cadastrar() {
       document.getElementById("inputCategoria").classList.remove(`error`);
     }
   
-  } else {
-    let newUser = {
-      nome : nome,
-      descricao : descricao,
-      preco : preco,
-      quantidade : estoque ,
-      laboratorio : laboratorio,
-      categoria : categoria,
-      img : "https://img.elo7.com.br/product/original/2B33995/caixa-remedio-festa-medico.jpg"
-    };
-
-    $.ajax({
-      url: "http://localhost:2000/api/produto",
-      type: "POST",
-      headers: {
-        accept: "application/json",
-      },
-      dataType: "json",
-      contentType: "application/json",
-      data: JSON.stringify(newUser),
-      success: function (data) {
-        console.log( 'foi ' ,newUser)
-        window.location.href = "../listProduct/listProduct.html";
-      },
-      error: function (data) {
-        console.log(data);
-      },
-    });
+  }else {
+    window.location.href = "../listProduct/listProduct.html";
   }
+  
 }
