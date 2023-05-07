@@ -32,10 +32,10 @@ module.exports = {
         });
     },
 
-    inserir: (nome,descricao,preco,quantidade,laboratorio,categoria) => {
+    inserir: (nome,descricao,preco,quantidade,laboratorio,categoria,img) => {
         return new Promise((aceito, rejeitado) => {
-            db.query('INSERT INTO produtos (nome, descricao, preco, quantidade, laboratorio, categoria) VALUES (?, ?, ?, ?, ?, ?)',
-                [nome,descricao,preco,quantidade,laboratorio,categoria], 
+            db.query('INSERT INTO produtos (nome, descricao, preco, quantidade, laboratorio, categoria, img) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                [nome,descricao,preco,quantidade,laboratorio,categoria,img], 
                 (error, results) => {
                     if (error) { rejeitado(error); return;}
                     aceito(results.insertId);
