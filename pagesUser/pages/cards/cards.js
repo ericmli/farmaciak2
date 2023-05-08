@@ -60,6 +60,14 @@ function load() {
             let mediaTratada = mediaAval;
 
             switch (mediaTratada) {
+              case 0.5 : {
+                htmlAvaliacoes += `
+                <div id="notas">
+                  <img class ="estrelasAval" src="../../../src/icons/metadeEstrela.png" alt="">
+                </div>
+                `
+                break;
+              }
               case 1:
                 htmlAvaliacoes += `
               <div id="notas">
@@ -150,7 +158,7 @@ function load() {
             }
           } else {
             htmlAvaliacoes = `
-            <h1> Produto não possui avaliações. </h1>
+            <h4> Produto não possui avaliações. </h4>
             `
           }
           document.getElementById("avaliacoes").innerHTML += htmlAvaliacoes;
