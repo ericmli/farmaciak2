@@ -19,7 +19,7 @@ function callFunction(){
                 if(data.result[i].status === 'Ativo'){
                     htmlLis += `  
                     <div class="card" style="width: 18rem" onclick="callLocal(${data.result[i].id})">
-                    <img src="${require(data.result[i].img)}" class="card-img-top">
+                    <img src="${data.result[i].img}" class="card-img-top">
                     <div class="card-body">
                     <h5 class="card-title">${data.result[i].nome}</h5>
                     <p class="textNameCard" >R$ ${data.result[i].preco}</p>
