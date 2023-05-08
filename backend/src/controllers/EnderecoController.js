@@ -93,34 +93,34 @@ module.exports = {
         res.json(json);
     },
 
-    alterar: async (req, res) => {
-        let json = { error: '', result: {} };
-    
-        let id = req.params.id;
-        let rua = req.body.rua;
-        let numero = req.body.numero;
-        let cidade = req.body.cidade;
-        let estado = req.body.estado;
-        let cep = req.body.cep;
-        let principal = req.body.principal;
-        let faturamento = req.body.faturamento;
+alterar: async (req, res) => {
+  let json = { error: '', result: {} };
 
-        if(id && rua || numero || cidade || estado || cep || principal || faturamento){
-            await EnderecoService.alterar(id, rua, numero, cidade, estado, cep, principal, faturamento);
-            json.result = {
-                id,
-                rua,
-                numero,
-                cidade,
-                estado,
-                cep,
-                principal,
-                faturamento
-            };
-        }else{
-            json.error = 'Campos não enviados';
-        }
-        res.json(json);
-    }
+  let id = req.params.id;
+  let rua = req.body.rua;
+  let numero = req.body.numero;
+  let cidade = req.body.cidade;
+  let estado = req.body.estado;
+  let cep = req.body.cep;
+  let principal = req.body.principal;
+  let faturamento = req.body.faturamento;
+
+  if (id && rua && numero && cidade && estado && cep && typeof principal !== 'undefined' || typeof faturamento !== 'undefined') {
+    await EnderecoService.alterar(id, rua, numero, cidade, estado, cep, principal, faturamento);
+    json.result = {
+      id,
+      rua,
+      numero,
+      cidade,
+      estado,
+      cep,
+      principal,
+      faturamento
+    };
+  } else {
+    json.error = 'Campos não enviados';
+  }
+  res.json(json);
+},
 
 }
