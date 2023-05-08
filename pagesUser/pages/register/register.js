@@ -55,6 +55,7 @@ function validarCPF(cpf) {
 }
 
 
+
 function cadastrar() {
   let name = document.getElementById("inputNome").value.trim();
   let email = document.getElementById("inputEmail").value.trim();
@@ -141,7 +142,7 @@ function cadastrar() {
       document.getElementById("inputNumero").classList.add(`error`);
     }
 
-    if(cep.length != 9 ){
+    if((cep) ){
       document.getElementById("inputCEP").classList.add(`error`);
     }else{
       document.getElementById("inputCEP").classList.remove(`error`);

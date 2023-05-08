@@ -62,19 +62,34 @@ module.exports = {
     },
 
     alterar: async (id, cliente_id, rua, numero, cidade, estado, cep, principal, faturamento) => {
-    return new Promise(async(aceito, rejeitado) => {
-        let query = 'UPDATE enderecos SET cliente_id=?, rua=?, numero=?, cidade=?, estado=?, cep=?, principal=?, faturamento=? WHERE id=?';
-        db.query(query, [cliente_id, rua, numero, cidade, estado, cep, principal, faturamento, id], async (error, results) => {
-            if (error) { rejeitado(error); return; }
-
-            // Verificar se o campo principal foi alterado
-            let enderecoAtualizado = await EnderecoService.buscarPorId(id);
-            if (enderecoAtualizado.principal !== principal) {
-                // Atualizar os outros endereços do mesmo cliente como não principais
-                await EnderecoService.definirOutrosEnderecosNaoPrincipais(cliente_id, id);
+        return new Promise(async(aceito, rejeitado) => {
+            let query;
+            let values;
+    
+            if (principal) {
+                // Se o novo endereço for principal, atualize todos os outros endereços do cliente para não serem mais principais
+                query = 'UPDATE enderecos SET principal = false WHERE cliente_id = ?';
+                values = [cliente_id];
+    
+                db.query(query, values, (error, results) => {
+                    if (error) {
+                        rejeitado(error);
+                        return;
+                    }
+                });
             }
-            aceito(id);
+    
+            // Altera o endereço
+            query = 'UPDATE enderecos SET rua = ?, numero = ?, cidade = ?, estado = ?, cep = ?, principal = ?, faturamento = ? WHERE id = ?';
+            values = [rua, numero, cidade, estado, cep, principal, faturamento, id];
+    
+            db.query(query, values, (error, results) => {
+                if (error) {
+                    rejeitado(error);
+                    return;
+                }
+                aceito(results.insertId);
+            });
         });
-    });
-},
+    },
 }
