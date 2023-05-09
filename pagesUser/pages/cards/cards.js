@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
   profil()
 })
 
+let id = localStorage.getItem("idProducts")
 function load() {
-  let id = localStorage.getItem("idProducts")
   $.ajax({
     url: `http://localhost:2000/api/produto/${id}`,
     type: "GET",
@@ -13,6 +13,8 @@ function load() {
     },
     success: function (data) {
       let status = ''
+
+
       if (data.result.status == 'Ativo') {
         status = 'Disponivel'
       } else {
@@ -24,11 +26,7 @@ function load() {
         <img class="imgMain" src="../../../${data.result.img}">
           <p class="textLab">Laboratorio: ${data.result.laboratorio}</p>
           <p class="textLab">${status}</p>
-          <div class="containerIcons">
-            <i class="bi bi-cart-plus-fill"></i>
-  
-            <i class="bi bi-heart-fill"></i>
-          </div>
+
         </div>
 
           <div class="containerText">
@@ -36,7 +34,7 @@ function load() {
             <p class="textPreco">R$ ${data.result.preco}</p>
             <p class="textDescricao"> - ${data.result.descricao}</p>
           </div>
-        `
+      `
 
       document.getElementById("containerBack").innerHTML = htmlLis
       $.ajax({
@@ -186,7 +184,6 @@ function profil(){
 
   let loged = ''
   if(logado){
-      console.log(logado)
       let add = ''
       add += `
       <li class="nav-item active">
@@ -215,4 +212,36 @@ function profil(){
 }
 function perfil(){
   window.location.href = `../profil/profil.html`
+}
+
+
+const tentacles = document.getElementById('tentacles')
+tentacles.addEventListener("input", function() {
+  const value = this.value
+  return value
+});
+
+function car(){
+  console.log(tentacles.value)
+  $.ajax({
+    url: `http://localhost:2000/api/produto/${id}`,
+    type: 'GET',
+    headers: {
+        'accept': 'application/json'
+    },
+    success: function (data) {
+
+      const exist = localStorage.getItem('sendCar')
+      if(exist.trim() != null){
+      localStorage.setItem('sendCar', `${exist}%${tentacles.value}${JSON.stringify(data.result)}`)
+      }else{
+        localStorage.setItem('sendCar', `${tentacles.value}${JSON.stringify(data.result)}`)
+      }
+      console.log(JSON.parse(exist))
+    },
+    error: function (error) {
+        console.log(error)
+    }
+})
+  
 }
