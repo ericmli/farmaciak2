@@ -26,9 +26,7 @@ function load() {
         <img class="imgMain" src="../../../${data.result.img}">
           <p class="textLab">Laboratorio: ${data.result.laboratorio}</p>
           <p class="textLab">${status}</p>
-
         </div>
-
           <div class="containerText">
             <p class="textNome">${data.result.nome}</p>
             <p class="textPreco">R$ ${data.result.preco}</p>

@@ -56,11 +56,16 @@ function car() {
       
       console.log(objeto)
       let addInHtml = ''
-      addInHtml = `
-        <p>Quantidade ${add[0]}</p>
-        <p>ID Produto ${objeto.id}</p>
-        <p>Nome${objeto.nome}</p>
+      addInHtml = ` 
+      <div class="cardItem"> 
+          <div id="containerProduct">  
+          <img class="imgCart" src="../../../${objeto.img}">
+          <p> <strong> Quantidade </strong> ${add[0]}</p>
+          <p> <strong> ID Produto </strong> ${objeto.id}</p>
+          <p> <strong> Nome </strong> ${objeto.nome}</p>
+          </div>
+      </div>
       `
-      document.getElementById('containerProduct').innerHTML += addInHtml
+      document.getElementById('containerProductDiv').innerHTML += addInHtml
     }
 }

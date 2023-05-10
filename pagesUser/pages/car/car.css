@@ -149,8 +149,28 @@ body, html {
 }
 
 #containerProduct{
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: relative;
-    height: 100px;
-    width: 100%;
-    background: #2525255b;
+    height: 100%;
+    width: 15%;
+    padding: 10px;
+    margin: 20px;
+}
+
+#containerProduct:hover {
+    transform: scale(1.02);
+    transition: 0.5s;
+}
+
+.imgCart {
+    border-radius: 10px;
+}
+
+.cardItem {
+    display: flex;
+    flex-direction: column;
 }
