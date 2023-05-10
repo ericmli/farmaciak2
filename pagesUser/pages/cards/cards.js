@@ -232,12 +232,31 @@ function car(){
     success: function (data) {
 
       const exist = localStorage.getItem('sendCar')
-      if(exist.trim() != null){
-      localStorage.setItem('sendCar', `${exist}%${tentacles.value}${JSON.stringify(data.result)}`)
-      }else{
-        localStorage.setItem('sendCar', `${tentacles.value}${JSON.stringify(data.result)}`)
+      if (typeof exist === 'string' && exist.trim() !== '') {
+        const novaString = `${tentacles.value}${JSON.stringify(data.result)}`;
+        const repit = localStorage.getItem('sendCar');
+        const strings = repit.split('%'); // separa as strings pelo separador '%'
+        const idSet = new Set(); // cria um objeto auxiliar para armazenar os valores de "id" já encontrados
+        const novoArr = []; // cria um novo array para armazenar as strings sem duplicatas
+        for (let i = strings.length - 1; i >= 0; i--) {
+          const str = strings[i];
+          const obj = JSON.parse(str.slice(1)); // remove o número no início da string antes de fazer o parse
+          if (idSet.has(obj.id)) {
+            // se o valor de "id" já foi encontrado, ignora a string
+            continue;
+          }
+          idSet.add(obj.id); // adiciona o valor de "id" ao objeto auxiliar
+          novoArr.unshift(str); // adiciona a string no início do novo array
+        }
+        novoArr.unshift(novaString); // adiciona a nova string no início do novo array
+        const novoStringFinal = novoArr.join('%'); // une as strings com o separador '%'
+        localStorage.setItem('sendCar', novoStringFinal);
+        console.log(novoArr);
+      } else {
+        localStorage.setItem('sendCar', `${tentacles.value}${JSON.stringify(data.result)}`);
       }
-      console.log(JSON.parse(exist))
+      
+      console.log(exist)
     },
     error: function (error) {
         console.log(error)

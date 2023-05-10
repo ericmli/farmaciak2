@@ -48,5 +48,18 @@ function perfil(){
 }
 
 function car() {
-    
+    const itens = localStorage.getItem('sendCar')
+    const itensSeparados = itens.split('%')
+    for(let i = 0 ; i < itensSeparados.length ; i++ ){
+      const add = itensSeparados[i]
+      const objeto = JSON.parse(add.substring(1));
+      console.log(objeto)
+      let addInHtml = ''
+      addInHtml = `
+        <p>Quantidade ${add[0]}</p>
+        <p>ID Produto ${objeto.id}</p>
+        <p>Nome${objeto.nome}</p>
+      `
+      document.getElementById('containerProduct').innerHTML += addInHtml
+    }
 }
