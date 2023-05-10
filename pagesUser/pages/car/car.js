@@ -53,6 +53,7 @@ function car() {
     for(let i = 0 ; i < itensSeparados.length ; i++ ){
       const add = itensSeparados[i]
       const objeto = JSON.parse(add.substring(1));
+      
       console.log(objeto)
       let addInHtml = ''
       addInHtml = `
