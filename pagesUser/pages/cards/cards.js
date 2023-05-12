@@ -220,7 +220,6 @@ tentacles.addEventListener("input", function() {
 });
 
 function car(){
-  console.log(tentacles.value)
   $.ajax({
     url: `http://localhost:2000/api/produto/${id}`,
     type: 'GET',
@@ -228,33 +227,24 @@ function car(){
         'accept': 'application/json'
     },
     success: function (data) {
-
-      const exist = localStorage.getItem('sendCar')
-      if (typeof exist === 'string' && exist.trim() !== '') {
-        const novaString = `${tentacles.value}${JSON.stringify(data.result)}`;
-        const repit = localStorage.getItem('sendCar');
-        const strings = repit.split('%'); // separa as strings pelo separador '%'
-        const idSet = new Set(); // cria um objeto auxiliar para armazenar os valores de "id" já encontrados
-        const novoArr = []; // cria um novo array para armazenar as strings sem duplicatas
-        for (let i = strings.length - 1; i >= 0; i--) {
-          const str = strings[i];
-          const obj = JSON.parse(str.slice(1)); // remove o número no início da string antes de fazer o parse
-          if (idSet.has(obj.id)) {
-            // se o valor de "id" já foi encontrado, ignora a string
-            continue;
-          }
-          idSet.add(obj.id); // adiciona o valor de "id" ao objeto auxiliar
-          novoArr.unshift(str); // adiciona a string no início do novo array
+      const item = localStorage.getItem('sendCar');
+      const response = data.result;
+      let cart = [];
+      
+      if (item) {
+        cart = JSON.parse(item);
+        const existingItem = cart.find((i) => i.id === response.id);
+        if (existingItem) {
+          existingItem.quantity += response.quantity;
+        } else {
+          cart.push({...response, quantidadeProduto: tentacles.value});
         }
-        novoArr.unshift(novaString); // adiciona a nova string no início do novo array
-        const novoStringFinal = novoArr.join('%'); // une as strings com o separador '%'
-        localStorage.setItem('sendCar', novoStringFinal);
-        console.log(novoArr);
       } else {
-        localStorage.setItem('sendCar', `${tentacles.value}${JSON.stringify(data.result)}`);
+        cart = [{...response, quantidadeProduto: tentacles.value}];
       }
       
-      console.log(exist)
+      localStorage.setItem('sendCar', JSON.stringify(cart));
+      window.location.href = `../home/index.html`
     },
     error: function (error) {
         console.log(error)

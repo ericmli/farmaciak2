@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   profil()
   car()
+  
 })
 
 
@@ -46,26 +47,52 @@ function profil(){
 function perfil(){
   window.location.href = `../profil/profil.html`
 }
-
+const itens = localStorage.getItem('sendCar')
+const convert = JSON.parse(itens)
 function car() {
-    const itens = localStorage.getItem('sendCar')
-    const itensSeparados = itens.split('%')
-    for(let i = 0 ; i < itensSeparados.length ; i++ ){
-      const add = itensSeparados[i]
-      const objeto = JSON.parse(add.substring(1));
-      
-      console.log(objeto)
-      let addInHtml = ''
+
+    let addInHtml = ''
+
+    for(let i = 0; i < convert.length ; i ++){
+    const obj = convert[i]
       addInHtml = ` 
-      <div class="cardItem"> 
-          <div id="containerProduct">  
-          <img class="imgCart" src="../../../${objeto.img}">
-          <p> <strong> Quantidade </strong> ${add[0]}</p>
-          <p> <strong> ID Produto </strong> ${objeto.id}</p>
-          <p> <strong> Nome </strong> ${objeto.nome}</p>
+
+          <div id="containerProductBody">
+            <img class="imgCart" src="../../../${obj.img}">
+            <div id="containerProduct">
+              <div class='containerTextCar'>
+
+                <p> <strong> Nome: </strong> ${obj.nome}</p>
+                <p> <strong> Nome: </strong> ${obj.preco}</p>
+              </div>
+              <div class='priceCar'>
+                <p> <strong> Quantidade: ${obj.quantidadeProduto} </strong> </p>
+                <div>
+                  <i class="bi bi-plus" onclick="pegaValorParaSomar(${i})"></i>
+                  <i class="bi bi-dash-lg" onclick="carregarIcone(${false})"></i>
+                </div>
+              </div>
+            </div>
           </div>
-      </div>
+
       `
       document.getElementById('containerProductDiv').innerHTML += addInHtml
     }
+    
+}
+
+let count = 0;
+function pegaValorParaSomar(i) {
+  let sun = convert[i].quantidadeProduto;
+  sun = Number(sun) + count++;
+  const newData = convert.map(item => item == i)
+  console.log(newData);
+  // console.log(sun);
+}
+
+function carregarIcone(id){
+  // const newData = convert.filter(item => item.id !== id)
+  // localStorage.setItem('sendCar', JSON.stringify(newData));
+  // window.location.reload();  
+
 }
