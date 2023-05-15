@@ -192,3 +192,15 @@ i:hover {
     background: #00000085;
     border-radius: 50px;
   }
+.divSoma{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconsContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

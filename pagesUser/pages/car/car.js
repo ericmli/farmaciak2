@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   profil()
   car()
-  
+  somarTotal()
 })
 
 
@@ -52,24 +52,28 @@ const convert = JSON.parse(itens)
 function car() {
 
     let addInHtml = ''
-
+    let soma = ''
     for(let i = 0; i < convert.length ; i ++){
     const obj = convert[i]
       addInHtml = ` 
 
-          <div id="containerProductBody">
+          <div id="containerProductBody" onclick="">
             <img class="imgCart" src="../../../${obj.img}">
             <div id="containerProduct">
               <div class='containerTextCar'>
 
-                <p> <strong> Nome: </strong> ${obj.nome}</p>
-                <p> <strong> Nome: </strong> ${obj.preco}</p>
+                <p> <strong> Nome: </strong>${obj.nome}</p>
+                <p> <strong> Preço: </strong>R$${obj.preco}</p>
               </div>
               <div class='priceCar'>
                 <p> <strong> Quantidade: ${obj.quantidadeProduto} </strong> </p>
-                <div>
+                <p> <strong> Total Produto: R$${(obj.quantidadeProduto * obj.preco).toFixed(2)} </strong> </p>
+                <div class="iconsContainer">
+                  <div>
                   <i class="bi bi-plus" onclick="pegaValorParaSomar(${i})"></i>
-                  <i class="bi bi-dash-lg" onclick="carregarIcone(${false})"></i>
+                  <i class="bi bi-dash-lg" onclick="pegaValorParaDiminuir(${i})"></i>
+                  </div>
+                  <i class="bi bi-trash3-fill" onclick="deletar(${i})"></i>
                 </div>
               </div>
             </div>
@@ -77,22 +81,67 @@ function car() {
 
       `
       document.getElementById('containerProductDiv').innerHTML += addInHtml
+
+      soma = `
+      <div class='divSoma'>
+      <p> <strong>Subtotal: ${somarTotal()} </strong> </p>
+      </div>
+      `
+      document.getElementById('total').innerHTML = soma
+
     }
     
 }
-
-let count = 0;
+count = 1;
 function pegaValorParaSomar(i) {
   let sun = convert[i].quantidadeProduto;
   sun = Number(sun) + count++;
-  const newData = convert.map(item => item == i)
-  console.log(newData);
-  // console.log(sun);
+
+  const local = localStorage.getItem('sendCar');
+  const carrinho = JSON.parse(local);
+  const produto = carrinho[i];
+  const novoProduto = {...produto, quantidadeProduto: sun};
+  carrinho[i] = novoProduto;
+  console.log(carrinho)
+  localStorage.setItem('sendCar', JSON.stringify(carrinho));
+  location.reload()
 }
 
-function carregarIcone(id){
-  // const newData = convert.filter(item => item.id !== id)
-  // localStorage.setItem('sendCar', JSON.stringify(newData));
-  // window.location.reload();  
+countMinius = 1;
+function pegaValorParaDiminuir(i) {
+  let sun = convert[i].quantidadeProduto;
+  sun = Number(sun) - count--;
 
+  const local = localStorage.getItem('sendCar');
+  const carrinho = JSON.parse(local);
+  const produto = carrinho[i];
+  const novoProduto = {...produto, quantidadeProduto: sun};
+  carrinho[i] = novoProduto;
+  console.log(carrinho)
+  localStorage.setItem('sendCar', JSON.stringify(carrinho));
+  location.reload()
+}
+
+function somarTotal() {
+  const local = localStorage.getItem('sendCar');
+  const obj = JSON.parse(local)
+  const valor = obj.map(item => item.preco)
+  const quantidade = obj.map(i => i.quantidadeProduto)
+  const total = valor.reduce(function (total, i, index) {
+    return total + i * quantidade[index]
+  }, 0)
+  return total.toFixed(2)
+}
+
+function callLocal(id){
+  localStorage.setItem("idProducts", id)
+  window.location.href = `../cards/cards.html`
+
+}
+
+
+function deletar(id){
+  const newData = convert.filter(item => item.id !== id)
+  localStorage.setItem('sendCar', JSON.stringify(newData));
+  window.location.reload();  
 }
