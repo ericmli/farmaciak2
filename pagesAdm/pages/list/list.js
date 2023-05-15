@@ -1,7 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
     pegarFuncionario()
+    hangleLogin()
 })
 
+function hangleLogin() {
+    const user = localStorage.getItem('Administrador')
+    if(user == 1 || user == 2) {
+        console.log('Verificado!')
+    } else {
+        alert('Erro, logar novamente!')
+        window.location.href = '../login/login.html'
+    }
+}
 function pegarFuncionario() {
     $.ajax({
         url: "http://localhost:2000/api/funcionarios",
