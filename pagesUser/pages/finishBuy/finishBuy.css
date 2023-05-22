@@ -49,7 +49,7 @@ body, html {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 4em;
     margin-top: 2em;
 }
@@ -133,75 +133,8 @@ body, html {
     height: 100px;
 }
 
-#avaliacoes {
-    margin-top: 50px;
-}
-
-.estrelasAval {
-    display: flex;
-    flex-direction: column;
-    width: 30px;
-}
-
-#notas {
-    display: flex;
-    flex-direction: row;
-}
-
-#containerProductBody{
-    border: 1px solid black;
-    border-radius: 10px;
-    display: flex;
-    height: 100%;
-    width: 100%;
-    padding: 10px;
-    margin: 20px;
-    gap: 20px;
-    justify-content: space-between;
-    align-items: center;
-}
-#containerProduct{
-    display: flex;
-    justify-content: space-between;
-    height: 100%;
-    width: 100%;
-}
-
-.imgCart {
-    border-radius: 10px;
-    height: 100px;
-    width: 100px;
-    object-fit: cover;
-}
-
-.containerTextCar{
-    display: flex;
-    flex-direction: column;
-}
-
-.priceCar{
-    display: flex;
-    flex-direction: column;
-}
-
-i {
-    font-size: 2em;
+.textRegistre{
     cursor: pointer;
-  }
-i:hover {
-    background: #00000085;
-    border-radius: 50px;
-  }
-.divSoma{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.iconsContainer{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    font-size: 14px;
+    color: #0000004f;
 }

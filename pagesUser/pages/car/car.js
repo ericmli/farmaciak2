@@ -73,7 +73,7 @@ function car() {
                   <i class="bi bi-plus" onclick="pegaValorParaSomar(${i})"></i>
                   <i class="bi bi-dash-lg" onclick="pegaValorParaDiminuir(${i})"></i>
                   </div>
-                  <i class="bi bi-trash3-fill" onclick="deletar(${i})"></i>
+                  <i class="bi bi-trash3-fill" onclick="deletar(${obj.id})"></i>
                 </div>
               </div>
             </div>
@@ -84,11 +84,12 @@ function car() {
 
       soma = `
       <div class='divSoma'>
-      <p> <strong>Subtotal: ${somarTotal()} </strong> </p>
+      <p> <strong>Subtotal: ${somarTotal()}</strong> </p>
+      <p> <button type="button" class="btn btn-info m-2" onclick="addEndereco()">Comprar</button> </p>
       </div>
+      
       `
       document.getElementById('total').innerHTML = soma
-
     }
     
 }
@@ -130,6 +131,7 @@ function somarTotal() {
   const total = valor.reduce(function (total, i, index) {
     return total + i * quantidade[index]
   }, 0)
+  localStorage.setItem('subtotal', total.toFixed(2))
   return total.toFixed(2)
 }
 
@@ -143,5 +145,17 @@ function callLocal(id){
 function deletar(id){
   const newData = convert.filter(item => item.id !== id)
   localStorage.setItem('sendCar', JSON.stringify(newData));
+  console.log(newData)
   window.location.reload();  
+}
+
+
+function addEndereco() {
+  let id = localStorage.getItem('idCliente')
+  if(id){
+    location.href='../finishBuy/finishBuy.html';
+  } else {
+    alert('Para continuar faça o login!')
+    location.href='../login/login.html';
+  }
 }

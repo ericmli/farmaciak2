@@ -53,8 +53,11 @@ function createCep(){
     data: JSON.stringify(newUser),
     success: function (data) {
       console.log(data);
-      window.location.href = '../profil.html'
-
+      let subtotal = localStorage.getItem('subtotal')
+      if(subtotal){
+        window.location.href = '../profil.html'
+      }
+      window.location.href = '../../finishBuy/finishBuy.html'
     },
     error: function (data) {
       console.log(data);
