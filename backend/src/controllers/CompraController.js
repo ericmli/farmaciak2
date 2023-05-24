@@ -2,7 +2,7 @@ const { json } = require('body-parser');
 const CompraService = require('../services/CompraService');
 
 module.exports = {
-    getProdutosCompra : (req, res) => {
+    getProdutosCompra: (req, res) => {
         const compraId = req.params.id;
         CompraService.getProdutosCompra(compraId, (err, result) => {
             if (err) {
@@ -12,29 +12,19 @@ module.exports = {
             }
         });
     },
-    createCompra: async (req, res) => {
-        let json = { error: '', result: {} };
 
-        let clienteId = req.body.clienteId;
-        let status = req.body.status;
-        let total = req.body.total;
+    // Função para criar uma nova compra
+    createCompra : (req, res) => {
+        const { cliente_id, status, mtd_pagamento, total, produtos } = req.body;
+      
+        CompraService.createCompra(cliente_id, status, mtd_pagamento, total, produtos)
+          .then(() => {
+            res.status(201).json({ message: 'Compra inserida com sucesso' });
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(500).json({ error: 'Erro ao inserir compra' });
+          });
+      }
+}
 
-        if (clienteId && status && subtotal) {
-            let compraId = await CompraService.createCompra(
-                clienteId, 
-                status,
-                total
-            );
-            json.result = {
-                id_compra: compraId,
-                clienteId,
-                status,
-                total
-            };
-        }else {
-            json.error = 'Campos não enviados';
-        }
-        res.json(json);
-    }
-
-};
