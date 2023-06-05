@@ -65,7 +65,7 @@ function cadastrar() {
     }
   
   }else {
-    window.location.href = "../listProduct/listProduct.html";
+    // window.location.href = "../listProduct/listProduct.html";
   }
   
 }

@@ -38,6 +38,17 @@ createCompra : (cliente_id, status, mtd_pagamento, total, produtos) => {
       });
     });
   });
+},
+
+buscarTodos: () => {
+  return new Promise((aceito, rejeitado) => {
+    const q = 'SELECT c.id_compra, c.data_compra, c.cliente_id, c.status, c.mtd_pagamento, c.total, pc.id_produto_compra, pc.compra_id, pc.produto_id, pc.quantidade, pc.subtotal FROM compras c JOIN produtos_compra pc ON c.id_compra = pc.compra_id';
+    db.query(q, (error, results) => {
+      if (error) { rejeitado(error); return; }
+      aceito(results);
+    });
+  });
 }
+
 
 }

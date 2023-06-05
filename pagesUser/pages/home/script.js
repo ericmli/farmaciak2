@@ -51,11 +51,6 @@ function profil(){
     const logado = localStorage.getItem('logado')
     const nome = localStorage.getItem('nome')
 
-    const cpf = localStorage.getItem('cpf')
-    const nascimento = localStorage.getItem('nascimento')
-    const email = localStorage.getItem('email')
-    const id = localStorage.getItem('idCliente')
-
     let loged = ''
     if(logado){
         console.log(logado)
@@ -88,6 +83,10 @@ function profil(){
 
 function sair(){
     alert('Saiu com sucesso!')
-    localStorage.clear();
+    localStorage.removeItem('nome');
+    localStorage.removeItem('idCliente');
+    localStorage.removeItem('cpf');
+    localStorage.removeItem('email');
+    localStorage.removeItem('logado');
     location.reload();
 }

@@ -47,6 +47,7 @@ router.put('/cliente/endereco/:id', EnderecoController.alterar);
 
 //Rotas para buscar os produtos de uma compra
 router.get('/compras/:id/produtos', CompraController.getProdutosCompra);
+router.get('/compras', CompraController.buscarTodos), 
 router.post('/compra', CompraController.createCompra);
 
 

@@ -106,6 +106,7 @@ function cart() {
   }
 
   let tipoPagamento = sessionStorage.getItem('tipoPagamento')
+
   let add = ''
   if(tipoPagamento === 'Cartão'){
     add = `
@@ -123,7 +124,7 @@ function cart() {
     <div class="form-group row">
       <label for="inputPassword" class="col-sm-2 col-form-label">Validade</label>
       <div class="col-sm-10">
-        <input type="password" class="form-control" id="inputPassword" placeholder='01/30'>
+        <input type="text" class="form-control" id="inputPassword" placeholder='01/30'>
       </div>
     </div>
 
@@ -131,7 +132,7 @@ function cart() {
     <div class="form-group row">
       <label for="staticEmail" class="col-sm-2 col-form-label">Código de segurança</label>
       <div class="col-sm-10">
-        <input type="string" class="form-control" id="inputData" placeholder='000'>
+        <input type="password" class="form-control" id="inputData" placeholder='000'>
       </div>
     </div>
 
@@ -147,40 +148,7 @@ function cart() {
       <button type="button" class="btn btn-info m-2" onclick="atualizar()">Comprar</button>
     `
     document.getElementById('addPagamento').innerHTML = add
-    let name = document.getElementById("inputNome").value.trim();
-    let password = document.getElementById("inputPassword").value.trim();
-    let date = document.getElementById("inputData").value.trim();
-    let number = document.getElementById("inputNumber").value.trim();
-  
-  
-    if (
-      name.length == 0 ||
-      password == 0 ||
-      date.length == 0
-    ) {
-      if (name.length == 0 || name.length > 99) {
-        document.getElementById("inputNome").classList.add(`error`);
-      } else {
-        document.getElementById("inputNome").classList.remove(`error`);
-      }
-      if (password.length == 0) {
-        document.getElementById("inputPassword").classList.add(`error`);
-      } else {
-        document.getElementById("inputPassword").classList.remove(`error`);
-      }
-  
-      if(date.length == 0){
-          document.getElementById("inputData").classList.add(`error`);
-      }else{
-          document.getElementById("inputData").classList.remove(`error`);
-      }
-  
-      if(number.length == 0 ){
-        document.getElementById("inputNumber").classList.add(`error`);
-      }else{
-        document.getElementById("inputNumber").classList.remove(`error`);
-      }
-    }
+
   } else if ( tipoPagamento === 'Boleto'){
     add = `
       <img src="../../../src/boletobancario.jpg">
@@ -220,5 +188,79 @@ function removerEnd(){
 }
 
 function atualizar() { 
-  alert('AA')
+  let name = document.getElementById("inputNome").value.trim();
+  let password = document.getElementById("inputPassword").value.trim();
+  let date = document.getElementById("inputData").value.trim();
+  let number = document.getElementById("inputNumber").value.trim();
+
+
+  if (
+    name.length == 0 ||
+    password.length == 0 ||
+    date.length == 0
+  ) {
+    if (name.length == 0 || name.length > 99) {
+      document.getElementById("inputNome").classList.add(`error`);
+    } else {
+      document.getElementById("inputNome").classList.remove(`error`);
+    }
+    if (password.length == 0) {
+      document.getElementById("inputPassword").classList.add(`error`);
+    } else {
+      document.getElementById("inputPassword").classList.remove(`error`);
+    }
+
+    if(date.length == 0){
+        document.getElementById("inputData").classList.add(`error`);
+    }else{
+        document.getElementById("inputData").classList.remove(`error`);
+    }
+
+    if(number.length == 0 ){
+      document.getElementById("inputNumber").classList.add(`error`);
+    }else{
+      document.getElementById("inputNumber").classList.remove(`error`);
+    }
+  } else {
+    let tipoPagamento = sessionStorage.getItem('tipoPagamento')
+    let subtotal = localStorage.getItem('subtotal')
+    const sendCar = JSON.parse(localStorage.getItem('sendCar'));
+    const produtoid = sendCar.map((e) =>{ 
+      let obj = {
+        produto_id: e.id,
+        quantidade:e.quantidadeProduto,
+        subtotal: (Number(e.preco) * Number(e.quantidadeProduto)).toFixed(2)
+      }
+      return obj
+    });
+    let valorFrete = sessionStorage.getItem('valorFrete')
+    let total = Number(subtotal) + Number(valorFrete)
+    let obj = {
+      cliente_id : id,
+      status : 'Aguardando Pagamento',
+      mtd_pagamento : tipoPagamento,
+      total: total,
+      produtos : produtoid
+    }
+    console.log(obj)
+    // $.ajax({
+    //   url: "http://localhost:2000/api/compra",
+    //   type: "POST",
+    //   headers: {
+    //     accept: "application/json",
+    //   },
+    //   dataType: "json",
+    //   contentType: "application/json",
+    //   data: JSON.stringify(obj),
+    //   success: function (data) {
+    //     alert('Compra realizada com sucesso!')
+    //     window.location.href = `../home/index.html`
+    //     localStorage.removeItem('sendCar')
+
+    //   },
+    //   error: function (data) {
+    //     console.log(data)
+    //   },
+    // });
+  }
 }

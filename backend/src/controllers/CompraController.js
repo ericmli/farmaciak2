@@ -25,6 +25,28 @@ module.exports = {
             console.log(error);
             res.status(500).json({ error: 'Erro ao inserir compra' });
           });
+      },
+
+      buscarTodos : async (req, res) => {
+        let json = { error: '', result: [] };
+        let compras = await CompraService.buscarTodos();
+
+        for(let i in compras){
+            json.result.push({
+                id:compras[i].id,
+                data_compra: compras[i].data_compra,
+                cliente_id: compras[i].cliente_id,
+                status: compras[i].status,
+                mtd_pagamento: compras[i].mtd_pagamento,
+                total: compras[i].total,
+                compra_id: compras[i].compra_id,
+                produto_id: compras[i].produto_id,
+                quantidade: compras[i].quantidade,
+                subtotal: compras[i].subtotal
+            })
+        }
+        res.json(json);
       }
+
 }
 
