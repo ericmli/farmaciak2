@@ -243,24 +243,24 @@ function atualizar() {
       produtos : produtoid
     }
     console.log(obj)
-    // $.ajax({
-    //   url: "http://localhost:2000/api/compra",
-    //   type: "POST",
-    //   headers: {
-    //     accept: "application/json",
-    //   },
-    //   dataType: "json",
-    //   contentType: "application/json",
-    //   data: JSON.stringify(obj),
-    //   success: function (data) {
-    //     alert('Compra realizada com sucesso!')
-    //     window.location.href = `../home/index.html`
-    //     localStorage.removeItem('sendCar')
+    $.ajax({
+      url: "http://localhost:2000/api/compra",
+      type: "POST",
+      headers: {
+        accept: "application/json",
+      },
+      dataType: "json",
+      contentType: "application/json",
+      data: JSON.stringify(obj),
+      success: function (data) {
+        alert('Compra realizada com sucesso!')
+        window.location.href = `../home/index.html`
+        localStorage.removeItem('sendCar')
 
-    //   },
-    //   error: function (data) {
-    //     console.log(data)
-    //   },
-    // });
+      },
+      error: function (data) {
+        console.log(data)
+      },
+    });
   }
 }
