@@ -39,6 +39,21 @@ function pegarInfos(){
         console.log(data);
       },
     });
+    $.ajax({
+      url: `http://localhost:2000/api/produto/${id}/avaliacoes`,
+      type: "GET",
+      headers: {
+          "accept": "application/json"
+      },
+      success: function (data) {
+          if(data.result[data.result.length - 1]){
+          document.getElementById("inputAvaliacao").value = data.result[data.result.length - 1].avaliacao; 
+          }
+      },
+      error: function (data) {
+        console.log(data);
+      },
+    });
 }
 
 function editarInfos(){
@@ -49,6 +64,7 @@ function editarInfos(){
     let descricao = document.getElementById("inputDescricao").value.trim();
     let categoria = document.getElementById("inputCategoria").value.trim();
     let status = document.getElementById("inputStatus").value.trim();
+    let avaliacao = document.getElementById("inputAvaliacao").value.trim();
 
     if (
         nome.length == 0 ||
@@ -56,7 +72,7 @@ function editarInfos(){
         laboratorio == 0 ||
         estoque == 0 ||
         descricao == 0 ||
-        categoria == 0 
+        avaliacao.length == 0 
       ) {
     
         if (nome.length == 0 || nome.length > 99) {
@@ -94,6 +110,12 @@ function editarInfos(){
         } else {
           document.getElementById("inputCategoria").classList.remove(`error`);
         }
+    
+        if (avaliacao.length == 0) {
+          document.getElementById("inputAvaliacao").classList.add(`error`);
+        } else {
+          document.getElementById("inputAvaliacao").classList.remove(`error`);
+        }
       
       } else {
         let newUser = {
@@ -118,7 +140,30 @@ function editarInfos(){
           data: JSON.stringify(newUser),
           success: function (data) {
             console.log( 'foi ' ,newUser)
-            window.location.href = "../listProduct/listProduct.html";
+            // window.location.href = "../listProduct/listProduct.html";
+            let obj ={
+              produto_id : Number(id),
+              cliente_id : 1,
+              avaliacao: avaliacao
+            }
+            $.ajax({
+              url: `http://localhost:2000/api/produto/${id}/avaliacao`,
+              type: "POST",
+              headers: {
+                accept: "application/json",
+              },
+              dataType: "json",
+              contentType: "application/json",
+              data: JSON.stringify(obj),
+              success: function (data) {
+                console.log( 'foi ' ,obj)
+                window.location.href = "../listProduct/listProduct.html";
+                
+              },
+              error: function (data) {
+                console.log(data);
+              },
+            });
           },
           error: function (data) {
             console.log(data);
