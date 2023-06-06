@@ -15,9 +15,9 @@ module.exports = {
 
     // Função para criar uma nova compra
     createCompra : (req, res) => {
-        const { cliente_id, status, mtd_pagamento, total, produtos } = req.body;
+        const { cliente_id, status, cdgCompra, mtd_pagamento, total, produtos } = req.body;
       
-        CompraService.createCompra(cliente_id, status, mtd_pagamento, total, produtos)
+        CompraService.createCompra(cliente_id, cdgCompra, status, mtd_pagamento, total, produtos)
           .then(() => {
             res.status(201).json({ message: 'Compra inserida com sucesso' });
           })
@@ -46,6 +46,18 @@ module.exports = {
             })
         }
         res.json(json);
+      },
+
+      updateCompra: async (req, res) => {
+        const compraId = req.params.id;
+        const { cliente_id, cdgCompra, status, mtd_pagamento, total } = req.body;
+      
+        try {
+          await CompraService.updateCompra(compraId, cliente_id, cdgCompra, status, mtd_pagamento, total);
+          res.status(200).json({ message: 'Compra atualizada com sucesso!' });
+        } catch (error) {
+          res.status(500).json({ error: 'Erro ao atualizar a compra.' });
+        }
       }
 
 }

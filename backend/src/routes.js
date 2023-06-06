@@ -49,6 +49,7 @@ router.put('/cliente/endereco/:id', EnderecoController.alterar);
 router.get('/compras/:id/produtos', CompraController.getProdutosCompra);
 router.get('/compras', CompraController.buscarTodos), 
 router.post('/compra', CompraController.createCompra);
+router.put('/compras/:id', CompraController.updateCompra);
 
 
 module.exports = router;
