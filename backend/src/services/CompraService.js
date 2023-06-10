@@ -9,10 +9,10 @@ module.exports = {
 
   // Função para criar uma nova compra
 
-createCompra : (cliente_id, status, mtd_pagamento, total, produtos) => {
+createCompra : (cliente_id, cdgCompra, status, mtd_pagamento, total, produtos) => {
   return new Promise((resolve, reject) => {
-    const compraQuery = 'INSERT INTO compras (cliente_id, status, mtd_pagamento, total) VALUES (?, ?, ?, ?)';
-    const compraValues = [cliente_id, status, mtd_pagamento, total];
+    const compraQuery = 'INSERT INTO compras (cliente_id, cdgCompra, status, mtd_pagamento, total) VALUES (?, ?, ?, ?, ?)';
+    const compraValues = [cliente_id, cdgCompra, status, mtd_pagamento, total];
 
     db.query(compraQuery, compraValues, (error, result) => {
       if (error) {
@@ -42,10 +42,25 @@ createCompra : (cliente_id, status, mtd_pagamento, total, produtos) => {
 
 buscarTodos: () => {
   return new Promise((aceito, rejeitado) => {
-    const q = 'SELECT c.id_compra, c.data_compra, c.cliente_id, c.status, c.mtd_pagamento, c.total, pc.id_produto_compra, pc.compra_id, pc.produto_id, pc.quantidade, pc.subtotal FROM compras c JOIN produtos_compra pc ON c.id_compra = pc.compra_id';
+    const q = 'SELECT c.id_compra, c.data_compra, c.cliente_id, c.cdgCompra, c.status, c.mtd_pagamento, c.total, pc.id_produto_compra, pc.compra_id, pc.produto_id, pc.quantidade, pc.subtotal FROM compras c JOIN produtos_compra pc ON c.id_compra = pc.compra_id;';
     db.query(q, (error, results) => {
       if (error) { rejeitado(error); return; }
       aceito(results);
+    });
+  });
+},
+
+updateCompra: async (compraId, cliente_id, cdgCompra, status, mtd_pagamento, total) => {
+  const compraQuery = 'UPDATE compras SET cliente_id = ?, cdgCompra = ?, status = ?, mtd_pagamento = ?, total = ? WHERE id_compra = ?';
+  const compraValues = [cliente_id, cdgCompra, status, mtd_pagamento, total, compraId];
+
+  return new Promise((resolve, reject) => {
+    db.query(compraQuery, compraValues, (error, result) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve();
+      }
     });
   });
 }
