@@ -29,7 +29,7 @@ function carregar(){
           for(let i = 0 ; i < data.result.length ; i++){
             if(data.result[i].principal === 1){
               add += `
-              <option selected disabled>${data.result[i].cep}</option>
+              <option selected disabled>${data.result[i].rua}</option>
               `
             }else{
               add += `

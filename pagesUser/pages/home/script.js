@@ -24,7 +24,7 @@ function callFunction(){
                     <div class="card-body">
                     <h5 class="card-title">${data.result[i].nome}</h5>
                     <p class="textNameCard" >R$ ${data.result[i].preco}</p>
-                    <p class="card-text">${data.result[i].descricao}</p>
+                    <button type="button" class="btn btn-primary" onclick="location.href='../cards/cards.html';">Detalhes</button>
                     </div>
                     </div>
                     `
