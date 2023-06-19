@@ -64,8 +64,6 @@ function cadastrar() {
       document.getElementById("inputCategoria").classList.remove(`error`);
     }
   
-  }else {
-    alert('Teste')
   }
   
 }

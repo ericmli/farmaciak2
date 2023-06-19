@@ -25,7 +25,7 @@ function pegarProdutos() {
             for (let i = 0; data.result.length > i; i++) {
                 htmlTab += `
                 <tr>
-                    <th scope="row">${data.result[i].produto_id}</th>
+                    <th scope="row">${i + 1}</th>
                     <td>${data.result[i].data_compra}</td>
                     <td>${(Math.random() * 1000000000).toFixed(0)}</td>
                     <td>${data.result[i].mtd_pagamento}</td>
@@ -36,20 +36,22 @@ function pegarProdutos() {
                     <div class="form-group row">
                     <div class="col-sm-10">
                       <select class="custom-select" id="inputCEP" required>
-                          <option disabled>${data.result[i].status}</option>
+                          <option>${data.result[i].status}</option>
                           <option>Pagamento Rejeitado</option>
                           <option>Pagamento com Sucesso</option>
                           <option>Aguardando Retirada</option>
                           <option>Em Transito</option>
                           <option>Entregue</option>
                       </select>
-                    </div>
-                  </div>
-                  </td>
+                      </div>
+                      </div>
+                      </td>
+                      <td>
+                      <button type="button" class="btn btn-warning" onclick="atualizar(${data.result[i].compra_id},${i})">Atualizar</button>
+                      </td>
                 </tr>
                 `
                 document.getElementById("products").innerHTML = htmlTab;
-
             }
         },
         error: function (data) {
@@ -58,42 +60,26 @@ function pegarProdutos() {
     })
 }
 
-function statusProduto(id) {
-
+function atualizar(id, item) {
+    let info = document.getElementById("inputCEP").value.trim();
+    console.log(id,item)
     $.ajax({
-        url: `http://localhost:2000/api/produto/${id}`,
+        url: "http://localhost:2000/api/compras",
         type: "GET",
         headers: {
             "accept": "application/json"
-        },
+        },  
         success: function (data) {
-            let status
-            let name = data.result.nome
-            let descricao = data.result.descricao
-            let preco = data.result.preco
-            let quantidade = data.result.quantidade
-            let laboratorio = data.result.laboratorio
-            let categoria = data.result.categoria
-
-            if (data.result.status === 'Ativo') {
-                status = 'Inativo'
-            } else {
-                status = 'Ativo'
-            }
-            let edit = {
-                nome: name,
-                descricao: descricao,
-                preco: preco,
-                quantidade: quantidade,
-                laboratorio: laboratorio,
-                categoria: categoria,
-                status: status
-            }
-            realize()
-
-            function realize() {
+                let edit = {
+                    compraId: data.result[item].compra_id,
+                    status: info,
+                    cliente_id: data.result[item].cliente_id,
+                    cdgCompra: 432432,
+                    mtd_pagamento: data.result[item].mtd_pagamento,
+                    total: data.result[item].total
+                }
                 $.ajax({
-                    url: `http://localhost:2000/api/produto/${id}`,
+                    url: `http://localhost:2000/api/compras/${id}`,
                     type: "PUT",
                     headers: {
                         accept: "application/json",
@@ -102,18 +88,17 @@ function statusProduto(id) {
                     contentType: "application/json",
                     data: JSON.stringify(edit),
                     success: function (data) {
-                        pegarProdutos()
+                        location.reload();
                     },
                     error: function (data) {
                         console.log(data);
                     },
                 })
-            }
+                
+            
         },
         error: function (data) {
             console.log(data)
         }
     })
-
 }
-

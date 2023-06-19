@@ -84,7 +84,7 @@ function cart() {
   } else {
     let subtotal = localStorage.getItem('subtotal')
     soma = `
-    <p> <strong>Subtotal: ${subtotal} + Frete: ${temItem} = R$${Number(subtotal)+ Number(temItem)}</strong> </p>    
+    <p> <strong>Subtotal: ${subtotal} + Frete: ${temItem} = R$${(Number(subtotal)+ Number(temItem)).toFixed(2)}</strong> </p>    
     <p> <button type="button" class="btn btn-primary" onclick="removerEnd()">Escolher outro frete</button></p>
     <div class="form-check">
         <input class="form-check-input" type="radio" name="opcaoCred" id="exampleRadios1"
@@ -235,8 +235,10 @@ function atualizar() {
     });
     let valorFrete = sessionStorage.getItem('valorFrete')
     let total = Number(subtotal) + Number(valorFrete)
+    let randomNumberBuy = (Math.random() * 10000000000).toFixed(0)
     let obj = {
       cliente_id : id,
+      cdgCompra: randomNumberBuy,
       status : 'Aguardando Pagamento',
       mtd_pagamento : tipoPagamento,
       total: total,
@@ -253,10 +255,10 @@ function atualizar() {
       contentType: "application/json",
       data: JSON.stringify(obj),
       success: function (data) {
-        alert('Compra realizada com sucesso!')
-        window.location.href = `../home/index.html`
+        alert(`Compra realizada com sucesso!\nNúmero do seu pedido: ${randomNumberBuy}`)
+        window.location.href = `./token/token.html`
         localStorage.removeItem('sendCar')
-
+        localStorage.setItem('codigoCompra',randomNumberBuy)
       },
       error: function (data) {
         console.log(data)
