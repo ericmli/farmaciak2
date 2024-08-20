@@ -1,47 +1,45 @@
 const db = require('../db');
 
 module.exports = {
-    buscarTodos: (produto_id) => {
-        return new Promise((aceito, rejeitado) =>{
-            db.query('SELECT * FROM avaliacoes WHERE produto_id = ?', [produto_id], (error, results) => {
-                if (error) { rejeitado(error); return; }
-                aceito(results);
-            })
-        })
+    buscarTodos: async (produto_id) => {
+        try {
+            const [results] = await db.promise().query('SELECT * FROM avaliacoes WHERE produto_id = ?', [produto_id]);
+            return results;
+        } catch (error) {
+            throw error;
+        }
     },
 
-    buscarAvaliacaoPorCliente: (produto_id, cliente_id) => {
-        return new Promise((aceito, rejeitado) =>{
-            db.query('SELECT * FROM avaliacoes WHERE produto_id = ? AND cliente_id = ?', [produto_id, cliente_id], (error, results) => {
-                if (error) { rejeitado(error); return; }
-                aceito(results);
-            })
-        })
+    buscarAvaliacaoPorCliente: async (produto_id, cliente_id) => {
+        try {
+            const [results] = await db.promise().query('SELECT * FROM avaliacoes WHERE produto_id = ? AND cliente_id = ?', [produto_id, cliente_id]);
+            return results;
+        } catch (error) {
+            throw error;
+        }
     },
 
     inserir: async (cliente_id, produto_id, avaliacao) => {
-        return new Promise(async(aceito, rejeitado) => {
-            let query = 'INSERT INTO avaliacoes (cliente_id, produto_id, avaliacao) VALUES (?, ?, ?)'
-            db.query(query,
-            [cliente_id, produto_id, avaliacao], (error, results) => {
-                if (error) { rejeitado(error); return;}
-                    aceito(results.insertId);
-            })
-        })
+        try {
+            const [results] = await db.promise().query(
+                'INSERT INTO avaliacoes (cliente_id, produto_id, avaliacao) VALUES (?, ?, ?)',
+                [cliente_id, produto_id, avaliacao]
+            );
+            return results.insertId;
+        } catch (error) {
+            throw error;
+        }
     },
 
-    alterar: (id, avaliacao) => {
-        return new Promise((aceito, rejeitado) => {
-            db.query('UPDATE avaliacoes SET avaliacao = ? WHERE id = ?',
-                [avaliacao, id],
-                (error, results) => {
-                    console.log(error);
-                    if (error) { rejeitado(error); return; }
-                    aceito(results);
-
-                }
-
+    alterar: async (id, avaliacao) => {
+        try {
+            const [results] = await db.promise().query(
+                'UPDATE avaliacoes SET avaliacao = ? WHERE id = ?',
+                [avaliacao, id]
             );
-        });
+            return results;
+        } catch (error) {
+            throw error;
+        }
     },
 }
