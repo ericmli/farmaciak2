@@ -1,7 +1,18 @@
 body, html {
     height: 100%;
 }
+#menu-items{
+    position: absolute;
+    right: 0;
+    font-size: 30px;
+}
 
+.dountFound{
+    height: 400px;
+    width: 100vw;
+    text-align: center;
+    padding: 150px 0;
+}
 .error{
     border-color: red;
 }

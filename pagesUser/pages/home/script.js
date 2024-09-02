@@ -34,7 +34,7 @@ function callFunction(){
             document.getElementById('products').innerHTML = htmlLis
         },
         error: function (error) {
-            console.log(error)
+            document.getElementById('products').innerHTML = '<div class="dountFound">Não foi possível carregar os items.</div>'
         }
     })
     
