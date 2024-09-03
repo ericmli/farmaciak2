@@ -1,158 +1,128 @@
 const db = require('../db');
 const bcrypt = require('bcrypt');
 
+
+
+// #001
 // Função para verificar se CPF ou email já existem na base de dados
 async function verificaExistencia(cpf, email) {
+    const con = await db.getConnection(); // Obtém uma conexão do pool
     try {
-        const results = await db.query('SELECT * FROM funcionarios WHERE cpf = ? OR email = ?', [cpf, email]);
+        const [results] = await con.query('SELECT * FROM funcionarios WHERE cpf = ? OR email = ?', [cpf, email]);
         return results.length > 0;
     } catch (error) {
         console.log(error);
         throw new Error('Erro ao verificar existência de CPF ou email.');
+    } finally {
+        con.release(); // Libera a conexão de volta para o pool
     }
 }
 
 module.exports = {
-    login: (email, senha) => {
-
-        return new Promise((aceito, rejeitado) => {
-            db.query('SELECT * FROM funcionarios WHERE email = ?', [email], (error, results) => {
-                if (error) {
-                    rejeitado(error);
-                } else if (results.length === 0) {
-                    rejeitado(new Error('Usuario não encontrado!'))
-                } else {
-                    bcrypt.compare(senha, results[0].senha, (err, match) => {
-                        console.log(senha)
-                        if (err) {
-                            rejeitado(err);
-                        } else if (!match) {
-                            rejeitado(new Error('Senha invalida #'));
-                        } else if (results[0].status !== 'Ativo') {
-                            rejeitado(new Error('Usuario inativo #'));
-                        } else if (results[0].logado) {
-                            rejeitado(new Error('Usuario já logado #'));
-                        } else {
-                            aceito(results);
-                        }
-                    })
-                }
-            });
-        });
+    login: async (email, senha) => {
+        const con = await db.getConnection(); // Obtém uma conexão do pool
+        try {
+            const [results] = await con.query('SELECT * FROM funcionarios WHERE email = ?', [email]);
+            if (results.length === 0) {
+                throw new Error('Usuario não encontrado!');
+            }
+            const match = await bcrypt.compare(senha, results[0].senha);
+            if (!match) {
+                throw new Error('Senha invalida #');
+            }
+            if (results[0].status !== 'Ativo') {
+                throw new Error('Usuario inativo #');
+            }
+            if (results[0].logado) {
+                throw new Error('Usuario já logado #');
+            }
+            return results;
+        } catch (error) {
+            throw error;
+        } finally {
+            con.release(); // Libera a conexão de volta para o pool
+        }
     },
 
-    buscarTodos: () => {
-        return new Promise((aceito, rejeitado) => {
-            db.query('SELECT * FROM funcionarios', (error, results) => {
-                if (error) { rejeitado(error); return; }
-                aceito(results);
-            });
-        });
+    buscarTodos: async () => {
+        const con = await db.getConnection(); // Obtém uma conexão do pool
+        try {
+            const [results] = await con.query('SELECT * FROM funcionarios');
+            return results;
+        } catch (error) {
+            throw error;
+        } finally {
+            con.release(); // Libera a conexão de volta para o pool
+        }
     },
 
-
-    buscarUm: (id) => {
-        return new Promise((aceito, rejeitado) => {
-            db.query('SELECT * FROM funcionarios WHERE id = ?', [id], (error, results) => {
-                if (error) { rejeitado(error); return; }
-                if (results.length > 0) {
-                    aceito(results[0]);
-                } else {
-                    aceito(false);
-                }
-            });
-        });
+    buscarUm: async (id) => {
+        const con = await db.getConnection(); // Obtém uma conexão do pool
+        try {
+            const [results] = await con.query('SELECT * FROM funcionarios WHERE id = ?', [id]);
+            return results.length > 0 ? results[0] : false;
+        } catch (error) {
+            throw error;
+        } finally {
+            con.release(); // Libera a conexão de volta para o pool
+        }
     },
-
 
     inserir: async (nome_completo, cpf, email, senha, grupo, status, logado) => {
-        return new Promise(async (aceito, rejeitado) => {
-            try {
-                const emailJaCadastrado = await verificaExistencia('email', email);
-                if (emailJaCadastrado) {
-                    return aceito({ mensagem: 'E-mail já cadastrado' });
-                }
-                const cpfJaCadastrado = await verificaExistencia('cpf', cpf);
-                if (cpfJaCadastrado) {
-                    return aceito({ mensagem: 'CPF já cadastrado' });
-                }
-                bcrypt.hash(senha, 10, async (error, hash) => {
-                    if (error) {
-                        rejeitado(error);
-                    } else {
-                        db.query('INSERT INTO funcionarios (nome_completo, cpf, email, senha, grupo, status, logado) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                            [nome_completo, cpf, email, hash, grupo, status, logado],
-                            (error, results) => {
-                                if (error) {
-                                    rejeitado(error);
-                                } else {
-                                    aceito(results.insertId);
-                                }
-                            });
-                    }
-                });
-            } catch (error) {
-                rejeitado(error);
+        try {
+            const emailJaCadastrado = await verificaExistencia('email', email);
+            if (emailJaCadastrado) {
+                return { mensagem: 'E-mail já cadastrado' };
             }
-        });
+            const cpfJaCadastrado = await verificaExistencia('cpf', cpf);
+            if (cpfJaCadastrado) {
+                return { mensagem: 'CPF já cadastrado' };
+            }
+            const hash = await bcrypt.hash(senha, 10);
+            const con = await db.getConnection(); // Obtém uma conexão do pool
+            const [results] = await con.query('INSERT INTO funcionarios (nome_completo, cpf, email, senha, grupo, status, logado) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                [nome_completo, cpf, email, hash, grupo, status, logado]
+            );
+            return results.insertId;
+        } catch (error) {
+            throw error;
+        }
     },
 
     alterar: async (id, nome_completo, cpf, email, senha, grupo, status, logado) => {
-        return new Promise(async (aceito, rejeitado) => {
-            try {
-                const emailJaCadastrado = await verificaExistencia('email', email, id);
-                if (emailJaCadastrado) {
-                    return aceito({ mensagem: 'E-mail já cadastrado' });
-                }
-                const cpfJaCadastrado = await verificaExistencia('cpf', cpf, id);
-                if (cpfJaCadastrado) {
-                    return aceito({ mensagem: 'CPF já cadastrado' });
-                }
-                if (senha !== '') {
-                    bcrypt.hash(senha, 10, (error, hash) => {
-                        if (error) {
-                            rejeitado(error);
-                        } else {
-                            db.query('UPDATE funcionarios SET nome_completo = ?, ' +
-                                'cpf = ?, email = ?, senha = ?, grupo = ?, status = ?, logado = ? WHERE id = ?',
-                                [nome_completo, cpf, email, hash, grupo, status, logado, id],
-                                (error, results) => {
-                                    if (error) {
-                                        rejeitado(error);
-                                    } else {
-                                        aceito(results);
-                                    }
-                                }
-                            );
-                        }
-                    });
-                } else {
-                    db.query('UPDATE funcionarios SET nome_completo = ?, ' +
-                        'cpf = ?, email = ?, grupo = ?, status = ?, logado = ? WHERE id = ?',
-                        [nome_completo, cpf, email, grupo, status, logado, id],
-                        (error, results) => {
-                            if (error) {
-                                rejeitado(error);
-                            } else {
-                                aceito(results);
-                            }
-                        }
-                    );
-                }
-            } catch (error) {
-                rejeitado(error);
+        try {
+            const emailJaCadastrado = await verificaExistencia('email', email, id);
+            if (emailJaCadastrado) {
+                return { mensagem: 'E-mail já cadastrado' };
             }
-        });
+            const cpfJaCadastrado = await verificaExistencia('cpf', cpf, id);
+            if (cpfJaCadastrado) {
+                return { mensagem: 'CPF já cadastrado' };
+            }
+            const con = await db.getConnection(); // Obtém uma conexão do pool
+            if (senha !== '') {
+                const hash = await bcrypt.hash(senha, 10);
+                await con.query('UPDATE funcionarios SET nome_completo = ?, cpf = ?, email = ?, senha = ?, grupo = ?, status = ?, logado = ? WHERE id = ?',
+                    [nome_completo, cpf, email, hash, grupo, status, logado, id]
+                );
+            } else {
+                await con.query('UPDATE funcionarios SET nome_completo = ?, cpf = ?, email = ?, grupo = ?, status = ?, logado = ? WHERE id = ?',
+                    [nome_completo, cpf, email, grupo, status, logado, id]
+                );
+            }
+        } catch (error) {
+            throw error;
+        }
     },
 
-
-    excluir: (id) => {
-        return new Promise((aceito, rejeitado) => {
-            db.query('DELETE FROM funcionarios WHERE id =?', [id], (error, results) => {
-                if (error) { rejeitado(error); return; }
-                aceito(results);
-            });
-        });
+    excluir: async (id) => {
+        const con = await db.getConnection(); // Obtém uma conexão do pool
+        try {
+            await con.query('DELETE FROM funcionarios WHERE id = ?', [id]);
+        } catch (error) {
+            throw error;
+        } finally {
+            con.release(); // Libera a conexão de volta para o pool
+        }
     }
-
 }

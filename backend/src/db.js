@@ -1,4 +1,5 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise'); // Use mysql2/promise para suporte a Promises
+
 const connectionConfig = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -6,30 +7,39 @@ const connectionConfig = {
     database: process.env.DB_NAME
 };
 
-let connection;
+let pool;
+const maxRetries = 5; // Número máximo de tentativas de reconexão
+const retryInterval = 2000; // Intervalo entre tentativas em milissegundos
 
-function handleDisconnect() {
-    connection = mysql.createConnection(connectionConfig);
-
-    connection.connect((error) => {
-        if (error) {
-            console.error('Erro ao conectar ao banco de dados:', error);
-            setTimeout(handleDisconnect, 2000); // Tenta reconectar após 2 segundos
-        } else {
+async function createPool() {
+    let retries = 0;
+    while (retries < maxRetries) {
+        try {
+            pool = mysql.createPool(connectionConfig); // Cria um pool de conexões
             console.log(`Conectado ao banco de dados: ${process.env.DB_NAME}`);
+            return pool;
+        } catch (error) {
+            console.error('Erro ao conectar ao banco de dados:', error);
+            retries++;
+            if (retries < maxRetries) {
+                console.log(`Tentando reconectar em ${retryInterval / 1000} segundos...`);
+                await new Promise(resolve => setTimeout(resolve, retryInterval)); // Aguarda antes de tentar novamente
+            } else {
+                throw new Error('Não foi possível conectar ao banco de dados após várias tentativas.');
+            }
         }
-    });
-
-    connection.on('error', (error) => {
-        console.error('Erro na conexão com o banco de dados:', error);
-        if (error.code === 'PROTOCOL_CONNECTION_LOST') {
-            handleDisconnect(); // Reconecta em caso de perda de conexão
-        } else {
-            throw error;
-        }
-    });
+    }
 }
 
-handleDisconnect();
+createPool().catch(error => {
+    console.error('Falha na criação do pool de conexões:', error);
+});
 
-module.exports = connection;
+module.exports = {
+    getConnection: async () => {
+        if (!pool) {
+            await createPool();
+        }
+        return pool.getConnection();
+    }
+};
