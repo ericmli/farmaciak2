@@ -2,14 +2,23 @@
 
 body, html {
     height: 100%;
-    background: white;
+    background-image: url(../../assets/farmaCapa.jpg);
+    width: 100%;
 }
 
+.register {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
 .container{
     position: relative;
     top: 25%;
     margin: auto;
-    background-color: #e7e7e7;
+    background-color: #FFF;
     height: 400px;
     display: flex;
     flex-direction: column;
