@@ -4,7 +4,10 @@ const bcrypt = require('bcrypt');
 // Função para verificar se CPF ou email já existem na base de dados
 async function verificaExistencia(cpf, email) {
     try {
-        const [results] = await db.query('SELECT * FROM funcionarios WHERE cpf = ? OR email = ?', [cpf, email]);
+        const [results] = await db.promise().query(
+            'SELECT * FROM funcionarios WHERE cpf = ? OR email = ?', 
+            [cpf, email]
+        );
         return results.length > 0;
     } catch (error) {
         console.log(error);
@@ -15,7 +18,11 @@ async function verificaExistencia(cpf, email) {
 module.exports = {
     login: async (email, senha) => {
         try {
-            const [results] = await db.query('SELECT * FROM clientes WHERE email = ?', [email]);
+            const [results] = await db.promise().query(
+                'SELECT * FROM clientes WHERE email = ?', 
+                [email]
+            );
+
             if (results.length === 0) {
                 throw new Error('Usuário não encontrado!');
             }
@@ -33,7 +40,7 @@ module.exports = {
 
     buscarTodos: async () => {
         try {
-            const [results] = await db.query('SELECT * FROM clientes');
+            const [results] = await db.promise().query('SELECT * FROM clientes');
             return results;
         } catch (error) {
             throw error;
@@ -42,7 +49,11 @@ module.exports = {
 
     buscarUm: async (id) => {
         try {
-            const [results] = await db.query('SELECT * FROM clientes WHERE id = ?', [id]);
+            const [results] = await db.promise().query(
+                'SELECT * FROM clientes WHERE id = ?', 
+                [id]
+            );
+
             if (results.length > 0) {
                 return results[0];
             } else {
@@ -55,19 +66,19 @@ module.exports = {
 
     inserir: async (nome_completo, cpf, nascimento, email, senha, telefone) => {
         try {
-            const emailJaCadastrado = await verificaExistencia('email', email);
+            const emailJaCadastrado = await verificaExistencia(cpf, email);
             if (emailJaCadastrado) {
                 return { mensagem: 'E-mail já cadastrado' };
             }
 
-            const cpfJaCadastrado = await verificaExistencia('cpf', cpf);
+            const cpfJaCadastrado = await verificaExistencia(cpf, email);
             if (cpfJaCadastrado) {
                 return { mensagem: 'CPF já cadastrado' };
             }
 
             const hash = await bcrypt.hash(senha, 10);
 
-            const [results] = await db.query(
+            const [results] = await db.promise().query(
                 'INSERT INTO clientes (nome_completo, cpf, nascimento, email, senha, telefone) VALUES (?, ?, ?, ?, ?, ?)',
                 [nome_completo, cpf, nascimento, email, hash, telefone]
             );
@@ -80,12 +91,12 @@ module.exports = {
 
     alterar: async (id, nome_completo, cpf, nascimento, email, senha, telefone) => {
         try {
-            const emailJaCadastrado = await verificaExistencia('email', email, id);
+            const emailJaCadastrado = await verificaExistencia(cpf, email);
             if (emailJaCadastrado) {
                 return { mensagem: 'E-mail já cadastrado' };
             }
 
-            const cpfJaCadastrado = await verificaExistencia('cpf', cpf, id);
+            const cpfJaCadastrado = await verificaExistencia(cpf, email);
             if (cpfJaCadastrado) {
                 return { mensagem: 'CPF já cadastrado' };
             }
@@ -103,7 +114,7 @@ module.exports = {
                 ? [nome_completo, cpf, nascimento, email, hash, telefone, id]
                 : [nome_completo, cpf, nascimento, email, telefone, id];
 
-            const [results] = await db.query(query, values);
+            const [results] = await db.promise().query(query, values);
             return results;
         } catch (error) {
             throw error;
