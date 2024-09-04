@@ -7,7 +7,7 @@ async function verificaExistencia(cpf, email) {
         const [results] = await db.query('SELECT * FROM funcionarios WHERE cpf = ? OR email = ?', [cpf, email]);
         return results.length > 0;
     } catch (error) {
-        console.error(error);
+        console.log(error);
         throw new Error('Erro ao verificar existência de CPF ou email.');
     }
 }
