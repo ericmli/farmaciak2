@@ -2,26 +2,32 @@ const db = require('../db');
 const mysql = require('mysql');
 
 module.exports = {
-  getProdutosCompra: (compraId, callback) => {
-    const sql = `SELECT * FROM produtos_compra WHERE compra_id = ?`;
-    db.query(sql, [compraId], callback);
+  getProdutosCompra: async (compraId) => {
+    const con = await db.getConnection(); // Obtém uma conexão do pool
+    try {
+      const [results] = await con.query('SELECT * FROM produtos_compra WHERE compra_id = ?', [compraId]);
+      return results;
+    } catch (error) {
+      throw error;
+    } finally {
+      con.release(); // Libera a conexão de volta para o pool
+    }
   },
 
   // Função para criar uma nova compra
-
-createCompra : (cliente_id, cdgCompra, status, mtd_pagamento, total, produtos) => {
-  return new Promise((resolve, reject) => {
-    const compraQuery = 'INSERT INTO compras (cliente_id, cdgCompra, status, mtd_pagamento, total) VALUES (?, ?, ?, ?, ?)';
-    const compraValues = [cliente_id, cdgCompra, status, mtd_pagamento, total];
-
-    db.query(compraQuery, compraValues, (error, result) => {
-      if (error) {
-        return reject(error);
-      }
+  createCompra: async (cliente_id, cdgCompra, status, mtd_pagamento, total, produtos) => {
+    const con = await db.getConnection(); // Obtém uma conexão do pool
+    try {
+      // Inserir a compra na tabela 'compras'
+      const [result] = await con.query(
+        'INSERT INTO compras (cliente_id, cdgCompra, status, mtd_pagamento, total) VALUES (?, ?, ?, ?, ?)',
+        [cliente_id, cdgCompra, status, mtd_pagamento, total]
+      );
 
       const compraId = result.insertId;
-      const produtosQuery = 'INSERT INTO produtos_compra (compra_id, produto_id, quantidade, subtotal) VALUES ?';
 
+      // Inserir os produtos relacionados à compra na tabela 'produtos_compra'
+      const produtosQuery = 'INSERT INTO produtos_compra (compra_id, produto_id, quantidade, subtotal) VALUES ?';
       const produtosValues = produtos.map((produto) => [
         compraId,
         produto.produto_id,
@@ -29,41 +35,48 @@ createCompra : (cliente_id, cdgCompra, status, mtd_pagamento, total, produtos) =
         produto.subtotal,
       ]);
 
-      db.query(produtosQuery, [produtosValues], (error) => {
-        if (error) {
-          return reject(error);
-        }
+      await con.query(produtosQuery, [produtosValues]);
 
-        resolve();
-      });
-    });
-  });
-},
+      return compraId; // Retorna o ID da nova compra inserida
+    } catch (error) {
+      throw error;
+    } finally {
+      con.release(); // Libera a conexão de volta para o pool
+    }
+  },
 
-buscarTodos: () => {
-  return new Promise((aceito, rejeitado) => {
-    const q = 'SELECT c.id_compra, c.data_compra, c.cliente_id, c.cdgCompra, c.status, c.mtd_pagamento, c.total, pc.id_produto_compra, pc.compra_id, pc.produto_id, pc.quantidade, pc.subtotal FROM compras c JOIN produtos_compra pc ON c.id_compra = pc.compra_id;';
-    db.query(q, (error, results) => {
-      if (error) { rejeitado(error); return; }
-      aceito(results);
-    });
-  });
-},
+  buscarTodos: async () => {
+    const con = await db.getConnection(); // Obtém uma conexão do pool
+    try {
+      const [results] = await con.query(`
+        SELECT 
+          c.id_compra, c.data_compra, c.cliente_id, c.cdgCompra, c.status, c.mtd_pagamento, c.total,
+          pc.id_produto_compra, pc.compra_id, pc.produto_id, pc.quantidade, pc.subtotal 
+        FROM compras c 
+        JOIN produtos_compra pc ON c.id_compra = pc.compra_id;
+      `);
+      return results;
+    } catch (error) {
+      throw error;
+    } finally {
+      con.release(); // Libera a conexão de volta para o pool
+    }
+  },
 
-updateCompra: async (compraId, cliente_id, cdgCompra, status, mtd_pagamento, total) => {
-  const compraQuery = 'UPDATE compras SET cliente_id = ?, cdgCompra = ?, status = ?, mtd_pagamento = ?, total = ? WHERE id_compra = ?';
-  const compraValues = [cliente_id, cdgCompra, status, mtd_pagamento, total, compraId];
+  updateCompra: async (compraId, cliente_id, cdgCompra, status, mtd_pagamento, total) => {
+    const con = await db.getConnection(); // Obtém uma conexão do pool
+    try {
+      const compraQuery = `
+        UPDATE compras 
+        SET cliente_id = ?, cdgCompra = ?, status = ?, mtd_pagamento = ?, total = ? 
+        WHERE id_compra = ?`;
+      const compraValues = [cliente_id, cdgCompra, status, mtd_pagamento, total, compraId];
 
-  return new Promise((resolve, reject) => {
-    db.query(compraQuery, compraValues, (error, result) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve();
-      }
-    });
-  });
-}
-
-
-}
+      await con.query(compraQuery, compraValues);
+    } catch (error) {
+      throw error;
+    } finally {
+      con.release(); // Libera a conexão de volta para o pool
+    }
+  },
+};

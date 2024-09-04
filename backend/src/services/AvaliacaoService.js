@@ -3,7 +3,10 @@ const db = require('../db');
 module.exports = {
     buscarTodos: async (produto_id) => {
         try {
-            const [results] = await db.promise().query('SELECT * FROM avaliacoes WHERE produto_id = ?', [produto_id]);
+            const [results] = await db.promise().query(
+                'SELECT * FROM avaliacoes WHERE produto_id = ?', 
+                [produto_id]
+            );
             return results;
         } catch (error) {
             throw error;
@@ -12,7 +15,10 @@ module.exports = {
 
     buscarAvaliacaoPorCliente: async (produto_id, cliente_id) => {
         try {
-            const [results] = await db.promise().query('SELECT * FROM avaliacoes WHERE produto_id = ? AND cliente_id = ?', [produto_id, cliente_id]);
+            const [results] = await db.promise().query(
+                'SELECT * FROM avaliacoes WHERE produto_id = ? AND cliente_id = ?', 
+                [produto_id, cliente_id]
+            );
             return results;
         } catch (error) {
             throw error;
@@ -42,4 +48,4 @@ module.exports = {
             throw error;
         }
     },
-}
+};
