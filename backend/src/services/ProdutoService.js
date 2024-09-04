@@ -1,72 +1,81 @@
 const db = require('../db');
 
 module.exports = {
-    buscarTodos: () => {
-        return new Promise((aceito, rejeitado) => {
-            db.query('SELECT * FROM produtos', (error, results) => {
-                if (error) { rejeitado(error); return; }
-                aceito(results);
-            });
-        });
+    buscarTodos: async () => {
+        const con = await db.getConnection(); // Obtém uma conexão do pool
+        try {
+            const [results] = await con.query('SELECT * FROM produtos');
+            return results;
+        } catch (error) {
+            throw error;
+        } finally {
+            con.release(); // Libera a conexão de volta para o pool
+        }
     },
 
-    buscarUm: (id) => {
-        return new Promise((aceito, rejeitado) => {
-            db.query('SELECT * FROM produtos WHERE id = ?', [id], (error, results) => {
-                if (error) { rejeitado(error); return; }
-                if (results.length > 0) {
-                    aceito(results[0]);
-                } else {
-                    aceito(false);
-                }
-            });
-        });
+    buscarUm: async (id) => {
+        const con = await db.getConnection(); // Obtém uma conexão do pool
+        try {
+            const [results] = await con.query('SELECT * FROM produtos WHERE id = ?', [id]);
+            return results.length > 0 ? results[0] : false;
+        } catch (error) {
+            throw error;
+        } finally {
+            con.release(); // Libera a conexão de volta para o pool
+        }
     },
 
-    buscarPorNome: (nome) => {
-        return new Promise((aceito, rejeitado) => {
-            db.query(`SELECT * FROM produtos WHERE nome LIKE '%${nome}%'`, (error, results) => {
-                if (error) { rejeitado(error); return; }
-                aceito(results);
-            });
-        });
+    buscarPorNome: async (nome) => {
+        const con = await db.getConnection(); // Obtém uma conexão do pool
+        try {
+            const [results] = await con.query(`SELECT * FROM produtos WHERE nome LIKE ?`, [`%${nome}%`]);
+            return results;
+        } catch (error) {
+            throw error;
+        } finally {
+            con.release(); // Libera a conexão de volta para o pool
+        }
     },
 
-    inserir: (nome,descricao,preco,quantidade,laboratorio,categoria,img) => {
-        return new Promise((aceito, rejeitado) => {
-            db.query('INSERT INTO produtos (nome, descricao, preco, quantidade, laboratorio, categoria, img) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                [nome,descricao,preco,quantidade,laboratorio,categoria,img], 
-                (error, results) => {
-                    if (error) { rejeitado(error); return;}
-                    aceito(results.insertId);
-                }
-                
+    inserir: async (nome, descricao, preco, quantidade, laboratorio, categoria, img) => {
+        const con = await db.getConnection(); // Obtém uma conexão do pool
+        try {
+            const [results] = await con.query(
+                'INSERT INTO produtos (nome, descricao, preco, quantidade, laboratorio, categoria, img) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                [nome, descricao, preco, quantidade, laboratorio, categoria, img]
             );
-        });
+            return results.insertId;
+        } catch (error) {
+            throw error;
+        } finally {
+            con.release(); // Libera a conexão de volta para o pool
+        }
     },
 
-    alterar: (id,nome,descricao,preco,quantidade,laboratorio,categoria, status) => {
-        return new Promise((aceito, rejeitado) => {
-            db.query('UPDATE produtos SET nome = ?, ' +
-                'descricao = ?, preco = ?, quantidade = ?, laboratorio = ?, categoria = ?, status = ? WHERE id = ?',
-                [nome, descricao, preco, quantidade, laboratorio, categoria, status, id],
-                (error, results) => {
-                    console.log(error);
-                    if (error) { rejeitado(error); return; }
-                    aceito(results);
-
-                }
-
+    alterar: async (id, nome, descricao, preco, quantidade, laboratorio, categoria, status) => {
+        const con = await db.getConnection(); // Obtém uma conexão do pool
+        try {
+            const [results] = await con.query(
+                'UPDATE produtos SET nome = ?, descricao = ?, preco = ?, quantidade = ?, laboratorio = ?, categoria = ?, status = ? WHERE id = ?',
+                [nome, descricao, preco, quantidade, laboratorio, categoria, status, id]
             );
-        });
+            return results;
+        } catch (error) {
+            throw error;
+        } finally {
+            con.release(); // Libera a conexão de volta para o pool
+        }
     },
 
-    excluir: (id) => {
-        return new Promise((aceito, rejeitado) => {
-            db.query('DELETE FROM produtos WHERE id =?', [id], (error, results) => {
-                if (error) { rejeitado(error); return; }
-                aceito(results);
-            });
-        });
+    excluir: async (id) => {
+        const con = await db.getConnection(); // Obtém uma conexão do pool
+        try {
+            const [results] = await con.query('DELETE FROM produtos WHERE id = ?', [id]);
+            return results;
+        } catch (error) {
+            throw error;
+        } finally {
+            con.release(); // Libera a conexão de volta para o pool
+        }
     }
 }
