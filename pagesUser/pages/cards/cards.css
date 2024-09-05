@@ -2,6 +2,85 @@ body, html {
     height: 100%;
 }
 
+.rnkHeader {
+    background-color: #343a40;
+    width: 100%;
+    padding: 15px 0;
+}
+
+.imgLogo {
+    height: 50px;
+    object-fit: cover;
+}
+
+.backSize {
+    background-color: #f8f9fa;
+    border-radius: 30px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.containerImg {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.imgMain {
+    width: 300px;
+    height: auto;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.textNome {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.textPreco {
+    color: #28a745;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.containerIcons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#tentacles {
+    width: 70px;
+    height: 40px;
+}
+
+.bi {
+    font-size: 2rem;
+    color: #28a745;
+}
+
+.footer {
+    background-color: #343a40;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+#menu-items{
+    position: absolute;
+    right: 0;
+    font-size: 30px;
+}
+
+.dountFound{
+    height: 400px;
+    width: 100vw;
+    text-align: center;
+    padding: 150px 0;
+}
 .error{
     border-color: red;
 }
@@ -35,129 +114,6 @@ body, html {
     left: 0;
 }
 
-.backSize{
-    width: 99%;
-    margin: 0.5%;
-    background-color: #e9e9e9;
-    border-radius: 50px 500px 0px 50px;
-    height: 100vh;
-}
-
-#containerBack {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 4em;
-    margin-top: 2em;
-}
-
-.containerImg {
-    display: flex;
-    flex-direction: column;
-}
-
-.imgMain {
-    width: 20rem;
-    height: 40%;
-    object-fit: cover;
-    transition: 0.5s;
-    border-radius: 20px;
-    
-}
-
-.imgMain:hover{
-    transform: scale(1.01);
-    transition: 0.5s;
-}
-
-.containerImg {
-    font-size: 1.8em;
-    transition: 0.5s;
-}
-
-.textLab{
-    padding: 10px 0px 0px 0px;
-    font-size: 0.8rem;
-}
-
-.containerImg i:hover{
-    color: #354691ab;
-    transition: 0.5s;
-    cursor: pointer;
-
-}
-
-.containerIcons {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: start;
-    gap: 10px;
-    color: #354691;
-    transition: 0.5s;
-}
-
-
-.containerText {
-    display: flex;
-    flex-direction: column;
-    width: 60%;
-    gap: 3em;
-}
-
-.textNome {
-    font-size: 2rem;
-    text-transform: uppercase;
-    font-weight: 700;
-}
-
-.textPreco {
-    color: black;
-    font-weight: 600;
-}
-
-.textDescricao {
-    border-radius: 20px;
-    background: #fff;
-    width: 100%;
-    height: 200px;
-    padding: 10px;
-}
-
-.footer{
-    background: #343a40;
-    width: 100%;
-    height: 100px;
-}
-
-#avaliacoes {
-    margin-top: 50px;
-}
-
-.estrelasAval {
-    display: flex;
-    flex-direction: column;
-    width: 30px;
-}
-
-#notas {
-    display: flex;
-    flex-direction: row;
-}
-
-#tentacles{
-    width: 60px;
-    height: 40px;
-}
-
-.bi {
-    font-size: 30px;
-}
-
-#irineu{
-    height: 40px;
-
+.containerText{
+    margin-left: 30px;
 }

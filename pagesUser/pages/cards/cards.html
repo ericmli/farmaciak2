@@ -4,9 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" 
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="cards.css">
@@ -14,87 +12,86 @@
 </head>
 
 <body>
+    <header class="rnkHeader">
+        <!-- <div class="container-fluid"> -->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#"><img src="../../../src/logos/logoWhiteSlim.png"
+                        class="imgLogo"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarScroll"
+                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav mr-auto my-2 my-lg-0 navbar-nav-scroll" id="menu-items" style="max-height: 100px;">
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="../register/register.html">Registrar-se<span
+                                    class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../login/login.html">Entrar</a>
+                        </li> -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                                aria-expanded="false">
+                                ☰
+                            </a>
+                            <div id="isLoged">
+                            <!-- <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="../login/login.html">Entrar</a></li>
+                                <li><a class="dropdown-item" href="../register/register.html">Registrar</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" onclick="sair()">Sair</a></li>
+                            </ul> -->
+                        </div>
+                        </li>
+                        <div id="addProfil">
 
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+        <!-- </div> -->
+    </header>
 
-    <div class="rnkHeader">
+    <main class="backSize">
         <div class="container">
-            <div class="container-fluid">
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <a class="navbar-brand" href="#"><img src="../../../src/logos/logoWhiteSlim.png"
-                            class="imgLogo"></a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarScroll"
-                        aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarScroll">
-                        <ul class="navbar-nav mr-auto my-2 my-lg-0 navbar-nav-scroll" style="max-height: 100px;">
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" href="../register/register.html">Registrar-se<span
-                                        class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../login/login.html">Entrar</a>
-                            </li> -->
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                                    aria-expanded="false">
-                                    Opções
-                                </a>
-                                <div id="isLoged">
-                                    <!-- <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="../login/login.html">Entrar</a></li>
-                                    <li><a class="dropdown-item" href="../register/register.html">Registrar</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" onclick="sair()">Sair</a></li>
-                                </ul> -->
-                                </div>
-                            </li>
-                            <div id="addProfil">
-
-                            </div>
-                        </ul>
-                        <form class="d-flex">
-                            <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-info" type="submit">Search</button>
-                        </form>
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="containerImg">
+                    <img src="https://via.placeholder.com/150" alt="Produto" class="imgMain">
+                    <p class="textLab">Produto em destaque</p>
+                </div>
+                <div class="containerText">
+                    <h2 class="textNome">Nome do Produto</h2>
+                    <p class="textDescricao">Descrição detalhada do produto.</p>
+                    <p class="textPreco">R$ 199,99</p>
+                    <div class="containerIcons">
+                        <i class="bi bi-cart-plus-fill" onclick="car()"></i>
+                        <input type="number" id="tentacles" min="1" value="1" class="form-control">
+                        <button type="button" class="btn btn-primary" id="irineu" onclick="car()">Adicionar</button>
                     </div>
-                </nav>
+                </div>
             </div>
         </div>
 
-        <div class="backSize">
-            <div id="containerAll">
-                <div id="containerBack">
-
-                </div>
-                <div class="containerIcons">
-                    <i class="bi bi-cart-plus-fill" onclick="car()"></i>
-                    <input type="number" id="tentacles" min="1" value="1">
-                    <button type="button" class="btn btn-primary" id="irineu" onclick="car()">+</button>
-
-                </div>
-
-            </div>
-            <div id="avaliacoes">
-                <div id="notas">
-                </div>
-
-            </div>
+    <section id="avaliacoes" class="mt-5">
+        <div id="notas" class="d-flex justify-content-center">
+            <!-- Avaliações serão inseridas aqui -->
         </div>
+    </section>
+</main>
 
-        <div class="footer">
+    <footer class="footer bg-dark text-light mt-auto py-4">
+        <div class="container text-center">
+            <p>&copy; 2024 K2 Farma. Todos os direitos reservados.</p>
         </div>
-    </div>
+    </footer>
 
-
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" 
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     <script src="cards.js"></script>
 </body>
-
 </html>
