@@ -93,47 +93,65 @@ function car() {
     }
     
 }
-count = 1;
-function pegaValorParaSomar(i) {
-  let sun = convert[i].quantidadeProduto;
-  sun = Number(sun) + count++;
+let count = 1;
+let countMinius = 1;
 
+function pegaValorParaSomar(i) {
   const local = localStorage.getItem('sendCar');
   const carrinho = JSON.parse(local);
-  const produto = carrinho[i];
-  const novoProduto = {...produto, quantidadeProduto: sun};
-  carrinho[i] = novoProduto;
-  console.log(carrinho)
-  localStorage.setItem('sendCar', JSON.stringify(carrinho));
-  location.reload()
+  
+  if (carrinho && carrinho[i]) {
+    let sun = Number(carrinho[i].quantidadeProduto);
+    sun = sun + count;  // Incrementa com o valor da variável global `count`
+
+    const novoProduto = { ...carrinho[i], quantidadeProduto: sun };
+    carrinho[i] = novoProduto;
+
+    localStorage.setItem('sendCar', JSON.stringify(carrinho));
+    location.reload();
+  } else {
+    console.error('Produto não encontrado no carrinho');
+  }
 }
 
-countMinius = 1;
 function pegaValorParaDiminuir(i) {
-  let sun = convert[i].quantidadeProduto;
-  sun = Number(sun) - count--;
-
   const local = localStorage.getItem('sendCar');
   const carrinho = JSON.parse(local);
-  const produto = carrinho[i];
-  const novoProduto = {...produto, quantidadeProduto: sun};
-  carrinho[i] = novoProduto;
-  console.log(carrinho)
-  localStorage.setItem('sendCar', JSON.stringify(carrinho));
-  location.reload()
+  
+  if (carrinho && carrinho[i]) {
+    let sun = Number(carrinho[i].quantidadeProduto);
+    
+    if (sun > 0) {
+      sun = sun - countMinius;  // Decrementa com o valor da variável global `countMinius`
+    }
+
+    const novoProduto = { ...carrinho[i], quantidadeProduto: sun };
+    carrinho[i] = novoProduto;
+
+    localStorage.setItem('sendCar', JSON.stringify(carrinho));
+    location.reload();
+  } else {
+    console.error('Produto não encontrado no carrinho');
+  }
 }
 
 function somarTotal() {
   const local = localStorage.getItem('sendCar');
-  const obj = JSON.parse(local)
-  const valor = obj.map(item => item.preco)
-  const quantidade = obj.map(i => i.quantidadeProduto)
-  const total = valor.reduce(function (total, i, index) {
-    return total + i * quantidade[index]
-  }, 0)
-  localStorage.setItem('subtotal', total.toFixed(2))
-  return total.toFixed(2)
+  const carrinho = JSON.parse(local);
+
+  if (carrinho) {
+    const total = carrinho.reduce((acc, item) => {
+      return acc + item.preco * item.quantidadeProduto;
+    }, 0);
+
+    localStorage.setItem('subtotal', total.toFixed(2));
+    return total.toFixed(2);
+  } else {
+    console.error('Carrinho vazio ou inválido');
+    return '0.00';
+  }
 }
+
 
 function callLocal(id){
   localStorage.setItem("idProducts", id)
