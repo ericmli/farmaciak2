@@ -6,7 +6,7 @@ async function verificaExistencia(cpf, email) {
     const con = await db.getConnection(); // Obtém uma conexão do pool
     try {
         const [results] = await con.query(
-            'SELECT * FROM funcionarios WHERE cpf = ? OR email = ?', 
+            'SELECT * FROM clientes WHERE cpf = ? OR email = ?', 
             [cpf, email]
         );
         return results.length > 0;
