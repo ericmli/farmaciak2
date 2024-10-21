@@ -3,54 +3,73 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 const id = localStorage.getItem('idCliente')
 
-function carregar(){
-  
+function carregar() {
 
+  // Faz a requisição AJAX para obter os dados do cliente
   $.ajax({
-    url: `http://localhost:2000/api/cliente/${id}`,
-    type: "GET",
+    url: `http://localhost:2000/api/cliente/${id}`, // URL do endpoint com o ID do cliente
+    type: "GET", // Método HTTP GET para buscar dados
     headers: {
-      accept: "application/json",
+      accept: "application/json", // Define que a resposta esperada é JSON
     },
+
+    // Função de callback para o caso de sucesso
     success: function (data) {
-      
+
+      // Popula os campos de nome, senha e data de nascimento com os dados recebidos
       document.getElementById("inputNome").value = data.result.nome_completo;
       document.getElementById("inputPassword").value = data.result.senha;
       document.getElementById("inputData").value = data.result.nascimento;
-      $.ajax({
-        url: `http://localhost:2000/api/cliente/${id}/enderecos`,
-        type: "GET",
-        headers: {
-          accept: "application/json",
-        },
-        success: function (data) {
-          document.getElementById("inputCEP").value = data.result[0].cep;
-          console.log(data.result)
 
-          let add = ''
-          for(let i = 0 ; i < data.result.length ; i++){
-            if(data.result[i].principal === 1){
+      // Faz a requisição AJAX para buscar os endereços do cliente
+      $.ajax({
+        url: `http://localhost:2000/api/cliente/${id}/enderecos`, // URL para obter os endereços do cliente
+        type: "GET", // Método HTTP GET para buscar dados de endereço
+        headers: {
+          accept: "application/json", // Define que a resposta esperada é JSON
+        },
+
+        // Função de callback para o caso de sucesso
+        success: function (data) {
+
+          // Preenche o campo de CEP com o primeiro endereço
+          document.getElementById("inputCEP").value = data.result[0].cep;
+          console.log(data.result); // Exibe os dados no console para depuração
+
+          // Inicializa a variável para armazenar as opções de CEP
+          let add = '';
+
+          // Loop para criar opções de CEP no elemento select
+          for (let i = 0; i < data.result.length; i++) {
+            if (data.result[i].principal === 1) { // Verifica se o endereço é o principal
               add += `
               <option selected disabled>${data.result[i].cep}</option>
-              `
-            }else{
+              `;
+            } else {
               add += `
               <option>${data.result[i].cep}</option>
-              `
+              `;
             }
           }
-          document.getElementById('inputCEP').innerHTML = add
+
+          // Insere as opções de CEP no elemento select
+          document.getElementById('inputCEP').innerHTML = add;
         },
+
+        // Função de callback para o caso de erro ao carregar os endereços
         error: function (error) {
-          console.log(error);
+          console.log(error); // Exibe o erro no console
         },
       });
     },
+
+    // Função de callback para o caso de erro ao carregar os dados do cliente
     error: function (error) {
-      console.log(error);
+      console.log(error); // Exibe o erro no console
     },
   });
 }
+
 
 function atualizar() {
   let name = document.getElementById("inputNome").value.trim();
