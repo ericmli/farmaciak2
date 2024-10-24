@@ -92,4 +92,3 @@ document.querySelector('.custom-file-input').addEventListener('change', function
   // Lê o conteúdo do arquivo como URL de dados
   reader.readAsDataURL(file);
 });
-
