@@ -91,4 +91,12 @@ document.querySelector('.custom-file-input').addEventListener('change', function
 
   // Lê o conteúdo do arquivo como URL de dados
   reader.readAsDataURL(file);
+
+  // Resetar o preview após um tempo 
+setTimeout(() => {
+    previewContainer.innerHTML = '';
+    label.textContent = 'Escolha a Imagem';
+    fileInput.value = '';
+}, 10000);
 });
+
