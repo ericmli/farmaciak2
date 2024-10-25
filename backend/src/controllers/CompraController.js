@@ -6,59 +6,59 @@ module.exports = {
         const compraId = req.params.id;
         CompraService.getProdutosCompra(compraId, (err, result) => {
             if (err) {
-                res.status(500).send({ error: 'Erro ao buscar os produtos da compra.' });
-            } else {
-                res.send(result);
+                return res.status(500).send({ error: 'Erro ao buscar os produtos da compra.' });
             }
+            res.send(result);
         });
     },
 
     // Função para criar uma nova compra
-    createCompra : (req, res) => {
+    createCompra: (req, res) => {
         const { cliente_id, status, cdgCompra, mtd_pagamento, total, produtos } = req.body;
-      
+
         CompraService.createCompra(cliente_id, cdgCompra, status, mtd_pagamento, total, produtos)
-          .then(() => {
-            res.status(201).json({ message: 'Compra inserida com sucesso' });
-          })
-          .catch((error) => {
-            console.log(error);
-            res.status(500).json({ error: 'Erro ao inserir compra' });
-          });
-      },
-
-      buscarTodos : async (req, res) => {
-        let json = { error: '', result: [] };
-        let compras = await CompraService.buscarTodos();
-
-        for(let i in compras){
-            json.result.push({
-                id:compras[i].id,
-                data_compra: compras[i].data_compra,
-                cliente_id: compras[i].cliente_id,
-                status: compras[i].status,
-                mtd_pagamento: compras[i].mtd_pagamento,
-                total: compras[i].total,
-                compra_id: compras[i].compra_id,
-                produto_id: compras[i].produto_id,
-                quantidade: compras[i].quantidade,
-                subtotal: compras[i].subtotal
+            .then(() => {
+                res.status(201).json({ message: 'Compra inserida com sucesso' });
             })
-        }
-        res.json(json);
-      },
+            .catch((error) => {
+                console.error(error);
+                res.status(500).json({ error: 'Erro ao inserir compra' });
+            });
+    },
 
-      updateCompra: async (req, res) => {
+    buscarTodos: async (req, res) => {
+        try {
+            const compras = await CompraService.buscarTodos();
+            const json = {
+                error: '',
+                result: compras.map(({ id, data_compra, cliente_id, status, mtd_pagamento, total, compra_id, produto_id, quantidade, subtotal }) => ({
+                    id,
+                    data_compra,
+                    cliente_id,
+                    status,
+                    mtd_pagamento,
+                    total,
+                    compra_id,
+                    produto_id,
+                    quantidade,
+                    subtotal,
+                })),
+            };
+            res.json(json);
+        } catch (error) {
+            res.status(500).json({ error: 'Erro ao buscar compras.' });
+        }
+    },
+
+    updateCompra: async (req, res) => {
         const compraId = req.params.id;
         const { cliente_id, cdgCompra, status, mtd_pagamento, total } = req.body;
-      
+
         try {
-          await CompraService.updateCompra(compraId, cliente_id, cdgCompra, status, mtd_pagamento, total);
-          res.status(200).json({ message: 'Compra atualizada com sucesso!' });
+            await CompraService.updateCompra(compraId, cliente_id, cdgCompra, status, mtd_pagamento, total);
+            res.status(200).json({ message: 'Compra atualizada com sucesso!' });
         } catch (error) {
-          res.status(500).json({ error: 'Erro ao atualizar a compra.' });
+            res.status(500).json({ error: 'Erro ao atualizar a compra.' });
         }
-      }
-
-}
-
+    },
+};
