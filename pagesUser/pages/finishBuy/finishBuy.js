@@ -187,82 +187,70 @@ function removerEnd(){
 
 }
 
-function atualizar() { 
-  let name = document.getElementById("inputNome").value.trim();
-  let password = document.getElementById("inputPassword").value.trim();
-  let date = document.getElementById("inputData").value.trim();
-  let number = document.getElementById("inputNumber").value.trim();
+function atualizar() {
+  const name = document.getElementById("inputNome").value.trim();
+  const password = document.getElementById("inputPassword").value.trim();
+  const date = document.getElementById("inputData").value.trim();
+  const number = document.getElementById("inputNumber").value.trim();
 
+  const inputs = [
+    { value: name, id: "inputNome", condition: name.length === 0 || name.length > 99 },
+    { value: password, id: "inputPassword", condition: password.length === 0 },
+    { value: date, id: "inputData", condition: date.length === 0 },
+    { value: number, id: "inputNumber", condition: number.length === 0 }
+  ];
 
-  if (
-    name.length == 0 ||
-    password.length == 0 ||
-    date.length == 0
-  ) {
-    if (name.length == 0 || name.length > 99) {
-      document.getElementById("inputNome").classList.add(`error`);
+  let hasError = false;
+
+  inputs.forEach(({ value, id, condition }) => {
+    const inputElement = document.getElementById(id);
+    if (condition) {
+      inputElement.classList.add("error");
+      hasError = true;
     } else {
-      document.getElementById("inputNome").classList.remove(`error`);
+      inputElement.classList.remove("error");
     }
-    if (password.length == 0) {
-      document.getElementById("inputPassword").classList.add(`error`);
-    } else {
-      document.getElementById("inputPassword").classList.remove(`error`);
-    }
+  });
 
-    if(date.length == 0){
-        document.getElementById("inputData").classList.add(`error`);
-    }else{
-        document.getElementById("inputData").classList.remove(`error`);
-    }
+  if (hasError) return;
 
-    if(number.length == 0 ){
-      document.getElementById("inputNumber").classList.add(`error`);
-    }else{
-      document.getElementById("inputNumber").classList.remove(`error`);
+  const tipoPagamento = sessionStorage.getItem("tipoPagamento");
+  const subtotal = Number(localStorage.getItem("subtotal"));
+  const valorFrete = Number(sessionStorage.getItem("valorFrete"));
+  const total = subtotal + valorFrete;
+  const randomNumberBuy = Math.floor(Math.random() * 10000000000).toString();
+
+  const sendCar = JSON.parse(localStorage.getItem("sendCar")) || [];
+  const produtos = sendCar.map(e => ({
+    produto_id: e.id,
+    quantidade: e.quantidadeProduto,
+    subtotal: (e.preco * e.quantidadeProduto).toFixed(2)
+  }));
+
+  const compraData = {
+    cliente_id: id,
+    cdgCompra: randomNumberBuy,
+    status: "Aguardando Pagamento",
+    mtd_pagamento: tipoPagamento,
+    total,
+    produtos
+  };
+
+  $.ajax({
+    url: "http://localhost:2000/api/compra",
+    type: "POST",
+    headers: { accept: "application/json" },
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(compraData),
+    success: function () {
+      alert(`Compra realizada com sucesso!\nNúmero do seu pedido: ${randomNumberBuy}`);
+      window.location.href = "./token/token.html";
+      localStorage.removeItem("sendCar");
+      localStorage.setItem("codigoCompra", randomNumberBuy);
+    },
+    error: function (error) {
+      console.log(error);
     }
-  } else {
-    let tipoPagamento = sessionStorage.getItem('tipoPagamento')
-    let subtotal = localStorage.getItem('subtotal')
-    const sendCar = JSON.parse(localStorage.getItem('sendCar'));
-    const produtoid = sendCar.map((e) =>{ 
-      let obj = {
-        produto_id: e.id,
-        quantidade:e.quantidadeProduto,
-        subtotal: (Number(e.preco) * Number(e.quantidadeProduto)).toFixed(2)
-      }
-      return obj
-    });
-    let valorFrete = sessionStorage.getItem('valorFrete')
-    let total = Number(subtotal) + Number(valorFrete)
-    let randomNumberBuy = (Math.random() * 10000000000).toFixed(0)
-    let obj = {
-      cliente_id : id,
-      cdgCompra: randomNumberBuy,
-      status : 'Aguardando Pagamento',
-      mtd_pagamento : tipoPagamento,
-      total: total,
-      produtos : produtoid
-    }
-    console.log(obj)
-    $.ajax({
-      url: "http://localhost:2000/api/compra",
-      type: "POST",
-      headers: {
-        accept: "application/json",
-      },
-      dataType: "json",
-      contentType: "application/json",
-      data: JSON.stringify(obj),
-      success: function (data) {
-        alert(`Compra realizada com sucesso!\nNúmero do seu pedido: ${randomNumberBuy}`)
-        window.location.href = `./token/token.html`
-        localStorage.removeItem('sendCar')
-        localStorage.setItem('codigoCompra',randomNumberBuy)
-      },
-      error: function (data) {
-        console.log(data)
-      },
-    });
-  }
+  });
 }
