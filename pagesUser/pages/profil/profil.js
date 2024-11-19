@@ -59,6 +59,17 @@ function carregar() {
         // Função de callback para o caso de erro ao carregar os endereços
         error: function (error) {
           console.log(error); // Exibe o erro no console
+          let mensagemErro = "Tente novamente mais tarde.";
+
+          if (error.responseJSON && error.responseJSON.message) {
+            mensagemErro = error.responseJSON.message;
+          }
+
+          Swal.fire({
+            icon: "error",
+            title: "Erro",
+            text: mensagemErro,
+          });
         },
       });
     },
@@ -94,19 +105,19 @@ function atualizar() {
       document.getElementById("inputPassword").classList.remove(`error`);
     }
 
-    if(date.length == 0){
-        document.getElementById("inputData").classList.add(`error`);
-    }else{
-        document.getElementById("inputData").classList.remove(`error`);
+    if (date.length == 0) {
+      document.getElementById("inputData").classList.add(`error`);
+    } else {
+      document.getElementById("inputData").classList.remove(`error`);
     }
 
-    if(cep.length != 9 ){
+    if (cep.length != 9) {
       document.getElementById("inputCEP").classList.add(`error`);
-    }else{
+    } else {
       document.getElementById("inputCEP").classList.remove(`error`);
     }
 
- 
+
 
   } else {
     $.ajax({
@@ -117,14 +128,14 @@ function atualizar() {
       },
       success: function (data) {
         let newUser = {
-          nome_completo: name ,
+          nome_completo: name,
           cpf: data.result.cpf,
           nascimento: date,
           email: data.result.email,
           senha: password,
           telefone: data.result.telefone
         };
-    
+
         $.ajax({
           url: `http://localhost:2000/api/cliente/${id}`,
           type: "PUT",
@@ -148,11 +159,11 @@ function atualizar() {
         console.log(error);
       },
     });
-    
+
   }
 }
 
-function createCep(){
+function createCep() {
   let cep = document.getElementById("inputCEP").value.trim();
   $.ajax({
     url: `http://localhost:2000/api/cliente/${id}/enderecos`,
@@ -161,36 +172,36 @@ function createCep(){
       accept: "application/json",
     },
     success: function (data) {
-      for(let i = 0 ; i < data.result.length ; i ++){
+      for (let i = 0; i < data.result.length; i++) {
         console.log(data.result[i].principal, '$%$%$%$%$$%$%')
-        if(data.result[i].cep === cep){
+        if (data.result[i].cep === cep) {
           console.log(id)
-        let newUser = {
-          cliente_id: id,
-          rua: data.result[i].rua,
-          numero: data.result[i].numero,
-          cidade: data.result[i].cidade,
-          estado: data.result[i].estado,
-          cep: data.result[i].cep,
-          principal: 1,
-          faturamento: null
-        }
+          let newUser = {
+            cliente_id: id,
+            rua: data.result[i].rua,
+            numero: data.result[i].numero,
+            cidade: data.result[i].cidade,
+            estado: data.result[i].estado,
+            cep: data.result[i].cep,
+            principal: 1,
+            faturamento: null
+          }
           $.ajax({
-          url: `http://localhost:2000/api/cliente/endereco/${id}`,
-          type: "PUT",
-          headers: {
-            accept: "application/json",
-          },
-          dataType: "json",
-          contentType: "application/json",
-          data: JSON.stringify(newUser),
-          success: function (date) {
+            url: `http://localhost:2000/api/cliente/endereco/${id}`,
+            type: "PUT",
+            headers: {
+              accept: "application/json",
+            },
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(newUser),
+            success: function (date) {
 
-          },
-          error: function (data) {
-            console.log(data);
-          },
-        });
+            },
+            error: function (data) {
+              console.log(data);
+            },
+          });
         }
       }
     },
@@ -198,5 +209,5 @@ function createCep(){
       console.log(error);
     },
   });
-  
+
 }

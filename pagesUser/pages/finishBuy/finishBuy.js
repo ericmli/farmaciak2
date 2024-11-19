@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 const id = localStorage.getItem('idCliente')
 
-function carregar(){
-  
+function carregar() {
+
 
   $.ajax({
     url: `http://localhost:2000/api/cliente/${id}`,
@@ -14,7 +14,7 @@ function carregar(){
       accept: "application/json",
     },
     success: function (data) {
-      
+
       $.ajax({
         url: `http://localhost:2000/api/cliente/${id}/enderecos`,
         type: "GET",
@@ -26,12 +26,12 @@ function carregar(){
           console.log(data.result)
 
           let add = ''
-          for(let i = 0 ; i < data.result.length ; i++){
-            if(data.result[i].principal === 1){
+          for (let i = 0; i < data.result.length; i++) {
+            if (data.result[i].principal === 1) {
               add += `
               <option selected disabled>${data.result[i].rua}</option>
               `
-            }else{
+            } else {
               add += `
               <option>${data.result[i].cep}</option>
               `
@@ -79,12 +79,12 @@ function cart() {
     </div>
   `
   let temItem = sessionStorage.getItem('valorFrete')
-  if(!temItem) {
+  if (!temItem) {
     document.getElementById('addRadio').innerHTML = addHtml
   } else {
     let subtotal = localStorage.getItem('subtotal')
     soma = `
-    <p> <strong>Subtotal: ${subtotal} + Frete: ${temItem} = R$${(Number(subtotal)+ Number(temItem)).toFixed(2)}</strong> </p>    
+    <p> <strong>Subtotal: ${subtotal} + Frete: ${temItem} = R$${(Number(subtotal) + Number(temItem)).toFixed(2)}</strong> </p>    
     <p> <button type="button" class="btn btn-primary" onclick="removerEnd()">Escolher outro frete</button></p>
     <div class="form-check">
         <input class="form-check-input" type="radio" name="opcaoCred" id="exampleRadios1"
@@ -108,7 +108,7 @@ function cart() {
   let tipoPagamento = sessionStorage.getItem('tipoPagamento')
 
   let add = ''
-  if(tipoPagamento === 'Cartão'){
+  if (tipoPagamento === 'Cartão') {
     add = `
     <form class="mt-5 text-left">
 
@@ -149,7 +149,7 @@ function cart() {
     `
     document.getElementById('addPagamento').innerHTML = add
 
-  } else if ( tipoPagamento === 'Boleto'){
+  } else if (tipoPagamento === 'Boleto') {
     add = `
       <img src="../../../src/boletobancario.jpg">
       <button type="button" class="btn btn-info m-2" onclick="atualizar()">Comprar</button>
@@ -160,10 +160,10 @@ function cart() {
     `
     document.getElementById('addPagamento').innerHTML = add
   }
-  
+
   var radios = document.getElementsByName('opcao');
   for (var i = 0; i < radios.length; i++) {
-    radios[i].addEventListener('change', function() {
+    radios[i].addEventListener('change', function () {
       var valorSelecionado = this.value;
       sessionStorage.setItem('valorFrete', valorSelecionado);
       window.location.reload();
@@ -172,7 +172,7 @@ function cart() {
   }
   var radiosCred = document.getElementsByName('opcaoCred');
   for (var i = 0; i < radiosCred.length; i++) {
-    radiosCred[i].addEventListener('change', function() {
+    radiosCred[i].addEventListener('change', function () {
       var valorSelecionado = this.value;
       sessionStorage.setItem('tipoPagamento', valorSelecionado);
       window.location.reload();
@@ -181,7 +181,7 @@ function cart() {
 
 }
 
-function removerEnd(){
+function removerEnd() {
   sessionStorage.clear()
   window.location.reload();
 
@@ -250,7 +250,19 @@ function atualizar() {
       localStorage.setItem("codigoCompra", randomNumberBuy);
     },
     error: function (error) {
-      console.log(error);
+      console.error("Erro ao realizar a compra:", error);
+
+      let mensagemErro = "Houve um problema ao processar sua compra. Tente novamente mais tarde.";
+
+      if (error.responseJSON && error.responseJSON.message) {
+        mensagemErro = error.responseJSON.message;
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: "Erro na compra",
+        text: mensagemErro,
+      });
     }
   });
 }

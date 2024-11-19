@@ -175,6 +175,17 @@ function cadastrar() {
       },
       error: function (data) {
         console.log(data);
+        let mensagemErro = "Tente novamente mais tarde.";
+
+      if (error.responseJSON && error.responseJSON.message) {
+        mensagemErro = error.responseJSON.message;
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: "Erro na compra",
+        text: mensagemErro,
+      });
       },
     });
   }

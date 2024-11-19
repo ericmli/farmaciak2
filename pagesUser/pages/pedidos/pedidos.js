@@ -36,6 +36,17 @@ function load(){
     },
     error: function (error) {
       console.log(error);
+      let mensagemErro = "Tente novamente mais tarde.";
+
+      if (error.responseJSON && error.responseJSON.message) {
+        mensagemErro = error.responseJSON.message;
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: "Erro",
+        text: mensagemErro,
+      });
     },
   });
 }

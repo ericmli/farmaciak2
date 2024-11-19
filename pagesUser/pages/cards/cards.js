@@ -59,6 +59,17 @@ function load() {
     },
     error: function (error) {
       console.error("Erro ao carregar o produto:", error);
+      let mensagemErro = "Houve um problema ao processar sua compra. Tente novamente mais tarde.";
+
+      if (error.responseJSON && error.responseJSON.message) {
+        mensagemErro = error.responseJSON.message;
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: "Erro na compra",
+        text: mensagemErro,
+      });
     },
   });
 }
@@ -100,6 +111,17 @@ function loadAvaliacoes() {
     },
     error: function (error) {
       console.error("Erro ao carregar as avaliações:", error);
+      let mensagemErro = "Houve um problema ao processar sua compra. Tente novamente mais tarde.";
+
+      if (error.responseJSON && error.responseJSON.message) {
+        mensagemErro = error.responseJSON.message;
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: "Erro na compra",
+        text: mensagemErro,
+      });
     },
   });
 }
@@ -134,6 +156,17 @@ function car() {
     },
     error: function (error) {
       console.error("Erro ao adicionar ao carrinho:", error);
+      let mensagemErro = "Tente novamente mais tarde.";
+
+      if (error.responseJSON && error.responseJSON.message) {
+        mensagemErro = error.responseJSON.message;
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: "Erro na compra",
+        text: mensagemErro,
+      });
     },
   });
 }
