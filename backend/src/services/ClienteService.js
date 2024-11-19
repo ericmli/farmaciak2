@@ -1,5 +1,6 @@
 const db = require('../db');
 const bcrypt = require('bcrypt');
+const emai = require('../utils/emai');
 
 // Função para verificar se CPF ou email já existem na base de dados
 async function verificaExistencia(cpf, email) {
@@ -96,6 +97,8 @@ module.exports = {
                 [nome_completo, cpf, nascimento, email, hash, telefone]
             );
 
+                 emai(email,"conta criada com sucesso" , `é um prazer recebelo 
+                ${nome_completo}`)
             return results.insertId;
         } catch (error) {
             throw error;
