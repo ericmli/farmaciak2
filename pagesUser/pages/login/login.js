@@ -56,18 +56,12 @@ function login() {
       },
 
       // Função de callback para o caso de erro
-      error: function () {
+      error: function (data) {
         // Exibe um alerta informando que o e-mail ou senha estão incorretos
-        let mensagemErro = "E-mail ou senha errado!";
-
-        if (error.responseJSON && error.responseJSON.message) {
-          mensagemErro = error.responseJSON.message;
-        }
-
         Swal.fire({
           icon: "error",
           title: "Erro",
-          text: mensagemErro,
+          text: data.responseJSON.error,
         });
       },
     });

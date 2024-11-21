@@ -40,7 +40,12 @@ function login() {
 
     },
     error: function (data) {
-      alert("E-mail ou senha erradas.")
+      console.log(data.responseJSON.error)
+      Swal.fire({
+        icon: "error",
+        title: "Erro",
+        text: data.responseJSON.error,
+      });
     },
   });
 }}

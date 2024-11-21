@@ -130,7 +130,11 @@ function cadastrar() {
         window.location.href = '../list/list.html'
       },
       error: function (data) {
-        alert("E-mail ou CPF já existente!")
+        Swal.fire({
+          icon: "error",
+          title: "Erro",
+          text: data.responseJSON.error,
+        });
       },
     });
   }

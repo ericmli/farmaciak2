@@ -1,6 +1,6 @@
 const db = require('../db');
 const bcrypt = require('bcrypt');
-const emai = require('../utils/emai');
+const emai = require('../utils/email');
 
 // Função para verificar se CPF ou email já existem na base de dados
 async function verificaExistencia(cpf, email) {
