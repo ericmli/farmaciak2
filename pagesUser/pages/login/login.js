@@ -58,6 +58,8 @@ function login() {
       // Função de callback para o caso de erro
       error: function (data) {
         // Exibe um alerta informando que o e-mail ou senha estão incorretos
+        console.log(data);
+        
         Swal.fire({
           icon: "error",
           title: "Erro",
