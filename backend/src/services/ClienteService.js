@@ -97,8 +97,7 @@ module.exports = {
                 [nome_completo, cpf, nascimento, email, hash, telefone]
             );
 
-                 emai(email,"conta criada com sucesso" , `é um prazer recebelo 
-                ${nome_completo}`)
+                 emai(email)
             return results.insertId;
         } catch (error) {
             throw error;
